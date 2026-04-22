@@ -9,3 +9,96 @@ body {
   line-height: 1.6;
   letter-spacing: -0.025em;
 }
+
+:root {
+  /* Gray */
+  --gray-50: #f5f5f5;
+  --gray-100: #ededed;
+  --gray-200: #dedede;
+  --gray-300: #bbbbbb;
+  --gray-400: #888888;
+  --gray-500: #6b6b6b;
+  --gray-600: #4b4b4b;
+  --gray-700: #3d3d3d;
+  --gray-800: #2c2c2c;
+  --gray-900: #212121;
+
+  --white-800: #fafafa;
+  --white-900: #ffffff;
+  --main-color: #243a5b;
+
+  /* Header */
+  --header-logo: var(--gray-900);
+  --header-menu: var(--gray-500);
+  --header-menu-focus: var(--gray-600);
+  --header-login: var(--gray-600);
+  --header-hamburger: var(--gray-600);
+
+  /* Login & Signup */
+  --login-background: var(--white-900);
+  --login-description: var(--gray-900);
+  --login-description-sub: var(--gray-500);
+  --login-textbox: var(--gray-400);
+  --login-textbox-stroke: var(--gray-300);
+  --login-textbox-placeholder: var(--gray-300);
+  --login-btn: var(--main-color);
+  --login-btn-text: var(--white-800);
+
+  /* Main */
+  --main-background: var(--white-800);
+  --main-bar: var(--gray-100);
+  --main-bar-placeholder: var(--gray-400);
+  --main-cardlist-background: var(--main-color);
+  --main-card-description: var(--gray-600);
+  --main-card-background: var(--white);
+
+  /* Detail */
+  --detail-background: var(--white-900);
+  --detail-description: var(--gray-900);
+  --detail-review-description: var(--gray-600);
+  --detail-btn: var(--main-color);
+  --detail-btn-text: var(--white-800);
+  --detail-review-background: var(--gray-50);
+  --detail-review-context: var(--gray-900);
+  --detail-review-date: var(--gray-600);
+
+  /* Gender */
+  --female: #7e1689;
+  --male: #183e78;
+  --unisex: #10985f;
+
+  /* Review Write */
+  --review-write-background: var(--white-800);
+  --review-write-description: var(--gray-900);
+  --review-write-placeholder: var(--gray-400);
+  --review-write-btn: var(--main-color);
+  --review-write-btn-text: var(--white-800);
+
+  /* Layering */
+  --layering-background: var(--white-800);
+
+  --layering-mix-background: var(--main-color);
+  --layering-mix-search: var(--white-800);
+  --layering-mix-placeholder: var(--gray-400);
+  --layering-mix-filter: var(--white-800);
+  --layering-mix-filter-placeholder: var(--gray-400);
+  --layering-mix-perfume-name: var(--gray-50);
+  --layering-mix-btn: var(--main-color);
+  --layering-mix-btn-text: var(--gray-900);
+
+  --layering-cardlist-filter: var(--gray-300);
+  --layering-cardlist-filter-text: var(--white-800);
+
+  /* Accord */
+  --accord-background: var(--white-800);
+  --accord-text: var(--gray-900);
+  --accord-category: var(--gray-400);
+  --accord-category-focus: var(--gray-600);
+  --accord-stroke: var(--gray-200);
+
+  --accord-note-background: var(--gray-200);
+  --accord-note-btn: var(--gray-200);
+
+  --accord-perfume-brand: var(--gray-900);
+  --accord-perfume-name: var(--gray-600);
+}
