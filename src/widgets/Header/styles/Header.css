@@ -1,0 +1,143 @@
+/* ── 데스크탑 (1920) ── */
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  width: 100%;
+}
+
+.header__brand {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--header-logo);
+}
+
+.header__nav {
+  display: flex;
+  gap: 60px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--header-menu);
+}
+
+.header__nav-item {
+  cursor: pointer;
+  /* white-space: nowrap; */
+}
+
+.header__auth {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.header__auth-btn {
+  border: 0;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--header-auth);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.header__auth-btn--profile {
+  display: flex;
+  align-items: center;
+}
+
+.header__hamburger {
+  display: none;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__nav--mobile {
+  display: none;
+}
+
+/* ── 태블릿 (~768px) ── */
+@media (max-width: 1024px) {
+  .header {
+    padding: 15px 30px;
+  }
+
+  .header__brand {
+    font-size: 18px;
+  }
+
+  .header__nav {
+    gap: 24px;
+    font-size: 14px;
+  }
+
+  .header__auth-btn {
+    font-size: 14px;
+  }
+
+  .header__auth-btn--profile svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ── 모바일 (~480px) ── */
+@media (max-width: 768px) {
+  .header {
+    padding: 16px 15px;
+  }
+
+  .header__brand {
+    font-size: 16px;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__auth {
+    display: none;
+  }
+
+  .header__hamburger {
+    display: flex;
+  }
+
+  .header__nav--mobile {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 16px 20px 24px;
+    gap: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+  }
+
+  .header__nav--mobile .header__nav-item {
+    color: var(--header-menu);
+  }
+
+  .header__auth--mobile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+  }
+
+  .header__auth--mobile .header__auth-btn {
+    font-size: 14px;
+  }
+}
