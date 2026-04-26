@@ -2,11 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  border: 0;
+  background-color: transparent;
 }
 
 body {
   font-family: 'Pretendard', sans-serif;
-  line-height: 1.6;
+  line-height: 1.4;
   letter-spacing: -0.025em;
 }
 

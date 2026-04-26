@@ -13,13 +13,14 @@
   font-weight: 600;
   color: var(--header-logo);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .header__nav {
   display: flex;
   font-size: 16px;
   font-weight: 500;
-  gap: 70px;
+  gap: 80px;
   color: var(--header-nav);
 }
 
@@ -37,18 +38,17 @@
 .header__auth {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 25px;
   justify-content: flex-end;
 }
 
 .header__auth-btn {
-  border: 0;
-  background-color: transparent;
   font-size: 14px;
   font-weight: 500;
   color: var(--header-auth);
-  line-height: 1;
   cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
 }
 
 .header__auth-btn:hover {
@@ -63,17 +63,9 @@
   cursor: pointer;
 }
 
-.header__auth-btn--profile {
-  color: var(--header-auth-focus);
-  font-weight: 600;
-}
-
 .header__hamburger {
   display: none;
-  border: 0;
   background-color: transparent;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   font-size: 18px;
 }
@@ -93,15 +85,19 @@
   }
 
   .header__nav {
-    gap: 40px;
+    gap: 50px;
     font-size: 14px;
+  }
+
+  .header__auth {
+    gap: 20px;
   }
 
   .header__auth-btn {
     font-size: 12px;
   }
 
-  .header__auth-btn--profile svg {
+  .header__auth-btn--profile {
     font-size: 20px;
   }
 }
@@ -123,6 +119,8 @@
 
   .header__hamburger {
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .header__nav--mobile {
@@ -132,51 +130,29 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: white;
     padding: 20px 30px;
     gap: 20px;
     font-size: 14px;
     font-weight: 500;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    /* z-index: 100; */
   }
 
-  .header__nav--mobile .header__nav-item {
+  .header__nav-item {
     color: var(--header-nav);
     font-weight: 500;
     cursor: pointer;
     text-decoration: none;
   }
 
-  .header__nav--mobile .header__nav-item:hover {
-    color: var(--header-nav-focus);
-    font-weight: 600;
-  }
-
   .header__auth--mobile {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding-top: 20px;
     border-top: 1px solid #eee;
   }
 
-  .header__auth-btn {
-    font-size: 12px;
-    color: var(--header-auth);
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  .header__auth-btn:hover {
-    color: var(--header-auth-focus);
-    font-weight: 600;
-  }
-
-  .header__auth-btn--profile svg {
-    font-size: 10px;
-    color: var(--header-auth);
-    font-weight: 500;
-    cursor: pointer;
+  .header__auth-btn--profile {
+    font-size: 15px;
   }
 }
