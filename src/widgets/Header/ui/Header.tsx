@@ -3,6 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const isLogin = true;
@@ -10,23 +11,31 @@ export default function Header() {
 
   return (
     <header className="header">
-      <h1 className="header__brand">The Scent Lab</h1>
+      <h1 className="header__logo">The Scent Lab</h1>
 
-      {/* 데스크탑 + 태블릿 nav */}
+      {/* Desktop, Tablet nav */}
       <nav className="header__nav">
-        <a className="header__nav-item">향수</a>
-        <a className="header__nav-item">향 계열</a>
-        <a className="header__nav-item">레이어링</a>
-        <a className="header__nav-item">서비스 소개</a>
+        <Link className="header__nav-item" to="/perfumes">
+          향수
+        </Link>
+        <Link className="header__nav-item" to="/fragrance-types">
+          향 계열
+        </Link>
+        <Link className="header__nav-item" to="/layering">
+          레이어링
+        </Link>
+        <Link className="header__nav-item" to="/services">
+          서비스 소개
+        </Link>
       </nav>
 
-      {/* 데스크탑 + 태블릿 로그인 영역 */}
+      {/* Desktop, Tablet 로그인 영역 */}
       <div className="header__auth">
         {isLogin ? (
           <>
             <button className="header__auth-btn">로그아웃</button>
             <button className="header__auth-btn header__auth-btn--profile">
-              <CgProfile size={25} color="var(--header-auth)" />
+              <CgProfile color="var(--header-auth)" />
             </button>
           </>
         ) : (
@@ -34,26 +43,26 @@ export default function Header() {
         )}
       </div>
 
-      {/* 모바일 햄버거 버튼 */}
+      {/* Mobile 햄버거 */}
       <button className="header__hamburger" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <IoClose size={18} /> : <GiHamburgerMenu size={18} />}
+        {isOpen ? <IoClose /> : <GiHamburgerMenu />}
       </button>
 
-      {/* 모바일 드롭다운 메뉴 */}
+      {/* Mobile 드롭다운 메뉴 */}
       {isOpen && (
         <nav className="header__nav--mobile">
-          <a className="header__nav-item" onClick={() => setIsOpen(false)}>
+          <Link className="header__nav-item" to="/perfumes" onClick={() => setIsOpen(false)}>
             향수
-          </a>
-          <a className="header__nav-item" onClick={() => setIsOpen(false)}>
+          </Link>
+          <Link className="header__nav-item" to="/fragrance-types" onClick={() => setIsOpen(false)}>
             향 계열
-          </a>
-          <a className="header__nav-item" onClick={() => setIsOpen(false)}>
+          </Link>
+          <Link className="header__nav-item" to="/layering" onClick={() => setIsOpen(false)}>
             레이어링
-          </a>
-          <a className="header__nav-item" onClick={() => setIsOpen(false)}>
+          </Link>
+          <Link className="header__nav-item" to="/services" onClick={() => setIsOpen(false)}>
             서비스 소개
-          </a>
+          </Link>
           <div className="header__auth--mobile">
             {isLogin ? (
               <>
