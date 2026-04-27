@@ -1,0 +1,45 @@
+.perfume-card {
+  width: 13.75rem;
+  height: 18.5625rem;
+  padding: 1.06rem;
+  background-color: var(--white-900);
+  border-radius: 0.625rem;
+}
+
+.perfume-card__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4375rem; /* 이미지와 텍스트 사이 간격 */
+  height: 100%;
+}
+
+.perfume-card__image-container {
+  flex: 1; /* 이미지 영역이 카드 높이를 유동적으로 채우도록 설정 */
+  width: 100%; /* 가득 채우기(Fill) */
+  background-color: var(--white);
+  overflow: hidden;
+}
+
+.perfume-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.perfume-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.perfume-card__name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.perfume-card__brand {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--gray-900);
+}
