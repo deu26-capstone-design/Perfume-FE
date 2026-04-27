@@ -1,7 +1,7 @@
-// import Header from '@widgets/Header/ui/Header'
+import Header from '@widgets/Header/ui/Header';
 
 function App() {
-  return <>{/* <Header /> */}</>;
+  return <>{<Header />}</>;
 }
 
 export default App;
