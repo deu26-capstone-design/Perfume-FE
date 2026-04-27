@@ -1,3 +1,11 @@
+// import Header from '@widgets/Header/ui/Header'
+
+function App() {
+  return <>{/* <Header /> */}</>;
+}
+
+export default App;
+
 // import { useState, useEffect } from 'react';
 // import { PerfumeCard } from '../entities/perfume/ui/card/PerfumeCard';
 // import { mockPerfumes } from '../entities/perfume/model/mockData';
@@ -20,9 +28,3 @@
 
 //   return <PerfumeCard perfume={perfume} />;
 // }
-
-//import Header from '@widgets/Header/ui/Header';
-
-function App() {
-  //return <>{<Header />}</>;
-}
