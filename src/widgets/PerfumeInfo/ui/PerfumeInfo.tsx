@@ -37,42 +37,44 @@ export default function PerfumeInfo({ perfume }: Props) {
           <hr />
         </div>
 
-        <div className="perfume-info__notes">
-          노트 구성
-          {(['top', 'mid', 'base'] as const).map((tier) => (
-            <div key={tier} className="perfume-info__notes-group">
-              <span className="perfume-info__notes-label">
-                {tier === 'mid' ? 'Middle' : tier.charAt(0).toUpperCase() + tier.slice(1)}
-              </span>
-              <div className="perfume-info__notes-values">
-                {perfume.notes[tier].map((note) => (
-                  <span key={note} className="perfume-info__notes-value">
-                    {note}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="perfume-info__graph">
-          향 계열 비율
-          {perfume.accords.map((accord) => (
-            <div key={accord.name} className="perfume-info__accord">
-              <span className="perfume-info__accord-name">{accord.name}</span>
-              <div className="perfume-info__accord-bar-wrap">
-                <div
-                  className="perfume-info__accord-bar"
-                  style={{
-                    width: `${accord.ratio}%`,
-                    backgroundColor: accordColors[accord.name],
-                  }}
-                >
-                  {accord.ratio}%
+        <div className="perfume-info__detail">
+          <div className="perfume-info__notes">
+            노트 구성
+            {(['top', 'mid', 'base'] as const).map((tier) => (
+              <div key={tier} className="perfume-info__notes-group">
+                <span className="perfume-info__notes-label">
+                  {tier === 'mid' ? 'Middle' : tier.charAt(0).toUpperCase() + tier.slice(1)}
+                </span>
+                <div className="perfume-info__notes-values">
+                  {perfume.notes[tier].map((note) => (
+                    <span key={note} className="perfume-info__notes-value">
+                      {note}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <div className="perfume-info__graph">
+            향 계열 비율
+            {[...perfume.accords].sort((a, b) => b.ratio - a.ratio).map((accord) => (
+              <div key={accord.name} className="perfume-info__accord">
+                <span className="perfume-info__accord-name">{accord.name}</span>
+                <div className="perfume-info__accord-bar-wrap">
+                  <div
+                    className="perfume-info__accord-bar"
+                    style={{
+                      width: `${accord.ratio}%`,
+                      backgroundColor: accordColors[accord.name],
+                    }}
+                  >
+                    {accord.ratio}%
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="perfume-info__description">
