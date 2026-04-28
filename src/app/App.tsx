@@ -1,12 +1,22 @@
+// src/App.tsx
+import Header from '@widgets/Header/ui/Header';
+import LayeringPage from '@pages/layering/LayeringPage';
+
+export default function App() {
+  return (
+    <>
+      <Header />
+      <LayeringPage />
+    </>
+  );
+}
 // import Header from '@widgets/Header/ui/Header';
 
-function App() {
-  return <>
-    {/*<Header />*/}
-  </>;
-}
+// function App() {
+//   return <>{<Header />}</>;
+// }
 
-export default App;
+// export default App;
 
 // import { useState, useEffect } from 'react';
 // import { PerfumeCard } from '../entities/perfume/ui/card/PerfumeCard';

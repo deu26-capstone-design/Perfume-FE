@@ -1,0 +1,91 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  transition: all 0.5s ease-in-out;
+}
+
+.search-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 18px;
+  height: 100%;
+  line-height: normal;
+  padding: 0;
+  color: inherit;
+}
+
+.search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-field::placeholder {
+  color: var(--layering-mix-placeholder);
+  transition: opacity 0.2s ease;
+  opacity: 1;
+}
+
+.search-field:focus::placeholder {
+  opacity: 0;
+}
+
+.search-container.layering {
+  width: 100%;
+  max-width: 544px;
+  height: 56px;
+  padding: 0 26px;
+  background-color: var(--layering-mix-search);
+  border-radius: 50px;
+}
+
+.search-container.main {
+  width: 100%;
+  max-width: 700px;
+  height: 50px;
+  padding: 0 30px;
+  background-color: var(--main-bar);
+  border-radius: 40px;
+  color: var(--gray-900);
+}
+
+.search-container.main .search-field::placeholder {
+  color: var(--main-bar-placeholder);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .search-container.main {
+    width: 400px;
+    height: 40px;
+  }
+  .search-container.layering {
+    width: 297px;
+    height: 38px;
+  }
+  .search-field {
+    font-size: 15px;
+  }
+}
+
+/* [3] 📱 모바일 구간 (768px 이하) */
+@media (max-width: 768px) {
+  .search-container.main {
+    width: 250px;
+    height: 30px;
+  }
+  .search-container.layering {
+    width: 306px;
+    height: 35px;
+  }
+  .search-field {
+    font-size: 15px;
+  }
+  .search-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
