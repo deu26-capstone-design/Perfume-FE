@@ -58,22 +58,28 @@ export default function PerfumeInfo({ perfume }: Props) {
 
           <div className="perfume-info__graph">
             향 계열 비율
-            {[...perfume.accords].sort((a, b) => b.ratio - a.ratio).map((accord) => (
-              <div key={accord.name} className="perfume-info__accord">
-                <span className="perfume-info__accord-name">{accord.name}</span>
-                <div className="perfume-info__accord-bar-wrap">
-                  <div
-                    className="perfume-info__accord-bar"
-                    style={{
-                      width: `${accord.ratio}%`,
-                      backgroundColor: accordColors[accord.name],
-                    }}
-                  >
-                    {accord.ratio}%
+            {[...perfume.accords]
+              .sort((a, b) => b.ratio - a.ratio)
+              .map(
+                (
+                  accord, //비율 높은 순으로 내림차순 정렬
+                ) => (
+                  <div key={accord.name} className="perfume-info__accord">
+                    <span className="perfume-info__accord-name">{accord.name}</span>
+                    <div className="perfume-info__accord-bar-wrap">
+                      <div
+                        className="perfume-info__accord-bar"
+                        style={{
+                          width: `${accord.ratio}%`,
+                          backgroundColor: accordColors[accord.name],
+                        }}
+                      >
+                        {accord.ratio}%
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                ),
+              )}
           </div>
         </div>
 
