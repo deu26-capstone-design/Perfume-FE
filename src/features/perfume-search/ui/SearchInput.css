@@ -38,6 +38,7 @@
 /* variants */
 .search-container.layering {
   --search-height: 56px;
+
   width: 100%;
   max-width: 544px;
   padding: 0 26px;
@@ -47,6 +48,7 @@
 
 .search-container.main {
   --search-height: 50px;
+
   width: 100%;
   max-width: 700px;
   padding: 0 26px;
