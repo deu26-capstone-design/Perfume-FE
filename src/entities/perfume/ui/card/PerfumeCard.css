@@ -1,15 +1,15 @@
 .perfume-card {
-  width: 13.75rem;
-  height: 18.5625rem;
-  padding: 1.06rem;
+  width: 220px;
+  height: 297px;
+  padding: 16px;
   background-color: var(--white-900);
-  border-radius: 0.625rem;
+  border-radius: 10px;
 }
 
 .perfume-card__inner {
   display: flex;
   flex-direction: column;
-  gap: 1.4375rem; /* 이미지와 텍스트 사이 간격 */
+  gap: 23px; /* 이미지와 텍스트 사이 간격 */
   height: 100%;
 }
 
@@ -29,7 +29,7 @@
 .perfume-card__info {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 9px;
 }
 
 .perfume-card__name {
@@ -42,4 +42,42 @@
   font-size: 1rem;
   font-weight: 500;
   color: var(--gray-900);
+}
+
+@media (max-width: 768px) {
+  .perfume-card {
+    width: 148px;
+    height: 217px;
+    padding: 10px;
+  }
+  .perfume-card__inner {
+    gap: 23px;
+  }
+  .perfume-card__name {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .perfume-card__brand {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfume-card {
+    width: 98px;
+    height: 159px;
+    padding: 8px;
+  }
+  .perfume-card__inner {
+    gap: 10px;
+  }
+  .perfume-card__name {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .perfume-card__brand {
+    font-size: 12px;
+    font-weight: 500;
+  }
 }
