@@ -59,9 +59,6 @@
 /* 메인 페이지 브레이크포인트 */
 
 @media (max-width: 600px) {
-  .perfume-grid-container.main {
-    padding: 30px;
-  }
   .perfume-grid-list {
     gap: 10px;
   }

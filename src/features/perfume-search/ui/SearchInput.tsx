@@ -26,6 +26,7 @@ export const SearchInput = ({ value, onChange, variant = 'main' }: SearchInputPr
         value={value} // 현재 입력값 표시
         onChange={(e) => onChange(e.target.value)} // 입력값이 바뀔 때 onChange 함수 실행
         placeholder={placeholder}
+        aria-label={variant === 'main' ? '향수 검색' : 'Perfume search'}
       />
 
       <span className="search-icon">

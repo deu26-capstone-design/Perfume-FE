@@ -36,12 +36,15 @@ export const FilterDropdown = ({ label, options, value, onSelect }: FilterDropdo
   return (
     <div className="filter-dropdown" ref={dropdownRef}>
       <button
+        type="button"
         className={`dropdown-trigger ${isOpen ? 'active' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-controls={`${label}-options`}
       >
         {/* 값이 있으면 value를, 없으면 초기 label을 표시 */}
         <span className="dropdown-label">{value || label}</span>
-
         <div className={`arrow-wrapper ${isOpen ? 'is-open' : ''}`}>
           <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
             <path
@@ -51,16 +54,19 @@ export const FilterDropdown = ({ label, options, value, onSelect }: FilterDropdo
           </svg>
         </div>
       </button>
-
       {isOpen && (
-        <ul className="dropdown-menu">
-          {options.map((option, index) => (
-            <li
-              key={index}
-              className={`dropdown-item ${value === option ? 'selected' : ''}`}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
+        <ul id={`${label}-options`} className="dropdown-menu" role="listbox" aria-label={label}>
+          {options.map((option) => (
+            <li key={option}>
+              <button
+                type="button"
+                className={`dropdown-item ${value === option ? 'selected' : ''}`}
+                onClick={() => handleOptionClick(option)}
+                role="option"
+                aria-selected={value === option}
+              >
+                {option}
+              </button>
             </li>
           ))}
         </ul>

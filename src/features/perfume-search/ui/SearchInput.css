@@ -63,11 +63,13 @@
 @media (min-width: 769px) and (max-width: 1024px) {
   .search-container.main {
     --search-height: 40px;
+
     width: 400px;
   }
 
   .search-container.layering {
     --search-height: 38px;
+
     width: 297px;
   }
 
@@ -80,11 +82,13 @@
 @media (max-width: 768px) {
   .search-container.main {
     --search-height: 30px;
+
     width: 250px;
   }
 
   .search-container.layering {
     --search-height: 35px;
+
     width: 306px;
   }
 
