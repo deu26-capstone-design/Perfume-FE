@@ -1,0 +1,28 @@
+.filter-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background-color: var(--gray-300);
+  border-radius: 20px;
+  color: var(--white-900);
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--white-900);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .filter-tag {
+    min-width: 70px;
+    height: 26px;
+    padding: 4px 12px;
+    font-size: 11px;
+  }
+}
