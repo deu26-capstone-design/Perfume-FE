@@ -1,7 +1,7 @@
 .perfume-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   max-width: 1377px;
   width: 70%;
   padding: 40px;
@@ -14,6 +14,8 @@
   height: 510px;
   object-fit: cover;
   border-radius: 10px;
+  position: sticky;
+  top: 40px;
 }
 
 .perfume-info__content {
@@ -70,7 +72,8 @@
 
 .perfume-info__detail {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .perfume-info__notes {
@@ -111,9 +114,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* border: 0.5px solid var(--gray-200); */
+  border: 0.5px solid var(--gray-200);
   border-radius: 10px;
-  /* padding: 20px; */
+  padding: 20px;
   font-size: 18px;
   font-weight: 500;
   width: 450px;
