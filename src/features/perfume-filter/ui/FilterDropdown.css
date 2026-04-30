@@ -1,16 +1,17 @@
+/* 버튼 레이아웃 영역 */
 .filter-dropdown {
   position: relative;
   width: 167px;
 }
 
-/* 버튼 영역 */
+/* 버튼 UI 영역 */
 .dropdown-trigger {
   width: 100%;
-  height: 33px;
+  height: 2.125rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 15px;
+  padding: 0.625rem 0.9375rem;
   background-color: var(--white-900);
   border: 1px solid var(--gray-300);
   border-radius: 29px;
@@ -19,14 +20,19 @@
   transition: all 0.2s ease;
 }
 
-/* 드롭다운 열림 상태 */
+.dropdown-icon {
+  font-size: 1.875rem;
+  color: var(--gray-300);
+}
+
+/* 드롭다운 열렸을 때 placeholder 부분 */
 .dropdown-trigger.active {
   border-radius: 20px 20px 0 0;
   border-bottom-color: transparent;
 }
 
 .dropdown-label {
-  font-size: 13px;
+  font-size: 0.875rem;
   color: var(--gray-400);
   white-space: nowrap;
   overflow: hidden;
@@ -43,7 +49,7 @@
   transform: rotate(180deg);
 }
 
-/* 드롭다운 리스트 */
+/* 드롭다운 열렸을 때 리스트 */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -55,17 +61,21 @@
   border: 1px solid var(--gray-300);
   border-top: none;
   border-radius: 0 0 20px 20px;
-  overflow: hidden;
   margin: 0;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+
+  /* 드롭다운이 너무 길어지는 경우 스크롤 가능하도록 설정 */
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 /* 옵션 아이템 */
 .dropdown-item {
   width: 100%;
   display: flex;
-  padding: 11px 20px;
-  font-size: 13px;
+  padding: 0.6875rem 1.25rem;
+  font-size: 0.8125rem;
   color: var(--gray-300);
   cursor: pointer;
 }
@@ -82,20 +92,20 @@
 
 @media (max-width: 768px) {
   .filter-dropdown {
-    width: 90px;
+    width: 110px;
   }
 
   .dropdown-trigger {
-    height: 25px;
-    padding: 4px 10px;
+    height: 2rem;
+    padding: 0.25rem 0.625rem;
   }
 
   .dropdown-label {
-    font-size: 11px;
+    font-size: 0.75rem;
   }
 
   .dropdown-item {
-    font-size: 11px;
-    padding: 6px 10px;
+    font-size: 0.75rem;
+    padding: 0.75rem 0.625rem;
   }
 }
