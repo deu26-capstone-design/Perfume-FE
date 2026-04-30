@@ -1,28 +1,27 @@
+/* PerfumeGrid.css */
 .perfume-grid-container {
   width: 100%;
   max-width: 1280px;
-  background-color: var(--layering-mix-background);
+  margin: 0 auto; /* 가운데 정렬 추가 */
+  background-color: var(--layering-mix-background, #1a2b4c); /* 사진의 남색 배경 적용 */
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-.perfume-grid-list {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 30px;
-}
-
+.perfume-grid-container.main,
 .perfume-grid-container.layering {
   padding: 30px;
   gap: 30px;
 }
 
-.perfume-grid-container.main {
-  padding: 30px;
-  gap: 30px;
+/* 수정: flex에서 grid로 변경하여 정확한 열(Column) 개수 지정 */
+.perfume-grid-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)); /* 데스크탑: 정확히 5열 픽스 */
+  width: 100%;
+  gap: 20px; /* 카드 사이 간격 */
 }
 
 /* 필터 태그 영역 */
@@ -34,41 +33,27 @@
   flex-wrap: wrap;
 }
 
-/* 레이어링 페이지 브레이크포인트 */
-
-@media (max-width: 694px) {
+/* 태블릿 (예: 1024px 이하) */
+@media (max-width: 1024px) {
+  .perfume-grid-container.main,
   .perfume-grid-container.layering {
-    padding: 20px;
-    gap: 30px;
+    padding: 24px;
   }
   .perfume-grid-list {
-    gap: 20px;
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* 태블릿: 4열로 변경 */
+    gap: 16px;
   }
 }
 
-@media (max-width: 336px) {
+/* 모바일 (예: 768px 이하) */
+@media (max-width: 768px) {
+  .perfume-grid-container.main,
   .perfume-grid-container.layering {
-    padding: 10px;
-    gap: 20px;
+    padding: 16px;
+    border-radius: 12px;
   }
   .perfume-grid-list {
-    gap: 10px;
-  }
-}
-
-/* 메인 페이지 브레이크포인트 */
-
-@media (max-width: 600px) {
-  .perfume-grid-list {
-    gap: 10px;
-  }
-}
-
-@media (max-width: 375px) {
-  .perfume-grid-container.main {
-    padding: 17px 12px;
-  }
-  .perfume-grid-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 모바일: 3열로 변경 */
     gap: 10px;
   }
 }
