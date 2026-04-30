@@ -34,7 +34,12 @@ export const SearchInput = ({ value, onChange, onSubmit, variant = 'main' }: Sea
         placeholder={placeholder}
         aria-label={variant === 'main' ? '향수 검색' : 'Perfume search'}
       />
-      <button type="submit" className="search-icon-btn" aria-label="검색 실행">
+      <button
+        type="button"
+        className="search-icon-btn"
+        aria-label="검색 실행"
+        onClick={() => onSubmit?.()}
+      >
         <IoSearch className="search-icon" />
       </button>
     </div>

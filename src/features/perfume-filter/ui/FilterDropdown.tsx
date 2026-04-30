@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import './FilterDropdown.css';
 
@@ -17,6 +17,7 @@ export const FilterDropdown = ({
 }: FilterDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const listboxId = useId();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,7 +61,7 @@ export const FilterDropdown = ({
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-controls={`${label}-options`}
+        aria-controls={listboxId}
       >
         <span className="dropdown-label">{getDisplayText()}</span>
         <div className={`arrow-wrapper ${isOpen ? 'is-open' : ''}`}>
@@ -69,7 +70,7 @@ export const FilterDropdown = ({
       </button>
 
       {isOpen && (
-        <ul id={`${label}-options`} className="dropdown-menu" role="listbox" aria-label={label}>
+        <ul id={listboxId} className="dropdown-menu" role="listbox" aria-label={label}>
           {options.map((option) => {
             const isSelected = checkIsSelected(option);
 

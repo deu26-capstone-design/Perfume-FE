@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './MainPage.css';
 import { SearchInput } from '@features/perfume-search/ui/SearchInput';
 import { FilterDropdown } from '@features/perfume-filter/ui/FilterDropdown';
@@ -35,6 +35,19 @@ const MainPage = () => {
   useEffect(() => {
     setPerfumes(mockPerfumes);
   }, []);
+
+  const visiblePerfumes = useMemo(() => {
+    const keyword = filters.search.trim().toLowerCase();
+    let result = perfumes;
+
+    if (keyword) {
+      result = result.filter(
+        (p) => p.name.toLowerCase().includes(keyword) || p.brand.toLowerCase().includes(keyword),
+      );
+    }
+
+    return result;
+  }, [perfumes, filters.search]);
 
   return (
     <div className="main-page">
@@ -76,7 +89,7 @@ const MainPage = () => {
         <div className="main-page__grid">
           <PerfumeGrid
             variant="main"
-            perfumes={perfumes}
+            perfumes={visiblePerfumes}
             selectedCategories={filters.categories}
             onRemoveCategory={removeCategory}
           />
