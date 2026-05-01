@@ -70,7 +70,13 @@ export const FilterDropdown = ({
       </button>
 
       {isOpen && (
-        <ul id={listboxId} className="dropdown-menu" role="listbox" aria-label={label}>
+        <ul
+          id={listboxId}
+          className="dropdown-menu"
+          role="listbox"
+          aria-label={label}
+          aria-multiselectable={Array.isArray(selectedValues) || undefined}
+        >
           {options.map((option) => {
             const isSelected = checkIsSelected(option);
 
