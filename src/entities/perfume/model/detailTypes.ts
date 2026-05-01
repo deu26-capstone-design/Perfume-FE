@@ -2,7 +2,7 @@ export interface PerfumeDetail {
   id: number;
   name: string;
   brand: string;
-  gender: string;
+  gender: 'female' | 'male' | 'unisex';
   imageUrl: string;
   description: string;
   rating: number;
