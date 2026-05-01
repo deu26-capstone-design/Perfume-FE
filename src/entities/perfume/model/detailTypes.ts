@@ -5,6 +5,8 @@ export interface PerfumeDetail {
   gender: string;
   imageUrl: string;
   description: string;
+  rating: number;
+  reviewCount: number;
   notes: {
     top: string[];
     mid: string[];
