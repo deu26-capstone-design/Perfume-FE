@@ -1,0 +1,167 @@
+.perfume-review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  width: 100%;
+  max-width: 1340px;
+  padding: 10px;
+  gap: 50px;
+  color: var(--detail-review-description);
+}
+
+.perfume-review__sections {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+}
+
+.perfume-review__satisfaction,
+.perfume-review__season,
+.perfume-review__longevity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  border: 1px solid var(--gray-300);
+  border-radius: 10px;
+  padding: 15px 40px;
+}
+
+.perfume-review__section-title {
+  font-size: clamp(14px, 0.83vw, 16px);
+  font-weight: 400;
+}
+
+.perfume-review__item-title {
+  font-size: clamp(12px, 0.78vw, 14px);
+  font-weight: 400;
+}
+
+.perfume-review__item-value {
+  font-size: clamp(12px, 0.78vw, 14px);
+  font-weight: 300;
+}
+
+.perfume-review__satisfaction-group,
+.perfume-review__season-group,
+.perfume-review__longevity-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.56rem;
+}
+
+.perfume-review__season-group,
+.perfume-review__longevity-group {
+  gap: 2.08rem;
+}
+
+.perfume-review__satisfaction-item,
+.perfume-review__season-item,
+.perfume-review__longevity-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  /* width: fit-content; */
+}
+
+hr {
+  width: 100%;
+  border: 0.1px solid var(--gray-100);
+}
+
+@media (max-width: 1023px) {
+  .perfume-review {
+    gap: clamp(20px, 2.5vw, 28px);
+  }
+
+  .perfume-review__sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-evenly;
+    gap: clamp(1rem, 1.5vw, 1.75rem);
+  }
+
+  .perfume-review__satisfaction,
+  .perfume-review__season,
+  .perfume-review__longevity {
+    gap: clamp(0.875rem, 1vw, 1.25rem);
+    padding: clamp(8px, 0.97vw, 12px) clamp(14px, 1.95vw, 24px);
+  }
+
+  .perfume-review__longevity {
+    grid-column: 1 / -1;
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  .perfume-review__satisfaction-group,
+  .perfume-review__season-group,
+  .perfume-review__longevity-group {
+    gap: clamp(0.875rem, 1.1vw, 1.56rem);
+  }
+
+  .perfume-review__satisfaction-item,
+  .perfume-review__season-item,
+  .perfume-review__longevity-item {
+    gap: 0.35rem;
+  }
+
+  .perfume-review__section-title {
+    font-size: clamp(14px, 15px, 16px);
+  }
+
+  .perfume-review__item-title,
+  .perfume-review__item-value {
+    font-size: clamp(12px, 13px, 14px);
+  }
+}
+
+@media (max-width: 767px) {
+  .perfume-review {
+    gap: 20px;
+  }
+
+  .perfume-review__sections {
+    grid-template-columns: 1fr;
+    justify-content: space-evenly;
+  }
+
+  .perfume-review__satisfaction,
+  .perfume-review__season,
+  .perfume-review__longevity {
+    gap: 0.75rem;
+    padding: 12px 16px;
+  }
+
+  .perfume-review__longevity {
+    grid-column: auto;
+    width: 100%;
+    margin: 0;
+  }
+
+  .perfume-review__satisfaction-group,
+  .perfume-review__season-group,
+  .perfume-review__longevity-group {
+    gap: 0.875rem;
+  }
+
+  .perfume-review__satisfaction-item,
+  .perfume-review__season-item,
+  .perfume-review__longevity-item {
+    gap: 0.25rem;
+  }
+
+  .perfume-review__section-title {
+    font-size: 12px;
+  }
+
+  .perfume-review__item-title,
+  .perfume-review__item-value {
+    font-size: 10px;
+  }
+}
