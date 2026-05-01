@@ -1,0 +1,64 @@
+/* 메인 페이지 컨테이너 */
+.main-page {
+  min-height: 100vh;
+  background: var(--main-background);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 내부 콘텐츠 영역 */
+.main-page__content {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+/* 검색창 영역 */
+.main-page__block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* 드롭다운 영역 */
+.main-page__dropdown-group {
+  display: flex;
+  justify-content: space-between; /* 피그마의 gap: 자동 효과 */
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* 왼쪽 드롭다운 그룹 (계열, 성별) */
+.main-page__dropdown-group-left {
+  display: flex;
+  gap: 20px;
+  flex: 0 1 auto;
+}
+
+/* 오른쪽 드롭다운 그룹 (평점순) */
+.main-page__dropdown-group-right {
+  display: flex;
+  flex: 0 1 auto;
+}
+
+/* 향수 그리드 컨테이너 */
+.main-page__grid {
+  width: 100%;
+  max-width: 1280px;
+}
+
+@media (max-width: 768px) {
+  .main-page__dropdown-group {
+    padding: 0 10px;
+    gap: 10px;
+  }
+
+  .main-page__dropdown-group-left {
+    gap: 10px;
+  }
+}

@@ -1,0 +1,58 @@
+/* PerfumeGrid.css */
+.perfume-grid-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  background-color: var(--layering-mix-background);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.perfume-grid-container.main,
+.perfume-grid-container.layering {
+  padding: 1.875rem;
+  gap: 1.875rem;
+}
+
+.perfume-grid-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+  gap: 1.25rem;
+}
+
+/* 필터 태그 영역 */
+.filter-tag-area {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
+/* 태블릿 (예: 1024px 이하) */
+@media (max-width: 1024px) {
+  .perfume-grid-container.main,
+  .perfume-grid-container.layering {
+    padding: 1.5rem;
+  }
+  .perfume-grid-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* 모바일 (예: 768px 이하) */
+@media (max-width: 768px) {
+  .perfume-grid-container.main,
+  .perfume-grid-container.layering {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+  .perfume-grid-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.625rem;
+  }
+}
