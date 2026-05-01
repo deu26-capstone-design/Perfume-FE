@@ -3,6 +3,8 @@ import WishlistButton from '@features/wishlist/ui/WishlistButton';
 import type { PerfumeDetail } from '@entities/perfume/model/detailTypes';
 import { accordColors } from '@entities/perfume/model/accordColors';
 
+const DEFAULT_ACCORD_COLOR = '#cccccc';
+
 interface Props {
   perfume: PerfumeDetail;
 }
@@ -61,7 +63,7 @@ export default function PerfumeInfo({ perfume }: Props) {
                         className="perfume-info__accord-bar"
                         style={{
                           width: `${accord.ratio}%`,
-                          backgroundColor: accordColors[accord.name],
+                          backgroundColor: accordColors[accord.name] ?? DEFAULT_ACCORD_COLOR,
                         }}
                       >
                         {accord.ratio}%
