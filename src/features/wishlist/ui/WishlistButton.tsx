@@ -5,5 +5,5 @@ interface Props {
 }
 
 export default function WishlistButton({ perfumeId: _perfumeId }: Props) {
-  return <button className="wishlist-btn">위시리스트에 추가</button>;
+  return <button type="button" className="wishlist-btn">위시리스트에 추가</button>;
 }
