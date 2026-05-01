@@ -32,9 +32,21 @@
   gap: 0.52vw;
 }
 
+.perfume-info__brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .perfume-info__brand {
   font-size: clamp(20px, 1.25vw, 24px);
   font-weight: 700;
+}
+
+.perfume-info__rating {
+  font-size: clamp(13px, 0.83vw, 16px);
+  font-weight: 400;
+  color: var(--gray-500);
 }
 
 .perfume-info__name {
@@ -47,7 +59,7 @@
   align-items: center;
   justify-content: center;
   width: fit-content;
-  padding: 0.156vw 0.26vw;
+  padding: 0.156vw 0.4vw;
   border-radius: 1.04vw;
   font-size: clamp(16px, 0.94vw, 18px);
   color: var(--detail-btn-text);
@@ -132,7 +144,8 @@
 .perfume-info__accord-name {
   font-size: clamp(12px, 0.78vw, 15px);
   font-weight: 400;
-  width: 2.34vw;
+  min-width: clamp(40px, 2.34vw, 45px);
+  flex-shrink: 0;
 }
 
 .perfume-info__accord-bar-wrap {
@@ -172,8 +185,9 @@
 /* -------------------------------------------------------------*/
 /* -------------------------------------------------------------*/
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .perfume-info {
+    max-width: 100%;
     padding: 1.95vw 4vw;
   }
 
@@ -194,6 +208,10 @@
 
   .perfume-info__brand {
     font-size: clamp(18px, 1.95vw, 22px);
+  }
+
+  .perfume-info__rating {
+    font-size: clamp(11px, 1.17vw, 13px);
   }
 
   .perfume-info__name {
@@ -252,7 +270,8 @@
 
   .perfume-info__accord-name {
     font-size: clamp(12px, 1.17vw, 14px);
-    width: 2.93vw;
+    min-width: clamp(40px, 2.93vw, 45px);
+    flex-shrink: 0;
   }
 
   .perfume-info__accord-bar-wrap {
@@ -282,7 +301,7 @@
 /* -------------------------------------------------------------*/
 /* -------------------------------------------------------------*/
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .perfume-info {
     flex-direction: column;
     align-items: center;
@@ -303,12 +322,16 @@
   }
 
   .info {
-    gap: 2.6vw;
+    gap: 1.3vw;
   }
 
   .perfume-info__brand {
     font-size: clamp(18px, 5.53vw, 24px);
     font-weight: 700;
+  }
+
+  .perfume-info__rating {
+    font-size: clamp(12px, 2.34vw, 15px);
   }
 
   .perfume-info__name {

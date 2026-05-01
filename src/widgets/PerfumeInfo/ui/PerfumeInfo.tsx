@@ -31,7 +31,12 @@ export default function PerfumeInfo({ perfume }: Props) {
 
       <div className="perfume-info__content">
         <div className="perfume-info__content info">
-          <h1 className="perfume-info__brand">{perfume.brand}</h1>
+          <div className="perfume-info__brand-row">
+            <h1 className="perfume-info__brand">{perfume.brand}</h1>
+            <span className="perfume-info__rating">
+              평점 {perfume.rating} (리뷰 {perfume.reviewCount})
+            </span>
+          </div>
           <h2 className="perfume-info__name">{perfume.name}</h2>
           <div className={`perfume-info__gender ${genderClass}`}>{perfume.gender}</div>
           <hr />
