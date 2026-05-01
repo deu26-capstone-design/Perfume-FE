@@ -1,0 +1,29 @@
+.wishlist-btn {
+  width: 100%;
+  max-width: 150px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: var(--detail-btn);
+  color: var(--detail-btn-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+@media (max-width: 1024px) {
+  .wishlist-btn {
+    max-width: 140px;
+    padding: 5px 15px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wishlist-btn {
+    max-width: 100px;
+    padding: 5px;
+    font-size: 0.75rem;
+  }
+}
