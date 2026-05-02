@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './MainPage.css';
 import { SearchInput } from '@features/perfume-search/ui/SearchInput';
 import { FilterDropdown } from '@features/perfume-filter/ui/FilterDropdown';

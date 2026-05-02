@@ -1,4 +1,3 @@
-import React from 'react';
 import { PerfumeCard } from '@entities/perfume/ui/card/PerfumeCard';
 import type { Perfume } from '@entities/perfume/model/types';
 import { FilterTag } from '@shared/ui/filter-tag/FilterTag';
