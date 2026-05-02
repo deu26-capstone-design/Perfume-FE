@@ -1,15 +1,15 @@
-import { FaFaceGrinHearts } from 'react-icons/fa6';
-import { FaFaceLaughBeam } from 'react-icons/fa6';
-import { FaFaceGrin } from 'react-icons/fa6';
-import { FaFaceFrown } from 'react-icons/fa6';
-import { FaFaceAngry } from 'react-icons/fa6';
+import {
+  FaFaceGrinHearts,
+  FaFaceLaughBeam,
+  FaFaceGrin,
+  FaFaceFrown,
+  FaFaceAngry,
+} from 'react-icons/fa6';
 import { LuFlower2 } from 'react-icons/lu';
-import { FaRegSun } from 'react-icons/fa6';
-import { FaCanadianMapleLeaf } from 'react-icons/fa';
-import { FaSnowman } from 'react-icons/fa';
-import '../styles/PerfumeReview.css';
+import { FaRegSun, FaCanadianMapleLeaf, FaSnowman } from 'react-icons/fa';
+import '../styles/PerfumeReviewSummary.css';
 
-export default function PerfumeReview() {
+export default function PerfumeReviewSummary() {
   return (
     <div className="perfume-review">
       <hr />
