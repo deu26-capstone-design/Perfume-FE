@@ -1,4 +1,3 @@
-import React from 'react';
 import './FilterTag.css';
 
 interface FilterTagProps {
