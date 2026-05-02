@@ -1,0 +1,110 @@
+.review-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1340px;
+  padding: 10px;
+  justify-self: center;
+}
+
+.review-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+/* 리뷰 아이템 */
+.review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem 1.5rem;
+  border-bottom: 0.1px solid var(--gray-100);
+}
+
+.review-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-item__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-item__profile-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review-item__profile-default {
+  color: var(--gray-300);
+}
+
+.review-item__nickname {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.review-item__date {
+  font-size: 0.9rem;
+  color: var(--gray-400);
+}
+
+.review-item__ratings {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.review-item__rating-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: #f3f3f3;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 20px;
+  color: var(--detail-review-context);
+}
+
+.review-item__rating-group svg {
+  display: block;
+}
+
+.review-item__rating-group > span:not(.review-item__rating-label) {
+  display: flex;
+  align-items: center;
+}
+
+.review-item__rating-label {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--gray-900);
+}
+
+.review-item__scents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.review-item__scent {
+  font-size: 0.9rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-300);
+  color: var(--gray-600);
+}
+
+.review-item__comment {
+  font-size: 1rem;
+  color: var(--gray-700);
+}
