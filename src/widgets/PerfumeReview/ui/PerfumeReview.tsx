@@ -20,7 +20,7 @@ export default function PerfumeReview() {
           </span>
           <div className="perfume-review__satisfaction-group">
             <div className="perfume-review__satisfaction-item">
-              <FaFaceGrinHearts size={35} color="var(--detail-review-context)" />
+              <FaFaceGrinHearts size={35} color="var(--gray-600)" />
               <span className="perfume-review__item-title">매우좋음</span>
               <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
             </div>
