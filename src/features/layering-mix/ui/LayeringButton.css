@@ -1,0 +1,86 @@
+/* LayeringButton.css */
+
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.layering-button {
+  width: 1280px;
+  height: 81px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid var(--layering-mix-btn);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  box-sizing: border-box;
+}
+
+/* Hover 시 테두리 제거 및 그림자 효과 */
+.layering-button:hover {
+  border-color: transparent;
+  box-shadow: 0 1.25rem 2.5rem -0.9375rem rgba(37, 50, 69, 0.3);
+}
+
+/* Fill-up 효과를 위한 배경 레이어 */
+.button-fill {
+  position: absolute;
+  inset: 0;
+  background-color: var(--layering-mix-btn);
+  transform: translateY(100%);
+  transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1;
+}
+
+.layering-button:hover .button-fill {
+  transform: translateY(0);
+}
+
+.button-text {
+  position: relative;
+  z-index: 2;
+  color: var(--gray-900);
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: color 0.5s ease;
+  padding-left: 0.5rem;
+}
+
+/* Hover 시 텍스트/아이콘 색상 반전 및 이동 */
+.layering-button:hover .button-text,
+.layering-button:hover .button-icon {
+  color: var(--white-900);
+}
+
+.layering-button:hover .button-icon {
+  transform: translateX(0.5rem);
+}
+
+/* Tablet: 694px * 66px */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .layering-button {
+    width: 43.375rem; /* 694px / 16 = 43.375rem */
+    height: 4.125rem; /* 66px / 16 = 4.125rem */
+  }
+  .button-text {
+    font-size: 1.125rem;
+  }
+}
+
+/* Mobile: 336px * 57px */
+@media (max-width: 767px) {
+  .layering-button {
+    width: 21rem; /* 336px / 16 = 21rem */
+    height: 3.5625rem; /* 57px / 16 = 3.5625rem */
+  }
+  .button-text {
+    font-size: 0.875rem;
+  }
+}
