@@ -37,6 +37,12 @@
   justify-content: space-between;
 }
 
+.perfume-info__brand-row-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .perfume-info__brand {
   font-size: clamp(20px, 1.25vw, 24px);
   font-weight: 700;
