@@ -1,34 +1,36 @@
 import {
-  FaFaceGrinHearts,
-  FaFaceLaughBeam,
-  FaFaceGrin,
-  FaFaceFrown,
-  FaFaceAngry,
+  FaRegFaceGrinHearts,
+  FaRegFaceLaughBeam,
+  FaRegFaceSmile,
+  FaRegFaceMeh,
+  FaRegFaceTired,
 } from 'react-icons/fa6';
 import { LuFlower2 } from 'react-icons/lu';
-import { FaRegSun, FaCanadianMapleLeaf, FaSnowman, FaUserCircle } from 'react-icons/fa';
+import { FaRegSun } from 'react-icons/fa';
+import { TbLeaf2, TbSnowman } from 'react-icons/tb';
+import { FaUserCircle } from 'react-icons/fa';
 import type { Review } from '@entities/review/model/types';
 import '../styles/PerfumeReviewList.css';
 
 const SATISFACTION_ICONS = {
-  1: <FaFaceAngry size={20} color="var(--gray-600)" />,
-  2: <FaFaceFrown size={20} color="var(--gray-600)" />,
-  3: <FaFaceGrin size={20} color="var(--gray-600)" />,
-  4: <FaFaceLaughBeam size={20} color="var(--gray-600)" />,
-  5: <FaFaceGrinHearts size={20} color="var(--gray-600)" />,
+  1: <FaRegFaceGrinHearts size={20} color="var(--gray-600)" />,
+  2: <FaRegFaceLaughBeam size={20} color="var(--gray-600)" />,
+  3: <FaRegFaceSmile size={20} color="var(--gray-600)" />,
+  4: <FaRegFaceMeh size={20} color="var(--gray-600)" />,
+  5: <FaRegFaceTired size={20} color="var(--gray-600)" />,
 };
 
 const LONGEVITY_ICONS = {
-  1: <FaFaceFrown size={20} color="var(--gray-600)" />,
-  2: <FaFaceGrin size={20} color="var(--gray-600)" />,
-  3: <FaFaceLaughBeam size={20} color="var(--gray-600)" />,
+  1: <FaRegFaceLaughBeam size={20} color="var(--gray-600)" />,
+  2: <FaRegFaceSmile size={20} color="var(--gray-600)" />,
+  3: <FaRegFaceMeh size={20} color="var(--gray-600)" />,
 };
 
 const SEASON_ICONS = {
   봄: <LuFlower2 size={20} color="var(--gray-600)" />,
   여름: <FaRegSun size={20} color="var(--gray-600)" />,
-  가을: <FaCanadianMapleLeaf size={20} color="var(--gray-600)" />,
-  겨울: <FaSnowman size={20} color="var(--gray-600)" />,
+  가을: <TbLeaf2 size={20} color="var(--gray-600)" />,
+  겨울: <TbSnowman size={20} color="var(--gray-600)" />,
 };
 
 interface Props {
