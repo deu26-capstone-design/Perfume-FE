@@ -1,0 +1,221 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal {
+  background-color: #fff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 520px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 0.1px solid var(--gray-100);
+}
+
+.modal__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--gray-400);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.modal__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.modal__label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-800);
+}
+
+.modal__required {
+  color: #e05555;
+}
+
+.modal__hint {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--gray-400);
+}
+
+/* 이모지 버튼 그룹 */
+.modal__emoji-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modal__emoji-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.6rem 0.875rem;
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  background: none;
+  cursor: pointer;
+  color: var(--gray-500);
+  font-size: 0.75rem;
+  transition: all 0.15s ease;
+}
+
+.modal__emoji-btn:hover {
+  border-color: #243a5b;
+  color: #243a5b;
+}
+
+.modal__emoji-btn.selected {
+  background-color: #eef1f7;
+  border-color: #243a5b;
+  color: #243a5b;
+}
+
+.modal__emoji-btn svg {
+  display: block;
+}
+
+/* 향 선택 버튼 그룹 */
+.modal__scent-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.modal__scent-btn {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-200);
+  background: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--gray-600);
+  transition: all 0.15s ease;
+}
+
+.modal__scent-btn:hover:not(:disabled) {
+  border-color: #243a5b;
+  color: #243a5b;
+}
+
+.modal__scent-btn.selected {
+  background-color: #eef1f7;
+  border-color: #243a5b;
+  color: #243a5b;
+}
+
+.modal__scent-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* 텍스트 영역 */
+.modal__textarea {
+  resize: none;
+  height: 90px;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--gray-200);
+  font-size: 0.875rem;
+  color: var(--gray-800);
+  outline: none;
+  line-height: 1.6;
+}
+
+.modal__textarea:focus {
+  border-color: #243a5b;
+}
+
+.modal__char-count {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+/* 동의 체크박스 */
+.modal__agreement {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background-color: #f7f8fa;
+  border: 1px solid var(--gray-200);
+}
+
+.modal__agreement input[type='checkbox'] {
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #243a5b;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.modal__agreement span {
+  font-size: 0.82rem;
+  color: var(--gray-700);
+  line-height: 1.5;
+}
+
+/* 하단 제출 버튼 */
+.modal__footer {
+  padding: 1rem 1.5rem;
+  border-top: 0.1px solid var(--gray-100);
+}
+
+.modal__submit {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #243a5b;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.modal__submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.modal__submit:not(:disabled):hover {
+  opacity: 0.85;
+}
