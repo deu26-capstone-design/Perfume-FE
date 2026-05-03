@@ -90,19 +90,19 @@ export default function PerfumeReviewSummary() {
           <div className="perfume-review__longevity-group">
             <div className="perfume-review__longevity-item">
               <FaRegFaceLaughBeam size={35} color="var(--detail-review-context)" />
-              <span className="perfume-review__item-title">매우좋음</span>
+              <span className="perfume-review__item-title">길어요</span>
               <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
             </div>
 
             <div className="perfume-review__longevity-item">
               <FaRegFaceSmile size={35} color="var(--detail-review-context)" />
-              <span className="perfume-review__item-title">좋음</span>
+              <span className="perfume-review__item-title">적당해요</span>
               <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
             </div>
 
             <div className="perfume-review__longevity-item">
               <FaRegFaceMeh size={35} color="var(--detail-review-context)" />
-              <span className="perfume-review__item-title">보통</span>
+              <span className="perfume-review__item-title">짧아요</span>
               <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
             </div>
           </div>
