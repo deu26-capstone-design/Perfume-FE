@@ -138,7 +138,7 @@ export default function ReviewFormModal({ onClose, onSubmit }: Props) {
 
           <div className="modal__section">
             <span className="modal__label">
-              이 향수는 어떤 계절에 사용하는 걸 추천하시나요? (선택, 중복 가능)
+              이 향수는 어떤 계절에 사용하는 걸 추천하시나요? (중복 가능)
             </span>
             <div className="modal__emoji-group">
               {SEASON_OPTIONS.map(({ value, icon }) => (
@@ -156,7 +156,7 @@ export default function ReviewFormModal({ onClose, onSubmit }: Props) {
           </div>
 
           <div className="modal__section">
-            <span className="modal__label">이런 향이 좋았어요! (선택, 최대 5개)</span>
+            <span className="modal__label">이런 향이 좋았어요! (최대 5개)</span>
             <div className="modal__scent-group">
               {SCENT_OPTIONS.map((scent) => (
                 <button
