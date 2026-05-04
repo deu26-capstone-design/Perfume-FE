@@ -6,6 +6,7 @@
   width: 100%;
   max-width: 1340px;
   padding: 10px;
+  color: var(--detail-review-context);
   justify-self: center;
 }
 
@@ -62,16 +63,17 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
+  background-color: #fcfcfc;
+  width: fit-content;
+  padding: 8px 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: 204px;
 }
 
 .review-item__rating-group {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  background-color: #f3f3f3;
-  width: fit-content;
-  padding: 8px 12px;
-  border-radius: 20px;
   color: var(--detail-review-context);
 }
 
@@ -87,7 +89,6 @@
 .review-item__rating-label {
   font-size: 0.95rem;
   font-weight: 300;
-  color: var(--gray-900);
 }
 
 .review-item__scents {
