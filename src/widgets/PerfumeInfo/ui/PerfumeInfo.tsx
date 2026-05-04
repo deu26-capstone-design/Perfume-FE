@@ -10,7 +10,8 @@ interface Props {
 }
 
 export default function PerfumeInfo({ perfume }: Props) {
-  const genderClass = `perfume-info__gender--${perfume.gender.toLowerCase()}`;
+  const genderMap = { W: 'Female', M: 'Male', U: 'Unisex' } as const;
+  const genderClass = `perfume-info__gender--${genderMap[perfume.gender].toLowerCase()}`;
 
   return (
     <div className="perfume-info">
@@ -28,7 +29,7 @@ export default function PerfumeInfo({ perfume }: Props) {
             </div>
           </div>
           <h2 className="perfume-info__name">{perfume.name}</h2>
-          <div className={`perfume-info__gender ${genderClass}`}>{perfume.gender}</div>
+          <div className={`perfume-info__gender ${genderClass}`}>{genderMap[perfume.gender]}</div>
           <hr />
         </div>
 
