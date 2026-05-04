@@ -1,15 +1,17 @@
-// import Header from '@widgets/Header/ui/Header';
+import Header from '@widgets/Header/ui/Header';
+// import MainPage from '@pages/main/MainPage';
 // import PerfumeInfo from '@widgets/PerfumeInfo/ui/PerfumeInfo';
 // import { mockPerfumeDetail } from '@entities/perfume/model/detailMockData';
-// import MainPage from '@pages/main/MainPage';
-import PerfumeReview from '@widgets/PerfumeReview/ui/PerfumeReview';
+// import PerfumeReviewSummary from '@widgets/PerfumeReview/ui/PerfumeReviewSummary';
+// import PerfumeReviewList from '@widgets/PerfumeReview/ui/PerfumeReviewList';
 function App() {
   return (
     <>
-      {/* <Header />
-      <PerfumeInfo perfume={mockPerfumeDetail} /> */}
+      <Header />
       {/* <MainPage /> */}
-      <PerfumeReview />
+      {/* <PerfumeInfo perfume={mockPerfumeDetail} /> */}
+      {/* <PerfumeReviewSummary /> */}
+      {/* <PerfumeReviewList /> */}
     </>
   );
 }
