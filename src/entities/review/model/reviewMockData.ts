@@ -2,7 +2,7 @@ import type { Review } from './types';
 
 export const mockReviews: Review[] = [
   {
-    nickname: '부리부리몬댄스',
+    nickname: '경민',
     profileImageUrl: 'https://i.pinimg.com/736x/6e/8f/47/6e8f47d1c1ffb45f8032997c446a32d3.jpg',
     satisfaction: 5,
     longevity: 3,
@@ -12,7 +12,7 @@ export const mockReviews: Review[] = [
     createdAt: '2026-04-20T14:32:00',
   },
   {
-    nickname: '향수초보',
+    nickname: '한솔',
     profileImageUrl: null,
     satisfaction: 3,
     longevity: 1,
@@ -22,7 +22,7 @@ export const mockReviews: Review[] = [
     createdAt: '2026-03-15T09:10:00',
   },
   {
-    nickname: '도로로',
+    nickname: '비룡',
     profileImageUrl: 'https://i.pinimg.com/736x/3f/49/ea/3f49eaa00908326d1391b4498de5a84e.jpg',
     satisfaction: 4,
     longevity: 2,
@@ -32,7 +32,7 @@ export const mockReviews: Review[] = [
     createdAt: '2026-02-28T18:55:00',
   },
   {
-    nickname: '타마타마',
+    nickname: '승민',
     profileImageUrl: 'https://i.pinimg.com/736x/9c/31/84/9c318421e5ed1157234f5c376f431837.jpg',
     satisfaction: 2,
     longevity: null,
@@ -42,7 +42,7 @@ export const mockReviews: Review[] = [
     createdAt: '2026-01-10T21:00:00',
   },
   {
-    nickname: '귀여운쿠루루',
+    nickname: '쿠루루',
     profileImageUrl: 'https://i.pinimg.com/736x/c2/bf/69/c2bf69775992a265d20e6f50660f7985.jpg',
     satisfaction: 2,
     longevity: null,
@@ -52,7 +52,7 @@ export const mockReviews: Review[] = [
     createdAt: '2026-01-10T21:00:00',
   },
   {
-    nickname: '플로럴러버',
+    nickname: '둠피스트',
     profileImageUrl: null,
     satisfaction: 5,
     longevity: 3,
@@ -62,7 +62,7 @@ export const mockReviews: Review[] = [
     createdAt: '2025-12-03T11:20:00',
   },
   {
-    nickname: '냥냥펀치',
+    nickname: '두쫀쿠',
     profileImageUrl: 'https://i.pinimg.com/736x/6e/8f/47/6e8f47d1c1ffb45f8032997c446a32d3.jpg',
     satisfaction: 4,
     longevity: 2,
@@ -72,7 +72,7 @@ export const mockReviews: Review[] = [
     createdAt: '2025-11-17T16:45:00',
   },
   {
-    nickname: '재스민조아',
+    nickname: '수육튀김',
     profileImageUrl: null,
     satisfaction: 5,
     longevity: 3,
@@ -82,7 +82,7 @@ export const mockReviews: Review[] = [
     createdAt: '2025-10-22T08:30:00',
   },
   {
-    nickname: '무스크킹',
+    nickname: '겨울수박',
     profileImageUrl: 'https://i.pinimg.com/736x/3f/49/ea/3f49eaa00908326d1391b4498de5a84e.jpg',
     satisfaction: 3,
     longevity: 2,
@@ -92,7 +92,7 @@ export const mockReviews: Review[] = [
     createdAt: '2025-09-05T19:00:00',
   },
   {
-    nickname: '어텀우드',
+    nickname: '아몬드초콜릿',
     profileImageUrl: null,
     satisfaction: 4,
     longevity: 3,
