@@ -11,7 +11,9 @@
 .wishlist-btn__icon {
   font-size: 1.5rem;
   color: var(--gray-300);
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .wishlist-btn:hover .wishlist-btn__icon {
@@ -27,6 +29,4 @@
   .wishlist-btn__icon {
     font-size: 1.2rem;
   }
-}
-
 }
