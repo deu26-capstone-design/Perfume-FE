@@ -64,7 +64,7 @@
   /* width: fit-content; */
 }
 
-hr {
+.perfume-review hr {
   width: 100%;
   border: 0.1px solid var(--gray-100);
 }
