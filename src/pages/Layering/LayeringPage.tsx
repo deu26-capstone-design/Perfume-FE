@@ -47,29 +47,31 @@ const LayeringPage: React.FC = () => {
     return matchesCategory && matchesKeyword;
   });
 
-  // 그리드에서 향수 선택 시 처리 로직
-  const handleSelectFromGrid = (perfume: Perfume) => {
+  const handleSelectPerfumeInSlot = (slot: 'first' | 'second', perfume: Perfume) => {
     if (firstPerfume && secondPerfume) {
       // alert는 나중에 toast로 변경 예정
       alert('향수 2개를 모두 선택하셨습니다. 초기화 버튼을 눌러주세요.');
       return;
     }
 
-    if (activeSlot === 'first') {
+    if (slot === 'first') {
       setFirstPerfume(perfume);
-      // 선택 후 검색어/카테고리 초기화
       setFirstSearch('');
       setFirstCategories([]);
 
-      // 만약 두 번째 향수가 아직 선택되지 않았다면 자동으로 두 번째 슬롯으로 이동
       if (!secondPerfume) setActiveSlot('second');
-    } else if (activeSlot === 'second') {
+    } else {
       setSecondPerfume(perfume);
       setSecondSearch('');
       setSecondCategories([]);
 
       if (!firstPerfume) setActiveSlot('first');
     }
+  };
+
+  // 그리드에서 향수 선택 시 처리 로직
+  const handleSelectFromGrid = (perfume: Perfume) => {
+    handleSelectPerfumeInSlot(activeSlot, perfume);
   };
 
   const resetFirst = () => {
@@ -107,7 +109,7 @@ const LayeringPage: React.FC = () => {
           >
             <LayeringPerfumeSelection
               selectedPerfume={firstPerfume}
-              onSelectPerfume={(perfume) => setFirstPerfume(perfume)}
+              onSelectPerfume={(perfume) => handleSelectPerfumeInSlot('first', perfume)}
               selectedCategories={firstCategories}
               onUpdateCategory={(c) =>
                 setFirstCategories((prev) =>
@@ -129,7 +131,7 @@ const LayeringPage: React.FC = () => {
           >
             <LayeringPerfumeSelection
               selectedPerfume={secondPerfume}
-              onSelectPerfume={(perfume) => setSecondPerfume(perfume)}
+              onSelectPerfume={(perfume) => handleSelectPerfumeInSlot('second', perfume)}
               selectedCategories={secondCategories}
               onUpdateCategory={(c) =>
                 setSecondCategories((prev) =>
