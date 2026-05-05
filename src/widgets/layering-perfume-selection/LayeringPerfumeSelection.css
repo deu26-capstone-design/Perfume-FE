@@ -45,7 +45,7 @@
   transition: all 0.3s ease;
 }
 
-/* 향수가 선택되지 않았을 때 향수 영역*/
+/* 향수가 선택되지 않았을 때 향수 영역 */
 .layering-perfume-selection.is-empty .layering-perfume-selection__content {
   border: 1.5px dashed rgba(255, 255, 255, 0.3);
   min-height: calc(clamp(70px, 15vw, 122px) + 40px);
