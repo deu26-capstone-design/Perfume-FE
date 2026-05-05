@@ -91,10 +91,23 @@ export default function ReviewFormModal({ onClose, onSubmit }: Props) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="review-form-title"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="modal__header">
-          <h2 className="modal__title">리뷰 작성하기</h2>
-          <button className="modal__close" onClick={onClose}>
+          <h2 id="review-form-title" className="modal__title">
+            리뷰 작성하기
+          </h2>
+          <button
+            type="button"
+            className="modal__close"
+            aria-label="리뷰 작성 모달 닫기"
+            onClick={onClose}
+          >
             ✕
           </button>
         </div>
