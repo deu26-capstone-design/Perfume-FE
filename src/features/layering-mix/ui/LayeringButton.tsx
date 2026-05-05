@@ -9,7 +9,6 @@ const LayeringButton: React.FC<LayeringButtonProps> = ({ onClick, label = 'ì¡°í•
   return (
     <div className="button-container">
       <button className="layering-button" onClick={onClick}>
-        <div className="button-fill"></div>
         <span className="button-text">{label}</span>
       </button>
     </div>
