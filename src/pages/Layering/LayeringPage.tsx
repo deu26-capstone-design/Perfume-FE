@@ -86,6 +86,10 @@ const LayeringPage: React.FC = () => {
     setActiveSlot('second');
   };
 
+  const handleLayeringMix = () => {
+    // TODO: 레이어링 결과 팝업/페이지 연동
+  };
+
   return (
     <div className="layering-page">
       <div className="layering-text-frame">
@@ -140,7 +144,7 @@ const LayeringPage: React.FC = () => {
         </section>
 
         <section className="button-frame">
-          {firstPerfume && secondPerfume && <LayeringButton onClick={() => {}} />}
+          {firstPerfume && secondPerfume && <LayeringButton onClick={handleLayeringMix} />}
         </section>
 
         <section className="grid-frame">
