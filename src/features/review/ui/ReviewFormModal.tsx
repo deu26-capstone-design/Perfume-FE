@@ -76,7 +76,7 @@ export default function ReviewFormModal({ onClose, onSubmit }: Props) {
   };
 
   const handleSubmit = () => {
-    if (!satisfaction) return;
+    if (!satisfaction || !isAgreed) return;
     onSubmit({
       nickname: 'user', // 추후 로그인 유저 정보로 교체
       profileImageUrl: null,
