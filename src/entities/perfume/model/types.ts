@@ -3,4 +3,7 @@ export interface Perfume {
   brand: string;
   name: string;
   imageUrl: string;
+  scent_type: string[];
+  gender: 'M' | 'W' | 'U';
+  avgRating: number;
 }

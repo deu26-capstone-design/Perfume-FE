@@ -7,6 +7,7 @@ interface PerfumeGridProps {
   perfumes: Perfume[];
   selectedCategories: string[];
   onRemoveCategory: (category: string) => void;
+  onSelectPerfume?: (perfume: Perfume) => void;
   variant?: 'layering' | 'main';
 }
 
@@ -14,6 +15,7 @@ const PerfumeGrid = ({
   perfumes,
   selectedCategories,
   onRemoveCategory,
+  onSelectPerfume,
   variant = 'main',
 }: PerfumeGridProps) => {
   return (
@@ -34,7 +36,15 @@ const PerfumeGrid = ({
       {/* 향수 카드 리스트 */}
       <div className="perfume-grid-list">
         {perfumes.map((perfume) => (
-          <PerfumeCard key={perfume.id} perfume={perfume} />
+          <button
+            key={perfume.id}
+            type="button"
+            className={`perfume-card-wrapper ${onSelectPerfume ? 'clickable' : ''}`}
+            onClick={() => onSelectPerfume?.(perfume)}
+            aria-label={`${perfume.brand} ${perfume.name} 선택`}
+          >
+            <PerfumeCard perfume={perfume} />
+          </button>
         ))}
       </div>
     </section>

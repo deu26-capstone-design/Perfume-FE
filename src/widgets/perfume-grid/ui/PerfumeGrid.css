@@ -23,6 +23,20 @@
   gap: 1.25rem;
 }
 
+.perfume-card-wrapper {
+  all: unset;
+  display: block;
+}
+
+.perfume-card-wrapper.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.perfume-card-wrapper.clickable:hover {
+  transform: scale(1.02);
+}
+
 /* 필터 태그 영역 */
 .filter-tag-area {
   display: flex;
