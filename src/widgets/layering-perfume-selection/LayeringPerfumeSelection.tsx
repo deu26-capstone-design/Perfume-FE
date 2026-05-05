@@ -1,10 +1,7 @@
-import { useState, useMemo } from 'react';
-import './LayeringPerfumeSelection.css';
 import { SearchInput } from '@features/perfume-search/ui/SearchInput';
 import { FilterDropdown } from '@features/perfume-filter/ui/FilterDropdown';
 import PerfumeInfoCard from '@entities/perfume/ui/card/PerfumeInfoCard';
-import { usePerfumeFilters } from '@features/perfume-filter/model/usePerfumeFilters';
-import { mockPerfumes } from '@entities/perfume/model/mockData';
+import './LayeringPerfumeSelection.css';
 
 const categoryOptions = [
   'Aromatic',
@@ -15,7 +12,7 @@ const categoryOptions = [
   'Fruity',
   'Green',
   'Musky',
-  'Resinous',
+  'Gourmand',
   'Spicy',
   'Sweet',
   'Woody',
@@ -30,67 +27,62 @@ interface SelectedPerfumeType {
 interface LayeringPerfumeSelectionProps {
   selectedPerfume?: SelectedPerfumeType | null;
   onSelectPerfume: (perfume: SelectedPerfumeType) => void;
+  selectedCategories: string[];
+  onUpdateCategory: (category: string) => void;
+  onReset: () => void;
+  searchKeyword: string;
+  onSearchChange: (keyword: string) => void;
 }
 
 export const LayeringPerfumeSelection: React.FC<LayeringPerfumeSelectionProps> = ({
   selectedPerfume,
-  onSelectPerfume,
+  selectedCategories,
+  onUpdateCategory,
+  onReset,
+  searchKeyword,
+  onSearchChange,
 }) => {
-  const { filters, setSearch, updateCategory } = usePerfumeFilters();
-  const [perfumes] = useState<SelectedPerfumeType[]>(mockPerfumes);
-
-  const visiblePerfumes = useMemo(() => {
-    const keyword = filters.search.trim().toLowerCase();
-    let result = perfumes;
-
-    if (keyword) {
-      result = result.filter(
-        (p) => p.name.toLowerCase().includes(keyword) || p.brand.toLowerCase().includes(keyword),
-      );
-    }
-    return result;
-  }, [perfumes, filters.search]);
+  const handleResetAll = () => {
+    onSearchChange('');
+    onReset();
+  };
 
   return (
-    <div className="layering-perfume-selection">
+    <div className={`layering-perfume-selection ${!selectedPerfume ? 'is-empty' : ''}`}>
+      <div className="reset-button-container">
+        <button type="button" className="reset-button" onClick={handleResetAll}>
+          초기화
+        </button>
+      </div>
+
       <div className="layering-perfume-selection__controls">
         <div className="layering-perfume-selection__search">
-          <SearchInput variant="layering" value={filters.search} onChange={setSearch} />
+          <SearchInput variant="layering" value={searchKeyword} onChange={onSearchChange} />
         </div>
         <div className="layering-perfume-selection__filter">
           <FilterDropdown
             label="계열"
             options={categoryOptions}
-            selectedValues={filters.categories}
-            onSelect={updateCategory}
+            selectedValues={selectedCategories}
+            onSelect={onUpdateCategory}
           />
         </div>
       </div>
+
       <div className="layering-perfume-selection__content">
         {selectedPerfume ? (
-          <PerfumeInfoCard
-            brand={selectedPerfume.brand}
-            name={selectedPerfume.name}
-            imageUrl={selectedPerfume.imageUrl}
-            direction="row"
-          />
+          <div className="selected-info-wrapper">
+            <PerfumeInfoCard
+              name={selectedPerfume.name}
+              brand={selectedPerfume.brand}
+              imageUrl={selectedPerfume.imageUrl}
+              direction="row"
+              align="left"
+            />
+          </div>
         ) : (
           <div className="layering-perfume-selection__empty">
-            {filters.search && visiblePerfumes.length > 0 ? (
-              <ul className="search-result-list">
-                {visiblePerfumes.map((perfume, idx) => (
-                  <li
-                    key={idx}
-                    className="search-result-item"
-                    onClick={() => onSelectPerfume(perfume)}
-                  >
-                    {perfume.brand} - {perfume.name}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <span className="empty-text">선택된 향수가 없습니다.</span>
-            )}
+            <div className="empty-placeholder" />
           </div>
         )}
       </div>

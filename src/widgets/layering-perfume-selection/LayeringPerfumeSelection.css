@@ -1,13 +1,33 @@
 .layering-perfume-selection {
   background-color: var(--layering-mix-background);
   border-radius: 20px;
-  padding: 1.875rem;
+  padding: 15px 22px 25px 22px;
+  gap: 20px;
   display: flex;
   flex-direction: column;
-  gap: 41px;
-  max-width: 625.5px;
   width: 100%;
+  min-height: clamp(300px, 35vh, 349px);
   transition: all 0.3s ease-in-out;
+  box-sizing: border-box;
+}
+
+.reset-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3px;
+}
+
+.reset-button {
+  background: none;
+  border: none;
+  color: var(--gray-300);
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.reset-button:hover {
+  color: var(--gray-100);
 }
 
 /* 검색창과 필터 드롭다운 프레임 */
@@ -17,40 +37,28 @@
   gap: 0.81rem;
 }
 
-/* 향수 정보 영역 */
+/* 향수 영역 */
 .layering-perfume-selection__content {
   display: flex;
-  align-items: center;
+  flex: 1;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* 아무것도 선택되지 않았을 때 텍스트 스타일 */
-.layering-perfume-selection__empty {
-  width: 100%;
+/* 향수가 선택되지 않았을 때 향수 영역*/
+.layering-perfume-selection.is-empty .layering-perfume-selection__content {
+  border: 1.5px dashed rgba(255, 255, 255, 0.3);
+  min-height: calc(clamp(70px, 15vw, 122px) + 40px);
 }
 
-.empty-text {
-  display: block;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-@media (max-width: 1024px) {
-  .layering-perfume-selection {
-    max-width: 337px;
-    gap: 20px;
-    padding: 1.25rem;
-  }
-
-  .empty-text {
-    font-size: 0.875rem;
+@media (max-width: 1023px) {
+  .reset-button {
+    font-size: 12px;
   }
 }
 
-@media (max-width: 768px) {
-  .layering-perfume-selection {
-    width: 336px;
-    gap: 20px;
-    padding: 0.94rem;
+@media (max-width: 767px) {
+  .reset-button {
+    font-size: 11px;
   }
 }
