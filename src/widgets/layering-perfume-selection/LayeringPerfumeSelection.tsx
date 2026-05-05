@@ -1,6 +1,7 @@
 import { SearchInput } from '@features/perfume-search/ui/SearchInput';
 import { FilterDropdown } from '@features/perfume-filter/ui/FilterDropdown';
 import PerfumeInfoCard from '@entities/perfume/ui/card/PerfumeInfoCard';
+import type { Perfume } from '@entities/perfume/model/types';
 import './LayeringPerfumeSelection.css';
 
 const categoryOptions = [
@@ -18,15 +19,9 @@ const categoryOptions = [
   'Woody',
 ];
 
-interface SelectedPerfumeType {
-  brand: string;
-  name: string;
-  imageUrl: string;
-}
-
 interface LayeringPerfumeSelectionProps {
-  selectedPerfume?: SelectedPerfumeType | null;
-  onSelectPerfume: (perfume: SelectedPerfumeType) => void;
+  selectedPerfume?: Perfume | null;
+  onSelectPerfume: (perfume: Perfume) => void;
   selectedCategories: string[];
   onUpdateCategory: (category: string) => void;
   onReset: () => void;
