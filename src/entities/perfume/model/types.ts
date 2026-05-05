@@ -3,4 +3,5 @@ export interface Perfume {
   brand: string;
   name: string;
   imageUrl: string;
+  scent_type: string[];
 }
