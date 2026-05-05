@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MainPage.css';
 import { SearchInput } from '@features/perfume-search/ui/SearchInput';
 import { FilterDropdown } from '@features/perfume-filter/ui/FilterDropdown';
@@ -6,6 +7,7 @@ import PerfumeGrid from '@widgets/perfume-grid/ui/PerfumeGrid';
 import { mockPerfumes } from '@entities/perfume/model/mockData';
 import type { Perfume } from '@entities/perfume/model/types';
 import { usePerfumeFilters } from '@features/perfume-filter/model/usePerfumeFilters';
+import { useInfiniteScroll } from '@shared/lib/useInfiniteScroll';
 
 const categoryOptions = [
   'Aromatic',
@@ -21,33 +23,63 @@ const categoryOptions = [
   'Sweet',
   'Woody',
 ];
-const genderOptions = ['None', 'Male', 'Female', 'Unisex'];
-const sortOptions = ['낮은 평점순', '높은 평점순'];
+const genderOptions = ['None', 'Female', 'Male', 'Unisex'];
+const sortOptions = ['높은 평점순', '낮은 평점순'];
+const getPageSize = () => {
+  if (window.innerWidth <= 768) return 12;
+  if (window.innerWidth <= 1024) return 20;
+  return 30;
+};
 
 const MainPage = () => {
-  /* 커스텀 훅 사용 */
+  const navigate = useNavigate();
   const { filters, setSearch, updateCategory, removeCategory, updateGender, setSort } =
     usePerfumeFilters();
 
-  /* 향수 데이터 상태 */
-  const [perfumes, setPerfumes] = useState<Perfume[]>([]);
+  const [allFiltered, setAllFiltered] = useState<Perfume[]>(() =>
+    [...mockPerfumes].sort((a, b) => b.avgRating - a.avgRating),
+  );
+  const [pageNum, setPageNum] = useState(0);
+  const [pageSize] = useState(getPageSize);
 
+  // 필터 변경 시 전체 필터링 결과 갱신 및 페이지 초기화
+  // API 연동 시 axios.get('/perfumes', { params: { pageNum, size: PAGE_SIZE, ...filters } })로 교체
   useEffect(() => {
-    setPerfumes(mockPerfumes);
-  }, []);
+    let result = [...mockPerfumes];
 
-  const visiblePerfumes = useMemo(() => {
     const keyword = filters.search.trim().toLowerCase();
-    let result = perfumes;
-
     if (keyword) {
       result = result.filter(
         (p) => p.name.toLowerCase().includes(keyword) || p.brand.toLowerCase().includes(keyword),
       );
     }
+    if (filters.categories.length > 0) {
+      result = result.filter((p) => filters.categories.every((c) => p.scent_type?.includes(c)));
+    }
+    if (filters.gender) {
+      const genderMap: Record<string, string> = { Female: 'W', Male: 'M', Unisex: 'U' };
+      result = result.filter((p) => p.gender === genderMap[filters.gender]);
+    }
+    result.sort((a, b) =>
+      filters.sort === '낮은 평점순' ? a.avgRating - b.avgRating : b.avgRating - a.avgRating,
+    );
 
-    return result;
-  }, [perfumes, filters.search]);
+    setAllFiltered(result);
+    setPageNum(0);
+  }, [filters.search, filters.categories, filters.gender, filters.sort]);
+
+  const perfumes = useMemo(
+    () => allFiltered.slice(0, (pageNum + 1) * pageSize),
+    [allFiltered, pageNum, pageSize],
+  );
+
+  const hasMore = perfumes.length < allFiltered.length;
+
+  const handleLoadMore = useCallback(() => {
+    setPageNum((prev) => prev + 1);
+  }, []);
+
+  const sentinelRef = useInfiniteScroll(handleLoadMore);
 
   return (
     <div className="main-page">
@@ -66,7 +98,6 @@ const MainPage = () => {
               selectedValues={filters.categories}
               onSelect={updateCategory}
             />
-
             <FilterDropdown
               label="성별"
               options={genderOptions}
@@ -74,7 +105,6 @@ const MainPage = () => {
               onSelect={updateGender}
             />
           </div>
-
           <div className="main-page__dropdown-group-right">
             <FilterDropdown
               label="높은 평점순"
@@ -87,13 +117,19 @@ const MainPage = () => {
 
         {/* 향수 리스트 */}
         <div className="main-page__grid">
-          <PerfumeGrid
-            variant="main"
-            perfumes={visiblePerfumes}
-            selectedCategories={filters.categories}
-            onRemoveCategory={removeCategory}
-          />
+          {perfumes.length === 0 ? (
+            <p className="main-page__empty">해당 조건에 맞는 향수가 없어요!</p>
+          ) : (
+            <PerfumeGrid
+              variant="main"
+              perfumes={perfumes}
+              selectedCategories={filters.categories}
+              onRemoveCategory={removeCategory}
+              onSelectPerfume={(perfume) => navigate(`/perfume/${perfume.id}`)}
+            />
+          )}
         </div>
+        {hasMore && <div ref={sentinelRef} />}
       </div>
     </div>
   );
