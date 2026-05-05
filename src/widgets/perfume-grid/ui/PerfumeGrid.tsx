@@ -36,13 +36,15 @@ const PerfumeGrid = ({
       {/* 향수 카드 리스트 */}
       <div className="perfume-grid-list">
         {perfumes.map((perfume) => (
-          <div
+          <button
             key={perfume.id}
+            type="button"
             className={`perfume-card-wrapper ${onSelectPerfume ? 'clickable' : ''}`}
             onClick={() => onSelectPerfume?.(perfume)}
+            aria-label={`${perfume.brand} ${perfume.name} 선택`}
           >
             <PerfumeCard perfume={perfume} />
-          </div>
+          </button>
         ))}
       </div>
     </section>
