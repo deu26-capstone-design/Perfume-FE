@@ -1,12 +1,13 @@
-// import Header from '@widgets/Header/ui/Header';
-// import PerfumeInfo from '@widgets/PerfumeInfo/ui/PerfumeInfo';
-// import { mockPerfumeDetail } from '@entities/perfume/model/detailMockData';
+import Header from '@widgets/Header/ui/Header';
+// import PerfumeDetailPage from '@pages/perfume-detail/ui/PerfumeDetailPage';
+// import MainPage from '@pages/main/MainPage';
 
 function App() {
   return (
     <>
-      {/* <Header />
-      <PerfumeInfo perfume={mockPerfumeDetail} /> */}
+      <Header />
+      {/* <PerfumeDetailPage /> */}
+      {/* <MainPage /> */}
     </>
   );
 }
