@@ -27,7 +27,7 @@ const LayeringPage: React.FC = () => {
   const isBothBright =
     (!isTouched && !firstPerfume && !secondPerfume) || (firstPerfume && secondPerfume);
 
-  // 향수 리스트 필터링 (카테고리 + 검색어)
+  // 향수 리스트 필터링 (카테고리 + 검색어 + 중복 선택 방지)
   const filteredPerfumes = mockPerfumes.filter((perfume) => {
     const perfumeScents = perfume.scent_type || [];
 
@@ -44,7 +44,9 @@ const LayeringPage: React.FC = () => {
       perfume.name.toLowerCase().includes(keyword) ||
       perfume.brand.toLowerCase().includes(keyword);
 
-    return matchesCategory && matchesKeyword;
+    const isSelected = perfume.id === firstPerfume?.id || perfume.id === secondPerfume?.id;
+
+    return matchesCategory && matchesKeyword && !isSelected;
   });
 
   const handleSelectPerfumeInSlot = (slot: 'first' | 'second', perfume: Perfume) => {
