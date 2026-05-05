@@ -4,7 +4,7 @@
   width: fit-content;
 }
 
-/* 방향 */
+/* 오토 레이아웃 방향 */
 .perfume-info-card.column {
   flex-direction: column;
   align-items: center;
@@ -44,20 +44,20 @@
 
 .perfume-brand {
   font-size: 1rem;
+  font-weight: 400;
   color: var(--gray-50);
   text-transform: uppercase;
-  font-weight: 400;
 }
 
 .perfume-image {
   width: clamp(70px, 15vw, 122px);
   height: auto;
-  object-fit: contain;
-  border-radius: 20px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 /* 태블릿 */
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .perfume-name {
     font-size: 1.125rem;
     font-weight: 400;
@@ -70,7 +70,7 @@
 }
 
 /* 모바일 */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .perfume-name {
     font-size: 1rem;
     font-weight: 400;

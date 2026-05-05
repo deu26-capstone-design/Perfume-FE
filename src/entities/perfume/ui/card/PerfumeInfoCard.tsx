@@ -9,8 +9,8 @@ interface PerfumeInfoCardProps {
 }
 
 const PerfumeInfoCard: React.FC<PerfumeInfoCardProps> = ({
-  brand,
   name,
+  brand,
   imageUrl,
   align = 'left',
   direction = 'row',
