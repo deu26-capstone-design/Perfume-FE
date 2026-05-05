@@ -48,7 +48,8 @@ export default function PerfumeReviewItem({ review }: Props) {
     comment,
     createdAt,
   } = review;
-  const date = createdAt.slice(0, 10).replace(/-/g, '.');
+  const d = new Date(createdAt);
+  const date = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 
   return (
     <div className="review-item">
