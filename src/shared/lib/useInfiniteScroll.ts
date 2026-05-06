@@ -1,35 +1,31 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useCallback } from 'react';
 
 export function useInfiniteScroll(onLoadMore: () => void) {
-  const sentinelRef = useRef<HTMLDivElement | null>(null);
   const isLoadingRef = useRef(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const onLoadMoreRef = useRef(onLoadMore);
+  onLoadMoreRef.current = onLoadMore;
 
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
+  const sentinelRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return;
 
-    observerRef.current = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !isLoadingRef.current) {
           isLoadingRef.current = true;
-          onLoadMore();
+          onLoadMoreRef.current();
           setTimeout(() => {
             isLoadingRef.current = false;
-            // 센티넬이 여전히 뷰포트에 있으면 재감지 강제 트리거
-            if (observerRef.current && sentinel) {
-              observerRef.current.unobserve(sentinel);
-              observerRef.current.observe(sentinel);
-            }
+            observer.unobserve(node);
+            observer.observe(node);
           }, 0);
         }
       },
       { threshold: 0.1 },
     );
 
-    observerRef.current.observe(sentinel);
-    return () => observerRef.current?.disconnect();
-  }, [onLoadMore]);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return sentinelRef;
 }
