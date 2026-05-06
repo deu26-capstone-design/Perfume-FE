@@ -1,17 +1,18 @@
+// import { Routes, Route } from 'react-router-dom';
 import Header from '@widgets/Header/ui/Header';
-// import PerfumeDetailPage from '@pages/perfume-detail/ui/PerfumeDetailPage';
 // import MainPage from '@pages/main/MainPage';
+// import PerfumeDetailPage from '@pages/perfume-detail/ui/PerfumeDetailPage';
 // import LayeringPage from '@pages/Layering/LayeringPage';
 
-function App() {
+export default function App() {
   return (
     <>
       <Header />
-      {/* <PerfumeDetailPage /> */}
-      {/* <MainPage /> */}
-      {/* <LayeringPage /> */}
+      {/* <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/perfume/:id" element={<PerfumeDetailPage />} />
+        <Route path="/layering" element={<LayeringPage />} />
+      </Routes> */}
     </>
   );
 }
-
-export default App;

@@ -23,31 +23,31 @@ export default function PerfumeReviewSummary() {
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceGrinHearts size={35} color="var(--gray-600)" />
               <span className="perfume-review__item-title">매우좋음</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">48%</span>
             </div>
 
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceLaughBeam size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">좋음</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">31%</span>
             </div>
 
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceSmile size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">보통</span>
-              <span className="perfume-review__item-value">11</span>
+              <span className="perfume-review__item-value">11%</span>
             </div>
 
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceMeh size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">나쁨</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">5%</span>
             </div>
 
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceTired size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">매우나쁨</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">2%</span>
             </div>
           </div>
         </div>
@@ -66,19 +66,19 @@ export default function PerfumeReviewSummary() {
             <div className="perfume-review__season-item">
               <FaRegSun size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">여름</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">45%</span>
             </div>
 
             <div className="perfume-review__season-item">
               <TbLeaf2 size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">가을</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">15%</span>
             </div>
 
             <div className="perfume-review__season-item">
               <TbSnowman size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">겨울</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">10%</span>
             </div>
           </div>
         </div>
@@ -91,19 +91,19 @@ export default function PerfumeReviewSummary() {
             <div className="perfume-review__longevity-item">
               <FaRegFaceLaughBeam size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">길어요</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">42%</span>
             </div>
 
             <div className="perfume-review__longevity-item">
               <FaRegFaceSmile size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">적당해요</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">38%</span>
             </div>
 
             <div className="perfume-review__longevity-item">
               <FaRegFaceMeh size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">짧아요</span>
-              <span className="perfume-review__item-value">{/* 유저들의 만족도 수치 */}</span>
+              <span className="perfume-review__item-value">17%</span>
             </div>
           </div>
         </div>
