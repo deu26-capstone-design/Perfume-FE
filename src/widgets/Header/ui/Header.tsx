@@ -52,6 +52,9 @@ export default function Header() {
         {isOpen ? <IoClose /> : <GiHamburgerMenu />}
       </button>
 
+      {/* Mobile 오버레이 */}
+      {isOpen && <div className="header__overlay" onClick={() => setIsOpen(false)} />}
+
       {/* Mobile 드롭다운 메뉴 */}
       {isOpen && (
         <nav className="header__nav--mobile">

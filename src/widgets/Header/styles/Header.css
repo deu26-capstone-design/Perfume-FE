@@ -121,6 +121,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 100;
   }
 
   .header__nav--mobile {
@@ -134,7 +136,16 @@
     gap: 20px;
     font-size: 14px;
     font-weight: 500;
+    background-color: var(--white-900);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+  }
+
+  .header__overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
   }
 
   .header__nav-item {
