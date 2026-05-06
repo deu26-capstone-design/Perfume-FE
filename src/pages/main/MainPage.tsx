@@ -70,8 +70,8 @@ const MainPage = () => {
     if (filters.categories.length > 0) {
       result = result.filter((p) => filters.categories.every((c) => p.scent_type?.includes(c)));
     }
-    if (filters.gender) {
-      const genderMap: Record<string, string> = { Female: 'W', Male: 'M', Unisex: 'U' };
+    const genderMap: Record<string, string> = { Female: 'W', Male: 'M', Unisex: 'U' };
+    if (filters.gender && genderMap[filters.gender]) {
       result = result.filter((p) => p.gender === genderMap[filters.gender]);
     }
     result.sort((a, b) =>
