@@ -40,7 +40,21 @@ const MainPage = () => {
     [...mockPerfumes].sort((a, b) => b.avgRating - a.avgRating),
   );
   const [pageNum, setPageNum] = useState(0);
-  const [pageSize] = useState(getPageSize);
+  const [pageSize, setPageSize] = useState(getPageSize);
+
+  useEffect(() => {
+    let current = getPageSize();
+    const handleResize = () => {
+      const next = getPageSize();
+      if (next !== current) {
+        current = next;
+        setPageSize(next);
+        setPageNum(0);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // 필터 변경 시 전체 필터링 결과 갱신 및 페이지 초기화
   // API 연동 시 axios.get('/perfumes', { params: { pageNum, size: PAGE_SIZE, ...filters } })로 교체
