@@ -1,0 +1,32 @@
+.wishlist-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wishlist-btn__icon {
+  font-size: 1.5rem;
+  color: var(--gray-300);
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.wishlist-btn:hover .wishlist-btn__icon {
+  color: #e05555;
+  transform: scale(1.1);
+}
+
+.wishlist-btn__icon--active {
+  color: #e05555;
+}
+
+@media (max-width: 1024px) {
+  .wishlist-btn__icon {
+    font-size: 1.2rem;
+  }
+}

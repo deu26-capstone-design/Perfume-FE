@@ -1,0 +1,83 @@
+.perfume-info-card {
+  display: inline-flex;
+  gap: clamp(0.9375rem, 2.5vw, 1.875rem);
+  width: fit-content;
+}
+
+/* 오토 레이아웃 방향 */
+.perfume-info-card.column {
+  flex-direction: column;
+  align-items: center;
+}
+
+.perfume-info-card.row {
+  flex-direction: row;
+}
+
+/* 텍스트 정보 */
+.perfume-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* 텍스트 정렬 */
+.perfume-info-card.left .perfume-text {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.perfume-info-card.center .perfume-text {
+  text-align: center;
+  align-items: center;
+}
+
+/* 텍스트 스타일 */
+.perfume-name {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--gray-50);
+  margin: 0;
+  word-break: keep-all;
+}
+
+.perfume-brand {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--gray-50);
+  text-transform: uppercase;
+}
+
+.perfume-image {
+  width: clamp(70px, 15vw, 122px);
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* 태블릿 */
+@media (max-width: 1023px) {
+  .perfume-name {
+    font-size: 1.125rem;
+    font-weight: 400;
+  }
+
+  .perfume-brand {
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 767px) {
+  .perfume-name {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .perfume-brand {
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+}

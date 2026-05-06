@@ -1,0 +1,101 @@
+.layering-page {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 5rem) 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  box-sizing: border-box;
+}
+
+.layering-text-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1875rem;
+}
+
+.layering-title {
+  font-size: 1.625rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+.layering-description {
+  font-size: 1.25rem;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+/* 향수 선택 영역 */
+.selection-frame {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(1rem, 2vw, 1.875rem);
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.selection-box {
+  flex: 1;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+  filter: brightness(90%);
+  cursor: pointer;
+}
+
+.selection-box:hover {
+  opacity: 0.7;
+}
+
+.selection-box.is-active {
+  opacity: 1;
+  filter: brightness(100%);
+  cursor: default;
+}
+
+.button-frame {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.grid-frame {
+  width: 100%;
+  padding-top: 2rem;
+}
+
+/* 태블릿 */
+@media (max-width: 1023px) {
+  .layering-title {
+    font-size: 1.25rem;
+  }
+
+  .layering-description {
+    font-size: 1.125rem;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 767px) {
+  .layering-page {
+    padding: 2rem 1rem;
+  }
+
+  .selection-frame {
+    flex-direction: column;
+  }
+  .layering-title {
+    font-size: 1.125rem;
+  }
+
+  .layering-description {
+    font-size: 1rem;
+  }
+
+  .layering-text-frame {
+    gap: 0.625rem;
+  }
+}
