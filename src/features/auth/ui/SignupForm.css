@@ -92,6 +92,12 @@
   font-weight: 600;
 }
 
+.signup__error {
+  font-size: 13px;
+  color: #e53e3e;
+  margin-bottom: 12px;
+}
+
 .signup__btn {
   width: 100%;
   padding: 14px;
