@@ -117,6 +117,12 @@
   justify-content: space-between;
 }
 
+.login__error {
+  font-size: 13px;
+  color: #e53e3e;
+  margin-bottom: 12px;
+}
+
 .login__signup,
 .login__find {
   font-size: 14px;

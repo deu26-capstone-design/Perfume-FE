@@ -1,10 +1,25 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import googleLogo from '@shared/assets/google_logo.png';
 import naverLogo from '@shared/assets/naver_logo.png';
+import { login } from '@features/auth/model/authApi';
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = async () => {
+    setError('');
+    try {
+      await login({ email, password });
+      navigate('/');
+    } catch {
+      setError('아이디 또는 비밀번호가 올바르지 않아요.');
+    }
+  };
 
   return (
     <div className="login">
@@ -12,11 +27,27 @@ const LoginForm = () => {
       <p className="login__subtitle">로그인을 해주세요.</p>
 
       <div className="login__fields">
-        <input className="login__input" type="text" placeholder="아이디를 입력해주세요." />
-        <input className="login__input" type="password" placeholder="비밀번호를 입력해주세요." />
+        <input
+          className="login__input"
+          type="text"
+          placeholder="아이디를 입력해주세요."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className="login__input"
+          type="password"
+          placeholder="비밀번호를 입력해주세요."
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
 
-      <button className="login__btn">로그인</button>
+      {error && <p className="login__error">{error}</p>}
+
+      <button className="login__btn" onClick={handleLogin}>
+        로그인
+      </button>
 
       <div className="login__divider">
         <span className="login__divider-line" />

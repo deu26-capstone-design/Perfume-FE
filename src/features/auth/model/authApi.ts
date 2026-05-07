@@ -15,10 +15,30 @@ export interface LoginRequest {
   password: string;
 }
 
-export const signup = (data: SignupRequest) => client.post('/api/auth/signup', data);
+export const getCsrfToken = async (): Promise<string | null> => {
+  const res = await client.get('/api/auth/csrf');
+  return res.data?.csrfToken ?? null;
+};
 
-export const login = (data: LoginRequest) => client.post('/api/auth/login', data);
+export const signup = async (data: SignupRequest) => {
+  const csrfToken = await getCsrfToken();
+  return client.post('/api/auth/signup', data, {
+    headers: csrfToken ? { 'X-XSRF-TOKEN': csrfToken } : {},
+  });
+};
 
-export const logout = () => client.post('/api/auth/logout');
+export const login = async (data: LoginRequest) => {
+  const csrfToken = await getCsrfToken();
+  return client.post('/api/auth/login', data, {
+    headers: csrfToken ? { 'X-XSRF-TOKEN': csrfToken } : {},
+  });
+};
+
+export const logout = async () => {
+  const csrfToken = await getCsrfToken();
+  return client.post('/api/auth/logout', null, {
+    headers: csrfToken ? { 'X-XSRF-TOKEN': csrfToken } : {},
+  });
+};
 
 export const getMe = () => client.get('/api/auth/me');
