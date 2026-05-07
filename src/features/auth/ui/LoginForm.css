@@ -1,21 +1,22 @@
 .login {
   display: flex;
   flex-direction: column;
-  padding: 60px 40px;
-  max-width: 480px;
+  padding: 40px 60px;
+  width: 500px;
   border: 1px solid var(--gray-200);
   border-radius: 20px;
 }
 
 .login__title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--login-description);
   margin-bottom: 8px;
 }
 
 .login__subtitle {
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: 400;
   color: var(--login-description-sub);
   margin-bottom: 36px;
 }
@@ -32,9 +33,11 @@
   padding: 14px 16px;
   border: 1px solid var(--login-textbox-stroke) !important;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--login-textbox);
+  background-color: var(--gray-50) !important;
   outline: none;
+  transition: background-color 0.15s;
 }
 
 .login__input::placeholder {
@@ -43,6 +46,7 @@
 
 .login__input:focus {
   border-color: var(--main-color) !important;
+  background-color: var(--white-900) !important;
 }
 
 .login__btn {
@@ -71,7 +75,7 @@
 }
 
 .login__divider-text {
-  font-size: 13px;
+  font-size: 18px;
   color: var(--login-description-sub);
   white-space: nowrap;
 }
@@ -84,18 +88,28 @@
 }
 
 .login__social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   padding: 13px;
   border: 1px solid var(--login-textbox-stroke) !important;
   border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
   color: var(--login-description);
   cursor: pointer;
 }
 
 .login__social-btn:hover {
   background-color: var(--gray-50) !important;
+}
+
+.login__social-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .login__bottom {

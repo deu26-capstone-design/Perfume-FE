@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
+import googleLogo from '@shared/assets/google_logo.png';
+import naverLogo from '@shared/assets/naver_logo.png';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -23,8 +25,14 @@ const LoginForm = () => {
       </div>
 
       <div className="login__social">
-        <button className="login__social-btn">Google로 계속하기</button>
-        <button className="login__social-btn">Naver로 계속하기</button>
+        <button className="login__social-btn">
+          <img src={googleLogo} alt="Google" className="login__social-logo" />
+          Google로 계속하기
+        </button>
+        <button className="login__social-btn">
+          <img src={naverLogo} alt="Naver" className="login__social-logo" />
+          Naver로 계속하기
+        </button>
       </div>
 
       <div className="login__bottom">

@@ -1,0 +1,19 @@
+.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: 40px 0;
+}
+
+@media (max-width: 1024px) {
+  .signup-page {
+    min-height: calc(100vh - 55px);
+  }
+}
+
+@media (max-width: 768px) {
+  .signup-page {
+    min-height: calc(100vh - 54px);
+  }
+}
