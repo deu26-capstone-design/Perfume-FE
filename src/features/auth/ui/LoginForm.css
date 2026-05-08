@@ -1,0 +1,134 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 60px;
+  width: min(500px, 100%);
+  box-sizing: border-box;
+  border: 1px solid var(--gray-200);
+  border-radius: 20px;
+}
+
+.login__title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--login-description);
+  margin-bottom: 8px;
+}
+
+.login__subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--login-description-sub);
+  margin-bottom: 36px;
+}
+
+.login__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.login__input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--login-textbox-stroke) !important;
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--login-textbox);
+  background-color: var(--gray-50) !important;
+  outline: none;
+  transition: background-color 0.15s;
+}
+
+.login__input::placeholder {
+  color: var(--login-textbox-placeholder);
+}
+
+.login__input:focus,
+.login__input--filled {
+  border-color: var(--main-color) !important;
+  background-color: var(--white-900) !important;
+}
+
+.login__btn {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--login-btn) !important;
+  color: var(--login-btn-text);
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 28px;
+}
+
+.login__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.login__divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--gray-200);
+}
+
+.login__divider-text {
+  font-size: 18px;
+  color: var(--login-description-sub);
+  white-space: nowrap;
+}
+
+.login__social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.login__social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid var(--login-textbox-stroke) !important;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--login-description);
+  cursor: pointer;
+}
+
+.login__social-btn:hover {
+  background-color: var(--gray-50) !important;
+}
+
+.login__social-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.login__bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login__error {
+  font-size: 13px;
+  color: #e53e3e;
+  margin-bottom: 12px;
+}
+
+.login__signup,
+.login__find {
+  font-size: 14px;
+  color: var(--login-description-sub);
+  cursor: pointer;
+  text-decoration: underline;
+}
