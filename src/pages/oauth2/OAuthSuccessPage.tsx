@@ -8,7 +8,7 @@ const OAuthSuccessPage = () => {
   useEffect(() => {
     bootstrapAfterOAuth()
       .then((res) => {
-        if (!res.data.profileCompleted) {
+        if (!res.data?.profileCompleted) {
           navigate('/oauth2/complete-profile');
         } else {
           navigate('/');

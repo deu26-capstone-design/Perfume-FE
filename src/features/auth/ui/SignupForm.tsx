@@ -23,8 +23,36 @@ const SignupForm = () => {
 
   const handleSignup = async () => {
     setError('');
+    if (!name.trim()) {
+      setError('이름을 입력해주세요.');
+      return;
+    }
+    if (!email.trim()) {
+      setError('이메일을 입력해주세요.');
+      return;
+    }
+    if (!password.trim()) {
+      setError('비밀번호를 입력해주세요.');
+      return;
+    }
+    if (!nickname.trim()) {
+      setError('닉네임을 입력해주세요.');
+      return;
+    }
+    if (!phoneNumber.trim()) {
+      setError('휴대폰번호를 입력해주세요.');
+      return;
+    }
     if (!gender) {
       setError('성별을 선택해주세요.');
+      return;
+    }
+    if (birthDate.length !== 8) {
+      setError('생년월일을 8자리로 입력해주세요.');
+      return;
+    }
+    if (password.length < 10) {
+      setError('비밀번호는 10자 이상 입력해주세요.');
       return;
     }
     try {
@@ -38,8 +66,15 @@ const SignupForm = () => {
         phoneNumber,
       });
       navigate('/');
-    } catch {
-      setError('회원가입에 실패했어요. 입력 정보를 확인해주세요.');
+    } catch (err: unknown) {
+      const message = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail;
+      if (message === 'email already exists') {
+        setError('이미 사용 중인 이메일이에요.');
+      } else if (message === 'nickname already exists') {
+        setError('이미 사용 중인 닉네임이에요.');
+      } else {
+        setError('회원가입에 실패했어요. 입력 정보를 확인해주세요.');
+      }
     }
   };
 

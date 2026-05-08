@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   padding: 40px 60px;
-  width: 500px;
+  width: min(500px, 100%);
+  box-sizing: border-box;
   border: 1px solid var(--gray-200);
   border-radius: 20px;
 }
