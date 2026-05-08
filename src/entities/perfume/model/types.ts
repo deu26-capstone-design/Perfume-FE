@@ -2,8 +2,9 @@ export interface Perfume {
   id: number;
   brand: string;
   name: string;
-  imageUrl: string;
-  scent_type: string[];
+  imageUrl: string | null;
+  scent_type?: string[];
   gender: 'M' | 'W' | 'U';
-  avgRating: number;
+  rating: number;
+  reviewCount?: number;
 }
