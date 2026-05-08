@@ -13,6 +13,7 @@ const SignupForm = () => {
   const [nickname, setNickname] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const formatBirthDate = (value: string) => {
     if (value.length === 8) {
@@ -22,6 +23,7 @@ const SignupForm = () => {
   };
 
   const handleSignup = async () => {
+    if (isLoading) return;
     setError('');
     if (!name.trim()) {
       setError('이름을 입력해주세요.');
@@ -56,6 +58,7 @@ const SignupForm = () => {
       return;
     }
     try {
+      setIsLoading(true);
       await signup({
         email,
         password,
@@ -75,6 +78,8 @@ const SignupForm = () => {
       } else {
         setError('회원가입에 실패했어요. 입력 정보를 확인해주세요.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -174,8 +179,8 @@ const SignupForm = () => {
 
       {error && <p className="signup__error">{error}</p>}
 
-      <button className="signup__btn" onClick={handleSignup}>
-        회원가입 완료
+      <button className="signup__btn" onClick={handleSignup} disabled={isLoading}>
+        {isLoading ? '처리 중...' : '회원가입 완료'}
       </button>
     </div>
   );
