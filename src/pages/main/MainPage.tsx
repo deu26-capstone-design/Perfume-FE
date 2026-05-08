@@ -7,6 +7,7 @@ import PerfumeGrid from '@widgets/perfume-grid/ui/PerfumeGrid';
 import type { Perfume } from '@entities/perfume/model/types';
 import { usePerfumeFilters } from '@features/perfume-filter/model/usePerfumeFilters';
 import { useInfiniteScroll } from '@shared/lib/useInfiniteScroll';
+import { useDebounce } from '@shared/lib/useDebounce';
 import {
   getPerfumes,
   getAccords,
@@ -40,6 +41,7 @@ const MainPage = () => {
   const [accordOptions, setAccordOptions] = useState<string[]>([]);
   const [fetchError, setFetchError] = useState(false);
   const [pageSize] = useState(getPageSize);
+  const debouncedSearch = useDebounce(filters.search, 400);
 
   useEffect(() => {
     getAccords()
@@ -51,7 +53,7 @@ const MainPage = () => {
   useEffect(() => {
     setPage(0);
     setPerfumes([]);
-  }, [filters.search, filters.accords, filters.gender, filters.sort]);
+  }, [debouncedSearch, filters.accords, filters.gender, filters.sort]);
 
   // 페이지 또는 필터 변경 시 fetch
   useEffect(() => {
@@ -60,7 +62,7 @@ const MainPage = () => {
     setFetchError(false);
 
     getPerfumes({
-      ...(filters.search && { keyword: filters.search }),
+      ...(debouncedSearch && { keyword: debouncedSearch }),
       ...(GENDER_MAP[filters.gender] && { gender: GENDER_MAP[filters.gender] }),
       ...(filters.accords.length > 0 && { accord: filters.accords }),
       sort: SORT_MAP[filters.sort] ?? 'rating_desc',
@@ -73,9 +75,7 @@ const MainPage = () => {
         setPerfumes((prev) => (page === 0 ? items : [...prev, ...items]));
         setHasMore(res.data.hasNext);
       })
-      .catch(() => {
-        if (!cancelled) setFetchError(true);
-      })
+      .catch(() => {})
       .finally(() => {
         if (!cancelled) setIsLoading(false);
       });
@@ -83,7 +83,7 @@ const MainPage = () => {
     return () => {
       cancelled = true;
     };
-  }, [page, filters.search, filters.accords, filters.gender, filters.sort, pageSize]);
+  }, [page, debouncedSearch, filters.accords, filters.gender, filters.sort, pageSize]);
 
   const handleLoadMore = useCallback(() => {
     if (!hasMore || isLoading) return;
@@ -125,9 +125,7 @@ const MainPage = () => {
         </div>
 
         <div className="main-page__grid">
-          {fetchError ? (
-            <p className="main-page__empty">향수 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.</p>
-          ) : isLoading && perfumes.length === 0 ? (
+          {isLoading && perfumes.length === 0 ? (
             <p className="main-page__loading">향수를 불러오는 중...</p>
           ) : perfumes.length === 0 ? (
             <p className="main-page__empty">해당 조건에 맞는 향수가 없어요!</p>
