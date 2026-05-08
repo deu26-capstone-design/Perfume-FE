@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import googleLogo from '@shared/assets/google_logo.png';
 import naverLogo from '@shared/assets/naver_logo.png';
-import { login } from '@features/auth/model/authApi';
+import { login, startGoogleLogin, startNaverLogin } from '@features/auth/model/authApi';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -56,11 +56,11 @@ const LoginForm = () => {
       </div>
 
       <div className="login__social">
-        <button className="login__social-btn">
+        <button className="login__social-btn" onClick={startGoogleLogin}>
           <img src={googleLogo} alt="Google" className="login__social-logo" />
           Google로 계속하기
         </button>
-        <button className="login__social-btn">
+        <button className="login__social-btn" onClick={startNaverLogin}>
           <img src={naverLogo} alt="Naver" className="login__social-logo" />
           Naver로 계속하기
         </button>

@@ -2,12 +2,27 @@ import '../styles/Header.css';
 import { CgProfile } from 'react-icons/cg';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { getMe, logout } from '@features/auth/model/authApi';
 
 export default function Header() {
-  const isLogin = true;
+  const [isLogin, setIsLogin] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    getMe()
+      .then(() => setIsLogin(true))
+      .catch(() => setIsLogin(false));
+  }, [location.pathname]);
+
+  const handleLogout = async () => {
+    await logout();
+    setIsLogin(false);
+    navigate('/');
+  };
 
   return (
     <header className="header">
@@ -35,7 +50,9 @@ export default function Header() {
       <div className="header__auth">
         {isLogin ? (
           <>
-            <button className="header__auth-btn">로그아웃</button>
+            <button className="header__auth-btn" onClick={handleLogout}>
+              로그아웃
+            </button>
             <Link to="/my-page" className="header__auth-btn header__auth-btn--profile">
               <CgProfile color="var(--header-auth)" />
             </Link>
@@ -73,7 +90,9 @@ export default function Header() {
           <div className="header__auth--mobile">
             {isLogin ? (
               <>
-                <button className="header__auth-btn">로그아웃</button>
+                <button className="header__auth-btn" onClick={handleLogout}>
+                  로그아웃
+                </button>
                 <Link to="/my-page" className="header__auth-btn header__auth-btn--profile">
                   <CgProfile color="var(--header-auth)" />
                 </Link>
