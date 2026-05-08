@@ -75,7 +75,9 @@ const MainPage = () => {
         setPerfumes((prev) => (page === 0 ? items : [...prev, ...items]));
         setHasMore(res.data.hasNext);
       })
-      .catch(() => {})
+      .catch(() => {
+        if (!cancelled) setFetchError(true);
+      })
       .finally(() => {
         if (!cancelled) setIsLoading(false);
       });
@@ -125,7 +127,9 @@ const MainPage = () => {
         </div>
 
         <div className="main-page__grid">
-          {isLoading && perfumes.length === 0 ? (
+          {fetchError ? (
+            <p className="main-page__empty">향수 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.</p>
+          ) : isLoading && perfumes.length === 0 ? (
             <p className="main-page__loading">향수를 불러오는 중...</p>
           ) : perfumes.length === 0 ? (
             <p className="main-page__empty">해당 조건에 맞는 향수가 없어요!</p>
@@ -140,6 +144,9 @@ const MainPage = () => {
           )}
         </div>
         {hasMore && <div ref={sentinelRef} />}
+        {isLoading && perfumes.length > 0 && (
+          <p className="main-page__loading">불러오는 중...</p>
+        )}
       </div>
     </div>
   );
