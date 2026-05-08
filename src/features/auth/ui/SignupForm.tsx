@@ -52,7 +52,7 @@ const SignupForm = () => {
         <div className="signup__field">
           <span className="signup__label">이름</span>
           <input
-            className="signup__input"
+            className={`signup__input ${name ? 'signup__input--filled' : ''}`}
             type="text"
             placeholder="ex. 홍길동"
             value={name}
@@ -63,7 +63,7 @@ const SignupForm = () => {
         <div className="signup__field">
           <span className="signup__label">아이디(이메일)</span>
           <input
-            className="signup__input"
+            className={`signup__input ${email ? 'signup__input--filled' : ''}`}
             type="email"
             placeholder="example@email.com"
             value={email}
@@ -74,7 +74,7 @@ const SignupForm = () => {
         <div className="signup__field">
           <span className="signup__label">비밀번호</span>
           <input
-            className="signup__input"
+            className={`signup__input ${password ? 'signup__input--filled' : ''}`}
             type="password"
             placeholder="영문, 숫자 조합"
             value={password}
@@ -86,7 +86,7 @@ const SignupForm = () => {
           <div className="signup__field">
             <span className="signup__label">생년월일(8자리)</span>
             <input
-              className="signup__input"
+              className={`signup__input ${birthDate ? 'signup__input--filled' : ''}`}
               type="text"
               placeholder="YYYYMMDD"
               maxLength={8}
@@ -97,7 +97,7 @@ const SignupForm = () => {
           <div className="signup__field">
             <span className="signup__label">닉네임</span>
             <input
-              className="signup__input"
+              className={`signup__input ${nickname ? 'signup__input--filled' : ''}`}
               type="text"
               placeholder="사용할 닉네임"
               value={nickname}
@@ -109,7 +109,7 @@ const SignupForm = () => {
         <div className="signup__field">
           <span className="signup__label">휴대폰번호(-없이 숫자만)</span>
           <input
-            className="signup__input"
+            className={`signup__input ${phoneNumber ? 'signup__input--filled' : ''}`}
             type="tel"
             placeholder="01012345678"
             maxLength={11}

@@ -28,14 +28,14 @@ const LoginForm = () => {
 
       <div className="login__fields">
         <input
-          className="login__input"
+          className={`login__input ${email ? 'login__input--filled' : ''}`}
           type="text"
           placeholder="아이디를 입력해주세요."
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className="login__input"
+          className={`login__input ${password ? 'login__input--filled' : ''}`}
           type="password"
           placeholder="비밀번호를 입력해주세요."
           value={password}

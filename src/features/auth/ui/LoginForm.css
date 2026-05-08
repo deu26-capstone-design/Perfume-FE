@@ -44,7 +44,8 @@
   color: var(--login-textbox-placeholder);
 }
 
-.login__input:focus {
+.login__input:focus,
+.login__input--filled {
   border-color: var(--main-color) !important;
   background-color: var(--white-900) !important;
 }

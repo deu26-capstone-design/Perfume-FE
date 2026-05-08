@@ -66,7 +66,8 @@
   color: var(--login-textbox-placeholder);
 }
 
-.signup__input:focus {
+.signup__input:focus,
+.signup__input--filled {
   border-color: var(--main-color) !important;
   background-color: var(--white-900) !important;
 }
