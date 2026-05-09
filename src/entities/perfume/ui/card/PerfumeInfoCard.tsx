@@ -6,6 +6,7 @@ interface PerfumeInfoCardProps {
   imageUrl: string | null;
   align?: 'left' | 'center';
   direction?: 'row' | 'column';
+  onClick?: () => void;
 }
 
 const PerfumeInfoCard: React.FC<PerfumeInfoCardProps> = ({
@@ -14,10 +15,15 @@ const PerfumeInfoCard: React.FC<PerfumeInfoCardProps> = ({
   imageUrl,
   align = 'left',
   direction = 'row',
+  onClick,
 }) => {
   return (
-    <div className={`perfume-info-card ${align} ${direction}`}>
+    <div
+      className={`perfume-info-card ${align} ${direction} ${onClick ? 'clickable' : ''}`}
+      onClick={onClick}
+    >
       {imageUrl && <img src={imageUrl} alt={name} className="perfume-image" />}
+
       <div className="perfume-text">
         <span className="perfume-name">{name}</span>
         <span className="perfume-brand">{brand}</span>
