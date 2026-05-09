@@ -49,7 +49,7 @@ export default function PerfumeDetailPage() {
         longevity={perfume.longevity}
         seasons={perfume.seasons}
       />
-      <PerfumeReviewList />
+      <PerfumeReviewList perfumeId={perfume.id} />
     </>
   );
 }
