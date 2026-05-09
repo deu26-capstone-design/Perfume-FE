@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MainPage.css';
 import { SearchInput } from '@features/perfume-search/ui/SearchInput';
@@ -17,7 +17,7 @@ import {
 const genderOptions = ['None', 'Female', 'Male', 'Unisex'];
 const sortOptions = ['높은 평점순', '낮은 평점순'];
 
-const GENDER_MAP: Record<string, string> = { Female: 'W', Male: 'M', Unisex: 'U' };
+const GENDER_MAP: Record<string, Perfume['gender']> = { Female: 'W', Male: 'M', Unisex: 'U' };
 const SORT_MAP: Record<string, 'rating_asc' | 'rating_desc'> = {
   '높은 평점순': 'rating_desc',
   '낮은 평점순': 'rating_asc',
@@ -41,6 +41,7 @@ const MainPage = () => {
   const [accordOptions, setAccordOptions] = useState<string[]>([]);
   const [fetchError, setFetchError] = useState(false);
   const [pageSize] = useState(getPageSize);
+  const pendingResetRef = useRef(false);
   const debouncedSearch = useDebounce(filters.search, 400);
 
   useEffect(() => {
@@ -51,12 +52,18 @@ const MainPage = () => {
 
   // 필터 변경 시 목록 초기화
   useEffect(() => {
+    pendingResetRef.current = true;
     setPage(0);
     setPerfumes([]);
   }, [debouncedSearch, filters.accords, filters.gender, filters.sort]);
 
   // 페이지 또는 필터 변경 시 fetch
   useEffect(() => {
+    if (pendingResetRef.current) {
+      if (page !== 0) return;
+      pendingResetRef.current = false;
+    }
+
     let cancelled = false;
     setIsLoading(true);
     setFetchError(false);
@@ -88,9 +95,9 @@ const MainPage = () => {
   }, [page, debouncedSearch, filters.accords, filters.gender, filters.sort, pageSize]);
 
   const handleLoadMore = useCallback(() => {
-    if (!hasMore || isLoading) return;
+    if (!hasMore || isLoading || fetchError) return;
     setPage((prev) => prev + 1);
-  }, [hasMore, isLoading]);
+  }, [hasMore, isLoading, fetchError]);
 
   const sentinelRef = useInfiniteScroll(handleLoadMore);
 
@@ -143,7 +150,7 @@ const MainPage = () => {
             />
           )}
         </div>
-        {hasMore && <div ref={sentinelRef} />}
+        {hasMore && !fetchError && <div ref={sentinelRef} />}
         {isLoading && perfumes.length > 0 && (
           <p className="main-page__loading">불러오는 중...</p>
         )}

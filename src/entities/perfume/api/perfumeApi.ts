@@ -3,7 +3,7 @@ import type { Perfume } from '../model/types';
 
 export interface PerfumeListParams {
   keyword?: string;
-  gender?: string;
+  gender?: Perfume['gender'];
   accord?: string[];
   sort?: 'rating_asc' | 'rating_desc';
   page?: number;
