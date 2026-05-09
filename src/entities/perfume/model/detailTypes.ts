@@ -1,10 +1,10 @@
 export interface PerfumeDetail {
   id: number;
-  imageUrl: string;
+  imageUrl: string | null;
   brand: string;
   name: string;
   gender: 'W' | 'M' | 'U';
-  description: string;
+  description: string | null;
   rating: number;
   reviewCount: number;
   notes: {
@@ -13,7 +13,10 @@ export interface PerfumeDetail {
     base: string[];
   };
   accords: {
-    name: string;
+    accordName: string;
     ratio: number;
   }[];
+  satisfaction: Record<'1' | '2' | '3' | '4' | '5', number>;
+  longevity: Record<'1' | '2' | '3', number>;
+  seasons: Record<'봄' | '여름' | '가을' | '겨울', number>;
 }
