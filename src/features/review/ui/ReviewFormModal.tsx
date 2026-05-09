@@ -9,7 +9,7 @@ import {
 import { LuFlower2 } from 'react-icons/lu';
 import { FaRegSun } from 'react-icons/fa';
 import { TbLeaf2, TbSnowman } from 'react-icons/tb';
-import type { Review } from '@entities/review/model/types';
+import { postReview } from '@entities/perfume/api/perfumeApi';
 import '../styles/ReviewFormModal.css';
 
 const SATISFACTION_OPTIONS = [
@@ -49,17 +49,20 @@ const SCENT_OPTIONS = [
 ];
 
 interface Props {
+  perfumeId: number;
   onClose: () => void;
-  onSubmit: (review: Review) => void;
+  onSubmit: () => void;
 }
 
-export default function ReviewFormModal({ onClose, onSubmit }: Props) {
+export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props) {
   const [satisfaction, setSatisfaction] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
   const [longevity, setLongevity] = useState<1 | 2 | 3 | null>(null);
   const [seasons, setSeasons] = useState<('봄' | '여름' | '가을' | '겨울')[]>([]);
   const [scents, setScents] = useState<string[]>([]);
   const [comment, setComment] = useState('');
   const [isAgreed, setIsAgreed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const toggleSeason = (season: '봄' | '여름' | '가을' | '겨울') => {
     setSeasons((prev) =>
@@ -75,18 +78,28 @@ export default function ReviewFormModal({ onClose, onSubmit }: Props) {
     });
   };
 
-  const handleSubmit = () => {
-    if (!satisfaction || !isAgreed) return;
-    onSubmit({
-      nickname: 'user', // 추후 로그인 유저 정보로 교체
-      profileImageUrl: null,
-      satisfaction,
-      longevity,
-      seasons: seasons.length > 0 ? seasons : null,
-      scents: scents.length > 0 ? scents : null,
-      comment: comment.trim() || null,
-      createdAt: new Date().toISOString(),
-    });
+  const handleSubmit = async () => {
+    if (!satisfaction || !isAgreed || isSubmitting) return;
+    setIsSubmitting(true);
+    setErrorMessage(null);
+    try {
+      await postReview(perfumeId, {
+        satisfaction,
+        longevity,
+        seasons: seasons.length > 0 ? seasons : null,
+        scents: scents.length > 0 ? scents : null,
+        comment: comment.trim() || null,
+        disclaimerAgreed: true,
+      });
+      onSubmit();
+    } catch (err: unknown) {
+      const status = (err as { response?: { status: number } })?.response?.status;
+      if (status === 409) setErrorMessage('이미 작성한 리뷰가 있습니다.');
+      else if (status === 401) setErrorMessage('로그인이 필요합니다.');
+      else setErrorMessage('리뷰 제출에 실패했어요. 잠시 후 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -210,13 +223,18 @@ export default function ReviewFormModal({ onClose, onSubmit }: Props) {
         </div>
 
         <div className="modal__footer">
+          {errorMessage && (
+            <p style={{ color: 'var(--error, #e53e3e)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+              {errorMessage}
+            </p>
+          )}
           <button
             type="button"
             className="modal__submit"
             onClick={handleSubmit}
-            disabled={!satisfaction || !isAgreed}
+            disabled={!satisfaction || !isAgreed || isSubmitting}
           >
-            제출하기
+            {isSubmitting ? '제출 중...' : '제출하기'}
           </button>
         </div>
       </div>
