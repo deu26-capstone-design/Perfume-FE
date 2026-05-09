@@ -7,7 +7,7 @@ const AccordsAbout = ({ name, description, imageUrl }: AccordsAboutProps) => {
   return (
     <section className="accords-about">
       <div className="image-wrapper">
-        <img src={imageUrl} alt={name} className="image" />
+        {imageUrl && <img src={imageUrl} alt={name} className="image" />}
         <div className="title-bar--mobile">{name}</div>
       </div>
 
