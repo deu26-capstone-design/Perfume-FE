@@ -15,7 +15,7 @@ export default function PerfumeInfo({ perfume }: Props) {
 
   return (
     <div className="perfume-info">
-      <img className="perfume-info__img" src={perfume.imageUrl} alt={perfume.name} />
+      <img className="perfume-info__img" src={perfume.imageUrl ?? undefined} alt={perfume.name} />
 
       <div className="perfume-info__content">
         <div className="perfume-info__content info">
@@ -60,14 +60,14 @@ export default function PerfumeInfo({ perfume }: Props) {
                 (
                   accord, //비율 높은 순으로 내림차순 정렬
                 ) => (
-                  <div key={accord.name} className="perfume-info__accord">
-                    <span className="perfume-info__accord-name">{accord.name}</span>
+                  <div key={accord.accordName} className="perfume-info__accord">
+                    <span className="perfume-info__accord-name">{accord.accordName}</span>
                     <div className="perfume-info__accord-bar-wrap">
                       <div
                         className="perfume-info__accord-bar"
                         style={{
                           width: `${accord.ratio}%`,
-                          backgroundColor: accordColors[accord.name] ?? DEFAULT_ACCORD_COLOR,
+                          backgroundColor: accordColors[accord.accordName] ?? DEFAULT_ACCORD_COLOR,
                         }}
                       >
                         {accord.ratio}%
@@ -79,10 +79,12 @@ export default function PerfumeInfo({ perfume }: Props) {
           </div>
         </div>
 
-        <div className="perfume-info__description">
-          <span>상세 설명</span>
-          <p>{perfume.description}</p>
-        </div>
+        {perfume.description && (
+          <div className="perfume-info__description">
+            <span>상세 설명</span>
+            <p>{perfume.description}</p>
+          </div>
+        )}
       </div>
     </div>
   );

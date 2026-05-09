@@ -1,5 +1,6 @@
 import client from '@shared/api/client';
 import type { Perfume } from '../model/types';
+import type { PerfumeDetail } from '../model/detailTypes';
 
 export interface PerfumeListParams {
   keyword?: string;
@@ -26,3 +27,6 @@ export const getPerfumes = (params: PerfumeListParams) =>
   });
 
 export const getAccords = () => client.get<string[]>('/api/accords');
+
+export const getPerfumeDetail = (id: number) =>
+  client.get<PerfumeDetail>(`/api/perfumes/${id}`);

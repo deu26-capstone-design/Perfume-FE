@@ -9,8 +9,28 @@ import { LuFlower2 } from 'react-icons/lu';
 import { FaRegSun } from 'react-icons/fa';
 import { TbLeaf2, TbSnowman } from 'react-icons/tb';
 import '../styles/PerfumeReviewSummary.css';
+import type { PerfumeDetail } from '@entities/perfume/model/detailTypes';
 
-export default function PerfumeReviewSummary() {
+interface Props {
+  reviewCount: number;
+  satisfaction: PerfumeDetail['satisfaction'];
+  longevity: PerfumeDetail['longevity'];
+  seasons: PerfumeDetail['seasons'];
+}
+
+export default function PerfumeReviewSummary({ reviewCount, satisfaction, longevity, seasons }: Props) {
+  if (reviewCount === 0) {
+    return (
+      <div className="perfume-review">
+        <hr />
+        <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
+          아직 리뷰가 없어요.
+        </p>
+        <hr />
+      </div>
+    );
+  }
+
   return (
     <div className="perfume-review">
       <hr />
@@ -23,31 +43,27 @@ export default function PerfumeReviewSummary() {
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceGrinHearts size={35} color="var(--gray-600)" />
               <span className="perfume-review__item-title">매우좋음</span>
-              <span className="perfume-review__item-value">48%</span>
+              <span className="perfume-review__item-value">{satisfaction['5']}%</span>
             </div>
-
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceLaughBeam size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">좋음</span>
-              <span className="perfume-review__item-value">31%</span>
+              <span className="perfume-review__item-value">{satisfaction['4']}%</span>
             </div>
-
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceSmile size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">보통</span>
-              <span className="perfume-review__item-value">11%</span>
+              <span className="perfume-review__item-value">{satisfaction['3']}%</span>
             </div>
-
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceMeh size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">나쁨</span>
-              <span className="perfume-review__item-value">5%</span>
+              <span className="perfume-review__item-value">{satisfaction['2']}%</span>
             </div>
-
             <div className="perfume-review__satisfaction-item">
               <FaRegFaceTired size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">매우나쁨</span>
-              <span className="perfume-review__item-value">2%</span>
+              <span className="perfume-review__item-value">{satisfaction['1']}%</span>
             </div>
           </div>
         </div>
@@ -60,25 +76,22 @@ export default function PerfumeReviewSummary() {
             <div className="perfume-review__season-item">
               <LuFlower2 size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">봄</span>
-              <span className="perfume-review__item-value">30%</span>
+              <span className="perfume-review__item-value">{seasons['봄']}%</span>
             </div>
-
             <div className="perfume-review__season-item">
               <FaRegSun size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">여름</span>
-              <span className="perfume-review__item-value">45%</span>
+              <span className="perfume-review__item-value">{seasons['여름']}%</span>
             </div>
-
             <div className="perfume-review__season-item">
               <TbLeaf2 size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">가을</span>
-              <span className="perfume-review__item-value">15%</span>
+              <span className="perfume-review__item-value">{seasons['가을']}%</span>
             </div>
-
             <div className="perfume-review__season-item">
               <TbSnowman size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">겨울</span>
-              <span className="perfume-review__item-value">10%</span>
+              <span className="perfume-review__item-value">{seasons['겨울']}%</span>
             </div>
           </div>
         </div>
@@ -91,19 +104,17 @@ export default function PerfumeReviewSummary() {
             <div className="perfume-review__longevity-item">
               <FaRegFaceLaughBeam size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">길어요</span>
-              <span className="perfume-review__item-value">42%</span>
+              <span className="perfume-review__item-value">{longevity['3']}%</span>
             </div>
-
             <div className="perfume-review__longevity-item">
               <FaRegFaceSmile size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">적당해요</span>
-              <span className="perfume-review__item-value">38%</span>
+              <span className="perfume-review__item-value">{longevity['2']}%</span>
             </div>
-
             <div className="perfume-review__longevity-item">
               <FaRegFaceMeh size={35} color="var(--detail-review-context)" />
               <span className="perfume-review__item-title">짧아요</span>
-              <span className="perfume-review__item-value">17%</span>
+              <span className="perfume-review__item-value">{longevity['1']}%</span>
             </div>
           </div>
         </div>
