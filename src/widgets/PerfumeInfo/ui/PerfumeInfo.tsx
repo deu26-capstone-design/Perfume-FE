@@ -15,7 +15,11 @@ export default function PerfumeInfo({ perfume }: Props) {
 
   return (
     <div className="perfume-info">
-      <img className="perfume-info__img" src={perfume.imageUrl ?? undefined} alt={perfume.name} />
+      {perfume.imageUrl ? (
+        <img className="perfume-info__img" src={perfume.imageUrl} alt={perfume.name} />
+      ) : (
+        <div className="perfume-info__img perfume-info__img--placeholder" />
+      )}
 
       <div className="perfume-info__content">
         <div className="perfume-info__content info">

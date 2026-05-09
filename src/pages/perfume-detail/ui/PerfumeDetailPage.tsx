@@ -14,10 +14,18 @@ export default function PerfumeDetailPage() {
   const [fetchError, setFetchError] = useState(false);
 
   useEffect(() => {
-    if (!id) return;
+    const numId = Number(id);
+    if (!id || isNaN(numId) || numId < 1) {
+      setNotFound(true);
+      setIsLoading(false);
+      return;
+    }
     let cancelled = false;
     setIsLoading(true);
-    getPerfumeDetail(Number(id))
+    setNotFound(false);
+    setFetchError(false);
+    setPerfume(null);
+    getPerfumeDetail(numId)
       .then((res) => { if (!cancelled) setPerfume(res.data); })
       .catch((err) => {
         if (cancelled) return;
