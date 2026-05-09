@@ -143,14 +143,17 @@
 .perfume-info__accord {
   display: flex;
   align-items: center;
-  gap: 1.04vw;
+  gap: 0.5vw;
 }
 
 .perfume-info__accord-name {
   font-size: clamp(12px, 0.78vw, 15px);
   font-weight: 400;
-  min-width: clamp(40px, 2.34vw, 45px);
+  width: clamp(90px, 7vw, 120px);
   flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .perfume-info__accord-bar-wrap {
@@ -265,13 +268,16 @@
   }
 
   .perfume-info__accord {
-    gap: 0.78vw;
+    gap: 0.4vw;
   }
 
   .perfume-info__accord-name {
     font-size: clamp(12px, 1.17vw, 14px);
-    min-width: clamp(40px, 2.93vw, 45px);
+    width: clamp(90px, 9vw, 120px);
     flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .perfume-info__accord-bar-wrap {
@@ -384,13 +390,16 @@
   }
 
   .perfume-info__accord {
-    gap: 1.56vw;
+    gap: 0.8vw;
   }
 
   .perfume-info__accord-name {
     font-size: clamp(12px, 2.6vw, 14px);
-    min-width: clamp(40px, 7vw, 55px);
+    width: clamp(80px, 18vw, 110px);
     flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .perfume-info__accord-bar-wrap {
