@@ -3,6 +3,7 @@ import Header from '@widgets/Header/ui/Header';
 import { AuthProvider } from '@features/auth/model/useAuth';
 import MainPage from '@pages/main/MainPage';
 import PerfumeDetailPage from '@pages/perfume-detail/ui/PerfumeDetailPage';
+import AccordsPage from '@pages/fragrance-accords/FragranceAccordsPage';
 import LayeringPage from '@pages/Layering/LayeringPage';
 import MyPage from '@pages/my/MyPage';
 import LoginPage from '@pages/login/LoginPage';
@@ -17,6 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/perfume/:id" element={<PerfumeDetailPage />} />
+        <Route path="/accords" element={<AccordsPage />} />
         <Route path="/layering" element={<LayeringPage />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/login" element={<LoginPage />} />
