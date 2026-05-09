@@ -3,7 +3,7 @@ import './PerfumeInfoCard.css';
 interface PerfumeInfoCardProps {
   brand: string;
   name: string;
-  imageUrl: string;
+  imageUrl: string | null;
   align?: 'left' | 'center';
   direction?: 'row' | 'column';
 }

@@ -9,7 +9,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.78952.jpg',
     scent_type: ['Floral', 'Musky', 'Aromatic', 'Woody', 'Spicy', 'Fresh', 'Sweet', 'Earthy/Smoky'],
     gender: 'U',
-    avgRating: 4.8,
+    rating: 4.8,
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.13016.jpg',
     scent_type: ['Floral', 'Musky', 'Aromatic', 'Fruity', 'Woody', 'Earthy/Smoky'],
     gender: 'M',
-    avgRating: 4.9,
+    rating: 4.9,
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.12201.jpg',
     scent_type: ['Woody', 'Earthy/Smoky', 'Floral', 'Spicy'],
     gender: 'U',
-    avgRating: 4.7,
+    rating: 4.7,
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.10806.jpg',
     scent_type: ['Woody', 'Floral', 'Sweet'],
     gender: 'U',
-    avgRating: 4.2,
+    rating: 4.2,
   },
   {
     id: 5,
@@ -45,7 +45,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.26358.jpg',
     scent_type: ['Floral', 'Musky', 'Woody', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'M',
-    avgRating: 4.6,
+    rating: 4.6,
   },
   {
     id: 6,
@@ -54,7 +54,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.276.jpg',
     scent_type: ['Green', 'Floral', 'Musky', 'Aromatic', 'Citrus', 'Woody', 'Fresh'],
     gender: 'U',
-    avgRating: 4.3,
+    rating: 4.3,
   },
   {
     id: 7,
@@ -63,7 +63,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.25324.jpg',
     scent_type: ['Gourmand', 'Floral', 'Fruity', 'Woody', 'Spicy', 'Sweet'],
     gender: 'W',
-    avgRating: 4.8,
+    rating: 4.8,
   },
   {
     id: 8,
@@ -72,7 +72,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.1733.jpg',
     scent_type: ['Fruity', 'Fresh', 'Floral'],
     gender: 'W',
-    avgRating: 4.5,
+    rating: 4.5,
   },
   {
     id: 9,
@@ -81,7 +81,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.66896.jpg',
     scent_type: ['Green', 'Floral', 'Musky', 'Fruity', 'Woody', 'Sweet', 'Earthy/Smoky'],
     gender: 'U',
-    avgRating: 4.4,
+    rating: 4.4,
   },
   {
     id: 10,
@@ -90,7 +90,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.792.jpg',
     scent_type: ['Floral', 'Fruity', 'Citrus', 'Woody', 'Spicy', 'Sweet'],
     gender: 'M',
-    avgRating: 4.1,
+    rating: 4.1,
   },
   {
     id: 11,
@@ -99,7 +99,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.2356.jpg',
     scent_type: ['Green', 'Aromatic', 'Fruity', 'Woody', 'Spicy', 'Fresh', 'Sweet', 'Earthy/Smoky'],
     gender: 'M',
-    avgRating: 3.1,
+    rating: 3.1,
   },
   {
     id: 12,
@@ -108,7 +108,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.9677.jpg',
     scent_type: ['Floral', 'Musky', 'Fruity', 'Woody', 'Citrus', 'Spicy', 'Fresh', 'Sweet'],
     gender: 'W',
-    avgRating: 4.3,
+    rating: 4.3,
   },
   {
     id: 13,
@@ -117,7 +117,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.1018.jpg',
     scent_type: ['Gourmand', 'Floral', 'Woody', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'U',
-    avgRating: 4.6,
+    rating: 4.6,
   },
   {
     id: 14,
@@ -126,7 +126,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.890.jpg',
     scent_type: ['Green', 'Aromatic', 'Woody', 'Fresh', 'Sweet', 'Earthy/Smoky'],
     gender: 'M',
-    avgRating: 4.2,
+    rating: 4.2,
   },
   {
     id: 15,
@@ -135,7 +135,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.78957.jpg',
     scent_type: ['Green', 'Floral', 'Musky', 'Fruity', 'Woody', 'Spicy', 'Fresh', 'Sweet'],
     gender: 'U',
-    avgRating: 4.4,
+    rating: 4.4,
   },
   {
     id: 16,
@@ -144,7 +144,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.988.jpg',
     scent_type: ['Green', 'Floral', 'Musky', 'Fruity', 'Fresh'],
     gender: 'W',
-    avgRating: 4.7,
+    rating: 4.7,
   },
   {
     id: 17,
@@ -153,7 +153,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.721.jpg',
     scent_type: ['Green', 'Floral', 'Aromatic', 'Citrus', 'Woody', 'Fresh'],
     gender: 'M',
-    avgRating: 4.5,
+    rating: 4.5,
   },
   {
     id: 18,
@@ -162,7 +162,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.31226.jpg',
     scent_type: ['Floral', 'Aromatic', 'Fruity', 'Woody', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'W',
-    avgRating: 4.0,
+    rating: 4.0,
   },
   {
     id: 19,
@@ -171,7 +171,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.83483.jpg',
     scent_type: ['Gourmand', 'Fresh', 'Floral', 'Sweet'],
     gender: 'W',
-    avgRating: 4.6,
+    rating: 4.6,
   },
   {
     id: 20,
@@ -180,7 +180,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.59860.jpg',
     scent_type: ['Floral', 'Musky', 'Fruity', 'Spicy', 'Fresh', 'Sweet'],
     gender: 'U',
-    avgRating: 4.1,
+    rating: 4.1,
   },
   {
     id: 21,
@@ -189,7 +189,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.50797.jpg',
     scent_type: ['Gourmand', 'Aromatic', 'Citrus', 'Woody', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'M',
-    avgRating: 4.4,
+    rating: 4.4,
   },
   {
     id: 22,
@@ -198,7 +198,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.611.jpg',
     scent_type: ['Floral', 'Citrus', 'Woody', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'W',
-    avgRating: 4.9,
+    rating: 4.9,
   },
   {
     id: 23,
@@ -207,7 +207,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.48434.jpg',
     scent_type: ['Green', 'Floral', 'Fruity', 'Woody', 'Citrus', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'W',
-    avgRating: 4.5,
+    rating: 4.5,
   },
   {
     id: 24,
@@ -216,7 +216,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.1198.jpg',
     scent_type: ['Green', 'Musky', 'Aromatic', 'Citrus', 'Woody', 'Fresh'],
     gender: 'M',
-    avgRating: 4.4,
+    rating: 4.4,
   },
   {
     id: 25,
@@ -225,7 +225,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.33443.jpg',
     scent_type: ['Floral', 'Musky', 'Aromatic', 'Citrus', 'Woody', 'Fresh'],
     gender: 'M',
-    avgRating: 4.5,
+    rating: 4.5,
   },
   {
     id: 26,
@@ -234,7 +234,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.9241.jpg',
     scent_type: ['Floral', 'Aromatic', 'Woody', 'Spicy', 'Fresh', 'Sweet'],
     gender: 'U',
-    avgRating: 4.7,
+    rating: 4.7,
   },
   {
     id: 27,
@@ -243,7 +243,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.30258.jpg',
     scent_type: ['Citrus', 'Fresh', 'Floral', 'Aromatic'],
     gender: 'U',
-    avgRating: 4.6,
+    rating: 4.6,
   },
   {
     id: 28,
@@ -252,7 +252,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.72.jpg',
     scent_type: ['Floral', 'Musky', 'Woody', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'W',
-    avgRating: 4.2,
+    rating: 4.2,
   },
   {
     id: 29,
@@ -261,7 +261,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.44894.jpg',
     scent_type: ['Musky', 'Green', 'Floral'],
     gender: 'W',
-    avgRating: 4.4,
+    rating: 4.4,
   },
   {
     id: 30,
@@ -270,7 +270,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.46623.jpg',
     scent_type: ['Green', 'Aromatic', 'Woody', 'Citrus', 'Fresh'],
     gender: 'M',
-    avgRating: 4.6,
+    rating: 4.6,
   },
   {
     id: 31,
@@ -279,7 +279,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.50256.jpg',
     scent_type: ['Floral', 'Musky', 'Aromatic', 'Woody', 'Spicy', 'Sweet', 'Earthy/Smoky'],
     gender: 'W',
-    avgRating: 4.1,
+    rating: 4.1,
   },
   {
     id: 32,
@@ -288,7 +288,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.10131.jpg',
     scent_type: ['Floral', 'Musky', 'Fruity', 'Woody', 'Spicy'],
     gender: 'U',
-    avgRating: 4.9,
+    rating: 4.9,
   },
   {
     id: 33,
@@ -297,7 +297,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.5002.jpg',
     scent_type: ['Green', 'Floral', 'Aromatic', 'Fruity', 'Spicy', 'Fresh', 'Sweet'],
     gender: 'M',
-    avgRating: 3.3,
+    rating: 3.3,
   },
   {
     id: 34,
@@ -306,7 +306,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.1688.jpg',
     scent_type: ['Gourmand', 'Floral', 'Fruity', 'Citrus', 'Spicy', 'Sweet'],
     gender: 'U',
-    avgRating: 3.5,
+    rating: 3.5,
   },
   {
     id: 35,
@@ -315,7 +315,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.10573.jpg',
     scent_type: ['Green', 'Floral', 'Fruity', 'Woody', 'Spicy', 'Fresh', 'Sweet', 'Earthy/Smoky'],
     gender: 'W',
-    avgRating: 4.4,
+    rating: 4.4,
   },
   {
     id: 36,
@@ -324,7 +324,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.66895.jpg',
     scent_type: ['Floral', 'Aromatic', 'Fruity', 'Woody', 'Citrus', 'Spicy', 'Fresh', 'Sweet'],
     gender: 'U',
-    avgRating: 3.6,
+    rating: 3.6,
   },
   {
     id: 37,
@@ -333,7 +333,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.31623.jpg',
     scent_type: ['Gourmand', 'Floral', 'Musky', 'Woody', 'Spicy', 'Sweet'],
     gender: 'U',
-    avgRating: 4.8,
+    rating: 4.8,
   },
   {
     id: 38,
@@ -342,7 +342,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.10314.jpg',
     scent_type: ['Green', 'Floral', 'Musky', 'Fruity', 'Woody', 'Fresh', 'Sweet'],
     gender: 'U',
-    avgRating: 4.5,
+    rating: 4.5,
   },
   {
     id: 39,
@@ -351,7 +351,7 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.25967.jpg',
     scent_type: ['Floral', 'Aromatic', 'Citrus', 'Woody', 'Spicy', 'Fresh', 'Earthy/Smoky'],
     gender: 'M',
-    avgRating: 3.8,
+    rating: 3.8,
   },
   {
     id: 40,
@@ -360,6 +360,6 @@ export const mockPerfumes: Perfume[] = [
     imageUrl: 'https://fimgs.net/mdimg/perfume-thumbs/375x500.35244.jpg',
     scent_type: ['Gourmand', 'Floral', 'Musky', 'Citrus', 'Fresh', 'Sweet'],
     gender: 'U',
-    avgRating: 4.2,
+    rating: 4.2,
   },
 ];
