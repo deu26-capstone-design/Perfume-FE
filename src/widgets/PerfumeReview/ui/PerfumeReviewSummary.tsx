@@ -19,22 +19,10 @@ interface Props {
 }
 
 export default function PerfumeReviewSummary({ reviewCount, satisfaction, longevity, seasons }: Props) {
-  if (reviewCount === 0) {
-    return (
-      <div className="perfume-review">
-        <hr />
-        <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
-          아직 리뷰가 없어요.
-        </p>
-        <hr />
-      </div>
-    );
-  }
-
   return (
     <div className="perfume-review">
       <hr />
-      <div className="perfume-review__sections">
+      {reviewCount === 0 ? null : <div className="perfume-review__sections">
         <div className="perfume-review__satisfaction">
           <span className="perfume-review__section-title">
             이 향수에 대한 유저들의 만족도는 다음과 같아요!
@@ -118,7 +106,7 @@ export default function PerfumeReviewSummary({ reviewCount, satisfaction, longev
             </div>
           </div>
         </div>
-      </div>
+      </div>}
       <hr />
     </div>
   );
