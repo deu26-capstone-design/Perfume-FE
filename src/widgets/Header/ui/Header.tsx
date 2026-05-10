@@ -4,7 +4,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { getMe, logout } from '@features/auth/model/authApi';
+import { getMe, logout, refreshCsrfToken } from '@features/auth/model/authApi';
 
 const AUTH_HIDDEN_PATHS = ['/login', '/signup'];
 
@@ -17,12 +17,19 @@ export default function Header() {
 
   useEffect(() => {
     getMe()
-      .then(() => setIsLogin(true))
+      .then(() => {
+        setIsLogin(true);
+        refreshCsrfToken().catch(() => {});
+      })
       .catch(() => setIsLogin(false));
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    await logout();
+    try {
+      await logout();
+    } catch {
+      // 서버 응답 형식 무관하게 로컬 상태 초기화
+    }
     setIsLogin(false);
     navigate('/');
   };
