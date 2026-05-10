@@ -1,150 +1,129 @@
 import { useState } from 'react';
-import { LayeringPerfumeSelection } from '@widgets/layering-perfume-selection/LayeringPerfumeSelection';
 import PerfumeGrid from '@widgets/perfume-grid/ui/PerfumeGrid';
 import LayeringButton from '@features/layering-mix/ui/LayeringButton';
-import { mockPerfumes } from '@entities/perfume/model/mockData';
 import type { Perfume } from '@entities/perfume/model/types';
+import { useDebounce } from '@shared/lib/useDebounce';
+import { INITIAL_SLOT_STATE, type SlotKey, type SlotState } from './model/layeringTypes';
+import { useLayeringPerfumes } from './hooks/useLayeringPerfumes';
+import { LayeringSelectionSection } from './ui/LayeringSelectionSection';
 import './LayeringPage.css';
 
-const LayeringPage: React.FC = () => {
-  const [activeSlot, setActiveSlot] = useState<'first' | 'second'>('first');
+const LayeringPage = () => {
+  const [activeSlot, setActiveSlot] = useState<SlotKey>('first');
   const [isTouched, setIsTouched] = useState(false);
 
-  const [firstPerfume, setFirstPerfume] = useState<Perfume | null>(null);
-  const [secondPerfume, setSecondPerfume] = useState<Perfume | null>(null);
-
-  const [firstCategories, setFirstCategories] = useState<string[]>([]);
-  const [secondCategories, setSecondCategories] = useState<string[]>([]);
-
-  const [firstSearch, setFirstSearch] = useState('');
-  const [secondSearch, setSecondSearch] = useState('');
-
-  // 현재 선택 중인 슬롯 기준으로 검색어/카테고리 동기화
-  const currentSearch = activeSlot === 'first' ? firstSearch : secondSearch;
-  const currentCategories = activeSlot === 'first' ? firstCategories : secondCategories;
-
-  // 초기 상태 or 두 개 모두 선택된 경우 두 selection box 모두 활성화
-  const isBothBright =
-    (!isTouched && !firstPerfume && !secondPerfume) || (firstPerfume && secondPerfume);
-
-  // 향수 리스트 필터링 (카테고리 + 검색어 + 중복 선택 방지)
-  const filteredPerfumes = mockPerfumes.filter((perfume) => {
-    const perfumeScents = perfume.scent_type || [];
-
-    // 선택된 모든 카테고리를 포함해야 함 (AND 조건)
-    const matchesCategory =
-      currentCategories.length === 0 ||
-      currentCategories.every((category) => perfumeScents.includes(category));
-
-    const keyword = currentSearch.toLowerCase();
-
-    // 이름 또는 브랜드 기준 검색
-    const matchesKeyword =
-      !keyword ||
-      perfume.name.toLowerCase().includes(keyword) ||
-      perfume.brand.toLowerCase().includes(keyword);
-
-    const isSelected = perfume.id === firstPerfume?.id || perfume.id === secondPerfume?.id;
-
-    return matchesCategory && matchesKeyword && !isSelected;
+  // 왼쪽/오른쪽 슬롯 상태
+  const [slots, setSlots] = useState<Record<SlotKey, SlotState>>({
+    first: INITIAL_SLOT_STATE,
+    second: INITIAL_SLOT_STATE,
   });
 
-  const handleSelectPerfumeInSlot = (slot: 'first' | 'second', perfume: Perfume) => {
+  const currentSlot = slots[activeSlot];
+  const debouncedSearch = useDebounce(currentSlot.search, 300);
+
+  const { perfumes, hasNext, isLoading, fetchError, sentinelRef } = useLayeringPerfumes({
+    keyword: debouncedSearch,
+    accords: currentSlot.accords,
+  });
+
+  const firstPerfume = slots.first.perfume;
+  const secondPerfume = slots.second.perfume;
+
+  const isBothBright =
+    (!isTouched && !firstPerfume && !secondPerfume) ||
+    (Boolean(firstPerfume) && Boolean(secondPerfume));
+
+  const updateSlot = (slot: SlotKey, updates: Partial<SlotState>) => {
+    setSlots((prev) => ({
+      ...prev,
+
+      [slot]: {
+        ...prev[slot],
+        ...updates,
+      },
+    }));
+  };
+
+  const toggleAccord = (slot: SlotKey, accord: string) => {
+    const accords = slots[slot].accords;
+
+    updateSlot(slot, {
+      accords: accords.includes(accord)
+        ? accords.filter((v) => v !== accord)
+        : [...accords, accord],
+    });
+  };
+
+  const resetSlot = (slot: SlotKey) => {
+    updateSlot(slot, INITIAL_SLOT_STATE);
+
+    setActiveSlot(slot);
+  };
+
+  const handleSelectPerfume = (slot: SlotKey, perfume: Perfume) => {
     if (firstPerfume && secondPerfume) {
       // alert는 나중에 toast로 변경 예정
       alert('향수 2개를 모두 선택하셨습니다. 초기화 버튼을 눌러주세요.');
+
       return;
     }
 
-    if (slot === 'first') {
-      setFirstPerfume(perfume);
-      setFirstSearch('');
-      setFirstCategories([]);
+    updateSlot(slot, {
+      perfume,
+      accords: [],
+      search: '',
+    });
 
-      if (!secondPerfume) setActiveSlot('second');
-    } else {
-      setSecondPerfume(perfume);
-      setSecondSearch('');
-      setSecondCategories([]);
-
-      if (!firstPerfume) setActiveSlot('first');
+    if (slot === 'first' && !secondPerfume) {
+      setActiveSlot('second');
+    }
+    if (slot === 'second' && !firstPerfume) {
+      setActiveSlot('first');
     }
   };
 
-  // 그리드에서 향수 선택 시 처리 로직
-  const handleSelectFromGrid = (perfume: Perfume) => {
-    handleSelectPerfumeInSlot(activeSlot, perfume);
-  };
-
-  const resetFirst = () => {
-    setFirstPerfume(null);
-    setFirstCategories([]);
-    setFirstSearch('');
-    setActiveSlot('first');
-  };
-
-  const resetSecond = () => {
-    setSecondPerfume(null);
-    setSecondCategories([]);
-    setSecondSearch('');
-    setActiveSlot('second');
-  };
+  // 이미 선택된 향수 제외
+  const filteredPerfumes = perfumes.filter(
+    (perfume) => perfume.id !== firstPerfume?.id && perfume.id !== secondPerfume?.id,
+  );
 
   const handleLayeringMix = () => {
-    // TODO: 레이어링 결과 팝업/페이지 연동
+    // TODO:
+    // 레이어링 결과 연결
   };
 
   return (
     <div className="layering-page">
       <div className="layering-text-frame">
         <h1 className="layering-title">향수 레이어링</h1>
-        <p className="layering-description">레이어링 하고싶은 향수 2개를 선택해주세요</p>
+
+        <p className="layering-description">레이어링 하고 싶은 향수 2개를 선택해주세요</p>
       </div>
+
       <main className="layering-content">
         <section className="selection-frame">
-          <div
-            className={`selection-box ${isBothBright || activeSlot === 'first' ? 'is-active' : ''}`}
-            onClick={() => {
-              setIsTouched(true);
-              setActiveSlot('first');
-            }}
-          >
-            <LayeringPerfumeSelection
-              selectedPerfume={firstPerfume}
-              onSelectPerfume={(perfume) => handleSelectPerfumeInSlot('first', perfume)}
-              selectedCategories={firstCategories}
-              onUpdateCategory={(c) =>
-                setFirstCategories((prev) =>
-                  prev.includes(c) ? prev.filter((v) => v !== c) : [...prev, c],
-                )
-              }
-              onReset={resetFirst}
-              searchKeyword={firstSearch}
-              onSearchChange={setFirstSearch}
-            />
-          </div>
+          {(['first', 'second'] as SlotKey[]).map((slot) => (
+            <LayeringSelectionSection
+              key={slot}
+              slot={slot}
+              slotState={slots[slot]}
+              activeSlot={activeSlot}
+              isBothBright={isBothBright}
+              onActivate={(slot) => {
+                setIsTouched(true);
 
-          <div
-            className={`selection-box ${isBothBright || activeSlot === 'second' ? 'is-active' : ''}`}
-            onClick={() => {
-              setIsTouched(true);
-              setActiveSlot('second');
-            }}
-          >
-            <LayeringPerfumeSelection
-              selectedPerfume={secondPerfume}
-              onSelectPerfume={(perfume) => handleSelectPerfumeInSlot('second', perfume)}
-              selectedCategories={secondCategories}
-              onUpdateCategory={(c) =>
-                setSecondCategories((prev) =>
-                  prev.includes(c) ? prev.filter((v) => v !== c) : [...prev, c],
-                )
+                setActiveSlot(slot);
+              }}
+              onSelectPerfume={handleSelectPerfume}
+              onToggleAccord={toggleAccord}
+              onReset={resetSlot}
+              onSearchChange={(slot, search) =>
+                updateSlot(slot, {
+                  search,
+                })
               }
-              onReset={resetSecond}
-              searchKeyword={secondSearch}
-              onSearchChange={setSecondSearch}
             />
-          </div>
+          ))}
         </section>
 
         <section className="button-frame">
@@ -152,16 +131,35 @@ const LayeringPage: React.FC = () => {
         </section>
 
         <section className="grid-frame">
-          <PerfumeGrid
-            perfumes={filteredPerfumes}
-            selectedCategories={currentCategories}
-            onRemoveCategory={(c) => {
-              if (activeSlot === 'first') setFirstCategories((prev) => prev.filter((v) => v !== c));
-              else setSecondCategories((prev) => prev.filter((v) => v !== c));
-            }}
-            onSelectPerfume={handleSelectFromGrid}
-            variant="layering"
-          />
+          {fetchError ? (
+            <p className="layering-page__empty">향수 정보를 불러오지 못했어요.</p>
+          ) : isLoading && perfumes.length === 0 ? (
+            <p className="layering-page__loading">향수를 불러오는 중...</p>
+          ) : perfumes.length === 0 ? (
+            <p className="layering-page__empty">해당 조건에 맞는 향수가 없어요!</p>
+          ) : (
+            <PerfumeGrid
+              perfumes={filteredPerfumes}
+              selectedCategories={currentSlot.accords}
+              onRemoveCategory={(accord) => toggleAccord(activeSlot, accord)}
+              onSelectPerfume={(perfume) => handleSelectPerfume(activeSlot, perfume)}
+              variant="layering"
+            />
+          )}
+
+          {hasNext && !fetchError && (
+            <div
+              ref={sentinelRef}
+              style={{
+                width: '100%',
+                height: '20px',
+              }}
+            />
+          )}
+
+          {isLoading && perfumes.length > 0 && (
+            <p className="layering-page__loading">불러오는 중...</p>
+          )}
         </section>
       </main>
     </div>
