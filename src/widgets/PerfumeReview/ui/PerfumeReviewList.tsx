@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReviewButton from '@features/review/ui/ReviewButton';
 import ReviewFormModal from '@features/review/ui/ReviewFormModal';
 import { useInfiniteScroll } from '@shared/lib/useInfiniteScroll';
@@ -17,22 +17,18 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
-  const pendingResetRef = useRef(false);
+  const [hasFirstLoaded, setHasFirstLoaded] = useState(false);
 
   useEffect(() => {
-    pendingResetRef.current = true;
     setPage(0);
-    setReviews([]);
+    setFetchError(false);
+    setHasFirstLoaded(false);
   }, [perfumeId]);
 
   useEffect(() => {
-    if (pendingResetRef.current) {
-      if (page !== 0) return;
-      pendingResetRef.current = false;
-    }
-
     let cancelled = false;
     setIsLoading(true);
     getReviews(perfumeId, page)
@@ -43,10 +39,16 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
         setHasMore(res.data.hasNext);
       })
       .catch(() => {
-        if (!cancelled) setHasMore(false);
+        if (!cancelled) {
+          setHasMore(false);
+          setFetchError(true);
+        }
       })
       .finally(() => {
-        if (!cancelled) setIsLoading(false);
+        if (!cancelled) {
+          setIsLoading(false);
+          setHasFirstLoaded(true);
+        }
       });
 
     return () => {
@@ -55,17 +57,15 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
   }, [perfumeId, page, refreshKey]);
 
   const handleLoadMore = useCallback(() => {
-    if (!hasMore || isLoading) return;
+    if (!hasMore || isLoading || reviews.length === 0) return;
     setPage((prev) => prev + 1);
-  }, [hasMore, isLoading]);
+  }, [hasMore, isLoading, reviews.length]);
 
   const sentinelRef = useInfiniteScroll(handleLoadMore);
 
   const handleSubmit = () => {
     setIsModalOpen(false);
     setPage(0);
-    setReviews([]);
-    pendingResetRef.current = true;
     setRefreshKey((prev) => prev + 1);
     onReviewSubmit?.();
   };
@@ -74,16 +74,26 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
     <div className="review-list">
       <ReviewButton onClick={() => setIsModalOpen(true)} />
       <div className="review-list__items">
-        {!isLoading && reviews.length === 0 ? (
+        {isLoading && !hasFirstLoaded ? (
+          <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
+            불러오는 중...
+          </p>
+        ) : fetchError ? (
+          <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
+            리뷰를 불러오지 못했어요. 잠시 후 다시 시도해주세요.
+          </p>
+        ) : reviews.length === 0 ? (
           <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
             아직 작성된 리뷰가 없어요!
           </p>
         ) : (
-          reviews.map((review, index) => <PerfumeReviewItem key={index} review={review} />)
+          reviews.map((review) => (
+            <PerfumeReviewItem key={`${review.nickname}-${review.createdAt}`} review={review} />
+          ))
         )}
       </div>
       {hasMore && <div ref={sentinelRef} />}
-      {isLoading && (
+      {isLoading && hasFirstLoaded && (
         <p style={{ textAlign: 'center', padding: '1rem 0', color: 'var(--gray-400)' }}>
           불러오는 중...
         </p>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MainPage.css';
 import { SearchInput } from '@features/perfume-search/ui/SearchInput';
@@ -41,7 +41,6 @@ const MainPage = () => {
   const [accordOptions, setAccordOptions] = useState<string[]>([]);
   const [fetchError, setFetchError] = useState(false);
   const [pageSize] = useState(getPageSize);
-  const pendingResetRef = useRef(false);
   const debouncedSearch = useDebounce(filters.search, 400);
 
   useEffect(() => {
@@ -50,20 +49,14 @@ const MainPage = () => {
       .catch(() => {});
   }, []);
 
-  // 필터 변경 시 목록 초기화
+  // 필터 변경 시 페이지 리셋
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    pendingResetRef.current = true;
     setPage(0);
-    setPerfumes([]);
-  }, [debouncedSearch, filters.accords, filters.gender, filters.sort]);
+  }, [debouncedSearch, filters.accords.join(','), filters.gender, filters.sort]);
 
   // 페이지 또는 필터 변경 시 fetch
   useEffect(() => {
-    if (pendingResetRef.current) {
-      if (page !== 0) return;
-      pendingResetRef.current = false;
-    }
-
     let cancelled = false;
     setIsLoading(true);
     setFetchError(false);
@@ -92,12 +85,13 @@ const MainPage = () => {
     return () => {
       cancelled = true;
     };
-  }, [page, debouncedSearch, filters.accords, filters.gender, filters.sort, pageSize]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, debouncedSearch, filters.accords.join(','), filters.gender, filters.sort, pageSize]);
 
   const handleLoadMore = useCallback(() => {
-    if (!hasMore || isLoading || fetchError) return;
+    if (!hasMore || isLoading || fetchError || perfumes.length === 0) return;
     setPage((prev) => prev + 1);
-  }, [hasMore, isLoading, fetchError]);
+  }, [hasMore, isLoading, fetchError, perfumes.length]);
 
   const sentinelRef = useInfiniteScroll(handleLoadMore);
 
@@ -135,7 +129,9 @@ const MainPage = () => {
 
         <div className="main-page__grid">
           {fetchError ? (
-            <p className="main-page__empty">향수 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.</p>
+            <p className="main-page__empty">
+              향수 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.
+            </p>
           ) : isLoading && perfumes.length === 0 ? (
             <p className="main-page__loading">향수를 불러오는 중...</p>
           ) : perfumes.length === 0 ? (
@@ -151,9 +147,7 @@ const MainPage = () => {
           )}
         </div>
         {hasMore && !fetchError && <div ref={sentinelRef} />}
-        {isLoading && perfumes.length > 0 && (
-          <p className="main-page__loading">불러오는 중...</p>
-        )}
+        {isLoading && perfumes.length > 0 && <p className="main-page__loading">불러오는 중...</p>}
       </div>
     </div>
   );
