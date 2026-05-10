@@ -9,9 +9,10 @@ import '../styles/PerfumeReviewList.css';
 
 interface Props {
   perfumeId: number;
+  onReviewSubmit?: () => void;
 }
 
-export default function PerfumeReviewList({ perfumeId }: Props) {
+export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -41,10 +42,16 @@ export default function PerfumeReviewList({ perfumeId }: Props) {
         setReviews((prev) => (page === 0 ? items : [...prev, ...items]));
         setHasMore(res.data.hasNext);
       })
-      .catch(() => { if (!cancelled) setHasMore(false); })
-      .finally(() => { if (!cancelled) setIsLoading(false); });
+      .catch(() => {
+        if (!cancelled) setHasMore(false);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [perfumeId, page, refreshKey]);
 
   const handleLoadMore = useCallback(() => {
@@ -60,6 +67,7 @@ export default function PerfumeReviewList({ perfumeId }: Props) {
     setReviews([]);
     pendingResetRef.current = true;
     setRefreshKey((prev) => prev + 1);
+    onReviewSubmit?.();
   };
 
   return (
@@ -71,13 +79,15 @@ export default function PerfumeReviewList({ perfumeId }: Props) {
             아직 작성된 리뷰가 없어요!
           </p>
         ) : (
-          reviews.map((review, index) => (
-            <PerfumeReviewItem key={index} review={review} />
-          ))
+          reviews.map((review, index) => <PerfumeReviewItem key={index} review={review} />)
         )}
       </div>
       {hasMore && <div ref={sentinelRef} />}
-      {isLoading && <p style={{ textAlign: 'center', padding: '1rem 0', color: 'var(--gray-400)' }}>불러오는 중...</p>}
+      {isLoading && (
+        <p style={{ textAlign: 'center', padding: '1rem 0', color: 'var(--gray-400)' }}>
+          불러오는 중...
+        </p>
+      )}
       {isModalOpen && (
         <ReviewFormModal
           perfumeId={perfumeId}
