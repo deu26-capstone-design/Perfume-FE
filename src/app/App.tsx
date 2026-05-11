@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Header from '@widgets/Header/ui/Header';
+import { AuthProvider } from '@features/auth/model/useAuth';
 import MainPage from '@pages/main/MainPage';
 import PerfumeDetailPage from '@pages/perfume-detail/ui/PerfumeDetailPage';
 import LayeringPage from '@pages/Layering/LayeringPage';
@@ -10,7 +11,7 @@ import OAuthFailurePage from '@pages/oauth2/OAuthFailurePage';
 
 export default function App() {
   return (
-    <>
+    <AuthProvider>
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
@@ -21,6 +22,6 @@ export default function App() {
         <Route path="/oauth2/success" element={<OAuthSuccessPage />} />
         <Route path="/oauth2/failure" element={<OAuthFailurePage />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }

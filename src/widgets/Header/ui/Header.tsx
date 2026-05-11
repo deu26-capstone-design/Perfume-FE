@@ -2,27 +2,19 @@ import '../styles/Header.css';
 import { CgProfile } from 'react-icons/cg';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { getMe, logout, refreshCsrfToken } from '@features/auth/model/authApi';
+import { logout } from '@features/auth/model/authApi';
+import { useAuth } from '@features/auth/model/useAuth';
 
 const AUTH_HIDDEN_PATHS = ['/login', '/signup'];
 
 export default function Header() {
-  const [isLogin, setIsLogin] = useState(false);
+  const { isLogin, setIsLogin } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const hideAuth = AUTH_HIDDEN_PATHS.includes(location.pathname);
-
-  useEffect(() => {
-    getMe()
-      .then(() => {
-        setIsLogin(true);
-        refreshCsrfToken().catch(() => {});
-      })
-      .catch(() => setIsLogin(false));
-  }, [location.pathname]);
 
   const handleLogout = async () => {
     try {
