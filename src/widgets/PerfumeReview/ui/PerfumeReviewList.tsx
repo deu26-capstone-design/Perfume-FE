@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ReviewButton from '@features/review/ui/ReviewButton';
 import ReviewFormModal from '@features/review/ui/ReviewFormModal';
 import { useInfiniteScroll } from '@shared/lib/useInfiniteScroll';
+import { useAuth } from '@features/auth/model/useAuth';
 import PerfumeReviewItem from './PerfumeReviewItem';
 import { getReviews } from '@entities/perfume/api/perfumeApi';
 import type { Review } from '@entities/review/model/types';
@@ -13,6 +15,9 @@ interface Props {
 }
 
 export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) {
+  const { isLogin } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -72,7 +77,7 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
 
   return (
     <div className="review-list">
-      <ReviewButton onClick={() => setIsModalOpen(true)} />
+      <ReviewButton onClick={() => (isLogin ? setIsModalOpen(true) : navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`))} />
       <div className="review-list__items">
         {isLoading && !hasFirstLoaded ? (
           <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
