@@ -7,8 +7,8 @@ const OAuthSuccessPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { setIsLogin } = useAuth();
-  const redirectTo =
-    searchParams.get('redirect') ?? sessionStorage.getItem('oauth_redirect') ?? '/';
+  const raw = searchParams.get('redirect') ?? sessionStorage.getItem('oauth_redirect') ?? '/';
+  const redirectTo = raw.startsWith('/') ? raw : '/';
 
   useEffect(() => {
     bootstrapAfterOAuth()
