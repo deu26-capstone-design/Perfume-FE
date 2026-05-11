@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FaRegFaceGrinHearts,
   FaRegFaceLaughBeam,
@@ -55,6 +56,7 @@ interface Props {
 }
 
 export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props) {
+  const navigate = useNavigate();
   const [satisfaction, setSatisfaction] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
   const [longevity, setLongevity] = useState<1 | 2 | 3 | null>(null);
   const [seasons, setSeasons] = useState<('봄' | '여름' | '가을' | '겨울')[]>([]);
@@ -63,6 +65,14 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
   const [isAgreed, setIsAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   const toggleSeason = (season: '봄' | '여름' | '가을' | '겨울') => {
     setSeasons((prev) =>
@@ -95,7 +105,7 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
     } catch (err: unknown) {
       const status = (err as { response?: { status: number } })?.response?.status;
       if (status === 409) setErrorMessage('이미 작성한 리뷰가 있습니다.');
-      else if (status === 401) setErrorMessage('로그인이 필요합니다.');
+      else if (status === 401) navigate('/login');
       else setErrorMessage('리뷰 제출에 실패했어요. 잠시 후 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);
