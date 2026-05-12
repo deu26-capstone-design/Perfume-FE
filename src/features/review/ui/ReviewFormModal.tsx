@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   FaRegFaceGrinHearts,
   FaRegFaceLaughBeam,
@@ -57,6 +57,7 @@ interface Props {
 
 export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [satisfaction, setSatisfaction] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
   const [longevity, setLongevity] = useState<1 | 2 | 3 | null>(null);
   const [seasons, setSeasons] = useState<('봄' | '여름' | '가을' | '겨울')[]>([]);
@@ -105,7 +106,7 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
     } catch (err: unknown) {
       const status = (err as { response?: { status: number } })?.response?.status;
       if (status === 409) setErrorMessage('이미 작성한 리뷰가 있습니다.');
-      else if (status === 401) navigate('/login');
+      else if (status === 401) navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`);
       else setErrorMessage('리뷰 제출에 실패했어요. 잠시 후 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);
@@ -235,7 +236,9 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
 
         <div className="modal__footer">
           {errorMessage && (
-            <p style={{ color: 'var(--error, #e53e3e)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+            <p
+              style={{ color: 'var(--error, #e53e3e)', fontSize: '0.9rem', marginBottom: '0.5rem' }}
+            >
               {errorMessage}
             </p>
           )}
