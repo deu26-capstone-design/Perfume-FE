@@ -18,7 +18,6 @@ export const useLayeringPerfumes = ({ keyword, accords }: UseLayeringPerfumesPro
   // 검색어나 accord 변경 시 초기화
   useEffect(() => {
     setPage(0);
-    setPerfumes([]);
     setHasNext(true);
   }, [keyword, accords.join(',')]);
 
@@ -36,6 +35,7 @@ export const useLayeringPerfumes = ({ keyword, accords }: UseLayeringPerfumesPro
           accord: accords.length > 0 ? accords : undefined,
           page,
           size: 30,
+          sort: 'rating_desc',
         });
 
         const data = response.data;
@@ -65,10 +65,10 @@ export const useLayeringPerfumes = ({ keyword, accords }: UseLayeringPerfumesPro
 
   // 무한 스크롤
   const handleLoadMore = useCallback(() => {
-    if (!hasNext || isLoading) return;
+    if (!hasNext || isLoading || perfumes.length === 0) return;
 
     setPage((prev) => prev + 1);
-  }, [hasNext, isLoading]);
+  }, [hasNext, isLoading, perfumes.length]);
 
   const sentinelRef = useInfiniteScroll(handleLoadMore);
 
