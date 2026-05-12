@@ -1,4 +1,4 @@
-import client from '@shared/api/client';
+import client, { updateClientCsrfToken } from '@shared/api/client';
 
 const API_BASE_URL = 'https://perfume.biryeong.kim';
 
@@ -22,6 +22,7 @@ export interface LoginRequest {
 export const refreshCsrfToken = async () => {
   const res = await client.get('/api/auth/csrf');
   csrfToken = res.data?.csrfToken ?? null;
+  updateClientCsrfToken(csrfToken);
   return csrfToken;
 };
 
@@ -43,6 +44,7 @@ export const logout = async () => {
   if (!csrfToken) await refreshCsrfToken();
   const res = await client.post('/api/auth/logout', null, { headers: withCsrf() });
   csrfToken = null;
+  updateClientCsrfToken(null);
   return res;
 };
 

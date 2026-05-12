@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import PerfumeInfo from '@widgets/PerfumeInfo/ui/PerfumeInfo';
 import PerfumeReviewSummary from '@widgets/PerfumeReview/ui/PerfumeReviewSummary';
@@ -13,18 +13,14 @@ export default function PerfumeDetailPage() {
   const [notFound, setNotFound] = useState(false);
   const [fetchError, setFetchError] = useState(false);
 
-  useEffect(() => {
-    const numId = Number(id);
-    if (!id || isNaN(numId) || numId < 1) {
-      setNotFound(true);
-      setIsLoading(false);
-      return;
-    }
+  const fetchDetail = useCallback((numId: number, showLoading: boolean) => {
     let cancelled = false;
-    setIsLoading(true);
-    setNotFound(false);
-    setFetchError(false);
-    setPerfume(null);
+    if (showLoading) {
+      setIsLoading(true);
+      setNotFound(false);
+      setFetchError(false);
+      setPerfume(null);
+    }
     getPerfumeDetail(numId)
       .then((res) => { if (!cancelled) setPerfume(res.data); })
       .catch((err) => {
@@ -34,11 +30,32 @@ export default function PerfumeDetailPage() {
       })
       .finally(() => { if (!cancelled) setIsLoading(false); });
     return () => { cancelled = true; };
-  }, [id]);
+  }, []);
+
+  useEffect(() => {
+    const numId = Number(id);
+    if (!id || isNaN(numId) || numId < 1) {
+      setNotFound(true);
+      setIsLoading(false);
+      return;
+    }
+    return fetchDetail(numId, true);
+  }, [id, fetchDetail]);
+
+  const handleReviewSubmit = useCallback(() => {
+    const numId = Number(id);
+    if (id && !isNaN(numId) && numId >= 1) fetchDetail(numId, false);
+  }, [id, fetchDetail]);
 
   if (isLoading) return <p style={{ textAlign: 'center', padding: '4rem 0' }}>불러오는 중...</p>;
-  if (notFound) return <p style={{ textAlign: 'center', padding: '4rem 0' }}>향수 정보를 찾을 수 없어요.</p>;
-  if (fetchError || !perfume) return <p style={{ textAlign: 'center', padding: '4rem 0' }}>향수 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.</p>;
+  if (notFound)
+    return <p style={{ textAlign: 'center', padding: '4rem 0' }}>향수 정보를 찾을 수 없어요.</p>;
+  if (fetchError || !perfume)
+    return (
+      <p style={{ textAlign: 'center', padding: '4rem 0' }}>
+        향수 정보를 불러오지 못했어요. 잠시 후 다시 시도해주세요.
+      </p>
+    );
 
   return (
     <>
@@ -49,7 +66,7 @@ export default function PerfumeDetailPage() {
         longevity={perfume.longevity}
         seasons={perfume.seasons}
       />
-      <PerfumeReviewList />
+      <PerfumeReviewList perfumeId={perfume.id} onReviewSubmit={handleReviewSubmit} />
     </>
   );
 }

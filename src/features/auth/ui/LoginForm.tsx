@@ -1,12 +1,17 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './LoginForm.css';
 import googleLogo from '@shared/assets/google_logo.png';
 import naverLogo from '@shared/assets/naver_logo.png';
 import { login, startGoogleLogin, startNaverLogin } from '@features/auth/model/authApi';
+import { useAuth } from '@features/auth/model/useAuth';
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { setIsLogin } = useAuth();
+  const raw = searchParams.get('redirect') ?? '/';
+  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,7 +20,8 @@ const LoginForm = () => {
     setError('');
     try {
       await login({ email, password });
-      navigate('/');
+      setIsLogin(true);
+      navigate(redirectTo);
     } catch {
       setError('아이디 또는 비밀번호가 올바르지 않아요.');
     }
@@ -56,11 +62,23 @@ const LoginForm = () => {
       </div>
 
       <div className="login__social">
-        <button className="login__social-btn" onClick={startGoogleLogin}>
+        <button
+          className="login__social-btn"
+          onClick={() => {
+            sessionStorage.setItem('oauth_redirect', redirectTo);
+            startGoogleLogin();
+          }}
+        >
           <img src={googleLogo} alt="Google" className="login__social-logo" />
           Google로 계속하기
         </button>
-        <button className="login__social-btn" onClick={startNaverLogin}>
+        <button
+          className="login__social-btn"
+          onClick={() => {
+            sessionStorage.setItem('oauth_redirect', redirectTo);
+            startNaverLogin();
+          }}
+        >
           <img src={naverLogo} alt="Naver" className="login__social-logo" />
           Naver로 계속하기
         </button>
