@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+const DEFAULT_SORT = '높은 평점순';
+
 export const usePerfumeFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -11,7 +13,7 @@ export const usePerfumeFilters = () => {
     [searchParams.getAll('accord').join(',')],
   );
   const gender = searchParams.get('gender') ?? '';
-  const sort = searchParams.get('sort') ?? '높은 평점순';
+  const sort = searchParams.get('sort') ?? DEFAULT_SORT;
 
   const setSearch = (value: string) => {
     setSearchParams(
@@ -70,7 +72,7 @@ export const usePerfumeFilters = () => {
     setSearchParams(
       (prev) => {
         const next = new URLSearchParams(prev);
-        if (value && value !== '높은 평점순') next.set('sort', value);
+        if (value && value !== DEFAULT_SORT) next.set('sort', value);
         else next.delete('sort');
         return next;
       },
