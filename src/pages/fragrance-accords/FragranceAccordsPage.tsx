@@ -1,22 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { mockAccords } from '@entities/accords/model/accordsData';
 import AccordsAbout from '@widgets/accords-about/AccordsAbout';
 import SimplePerfumeGrid from '@widgets/simple-perfume-grid/SimplePerfumeGrid';
-import NoteCarousel from '@widgets/note-carousel/NoteCarousel';
-import type { Accord } from '@entities/accords/model/accordsType';
+import NoteList from '@widgets/note-list/NoteList';
 import './FragranceAccordsPage.css';
 
 const AccordsPage = () => {
   const navigate = useNavigate();
+
   const [activeCategory, setActiveCategory] = useState<string>(mockAccords[0]?.name ?? '');
-  const [selectedAccord, setSelectedAccord] = useState<Accord | null>(null);
 
-  useEffect(() => {
-    const found = mockAccords.find((item) => item.name === activeCategory);
-
-    setSelectedAccord(found ?? null);
-  }, [activeCategory]);
+  const selectedAccord = mockAccords.find((item) => item.name === activeCategory);
 
   return (
     <div className="accords-page__container">
@@ -45,7 +40,7 @@ const AccordsPage = () => {
 
         <section className="notes-section">
           <h3 className="section-title">Notes</h3>
-          <NoteCarousel notes={selectedAccord?.notes ?? []} />
+          <NoteList notes={selectedAccord?.notes ?? []} />
         </section>
 
         <section className="perfume-list-section">
