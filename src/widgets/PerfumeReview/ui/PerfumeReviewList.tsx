@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ReviewButton from '@features/review/ui/ReviewButton';
 import ReviewFormModal from '@features/review/ui/ReviewFormModal';
@@ -22,6 +22,7 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const isLoadingRef = useRef(false);
   const [fetchError, setFetchError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -36,6 +37,7 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
   useEffect(() => {
     let cancelled = false;
     setIsLoading(true);
+    isLoadingRef.current = true;
     getReviews(perfumeId, page)
       .then((res) => {
         if (cancelled) return;
@@ -54,6 +56,7 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
           setIsLoading(false);
           setHasFirstLoaded(true);
         }
+        isLoadingRef.current = false;
       });
 
     return () => {
@@ -62,9 +65,10 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
   }, [perfumeId, page, refreshKey]);
 
   const handleLoadMore = useCallback(() => {
-    if (!hasMore || isLoading || reviews.length === 0) return;
+    if (!hasMore || isLoadingRef.current || reviews.length === 0) return;
+    isLoadingRef.current = true;
     setPage((prev) => prev + 1);
-  }, [hasMore, isLoading, reviews.length]);
+  }, [hasMore, reviews.length]);
 
   const sentinelRef = useInfiniteScroll(handleLoadMore);
 
@@ -77,7 +81,13 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
 
   return (
     <div className="review-list">
-      <ReviewButton onClick={() => (isLogin ? setIsModalOpen(true) : navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`))} />
+      <ReviewButton
+        onClick={() =>
+          isLogin
+            ? setIsModalOpen(true)
+            : navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`)
+        }
+      />
       <div className="review-list__items">
         {isLoading && !hasFirstLoaded ? (
           <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
