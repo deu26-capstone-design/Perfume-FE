@@ -10,7 +10,7 @@ import { useAuth } from '@features/auth/model/useAuth';
 const AUTH_HIDDEN_PATHS = ['/login', '/signup'];
 
 export default function Header() {
-  const { isLogin, setIsLogin } = useAuth();
+  const { isLogin, isAuthLoading, setIsLogin } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,7 +52,7 @@ export default function Header() {
 
           {/* Desktop, Tablet 로그인 영역 */}
           <div className="header__auth">
-            {isLogin ? (
+            {isAuthLoading && !isLogin ? null : isLogin ? (
               <>
                 <button className="header__auth-btn" onClick={handleLogout}>
                   로그아웃
@@ -92,7 +92,7 @@ export default function Header() {
                 서비스 소개
               </Link>
               <div className="header__auth--mobile">
-                {isLogin ? (
+                {isAuthLoading && !isLogin ? null : isLogin ? (
                   <>
                     <button className="header__auth-btn" onClick={handleLogout}>
                       로그아웃
