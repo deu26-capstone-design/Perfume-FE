@@ -68,11 +68,11 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape' && !isSubmitting) onClose();
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [onClose, isSubmitting]);
 
   const toggleSeason = (season: '봄' | '여름' | '가을' | '겨울') => {
     setSeasons((prev) =>
@@ -113,7 +113,7 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={isSubmitting ? undefined : onClose}>
       <div
         className="modal"
         role="dialog"
@@ -130,6 +130,7 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
             className="modal__close"
             aria-label="리뷰 작성 모달 닫기"
             onClick={onClose}
+            disabled={isSubmitting}
           >
             ✕
           </button>

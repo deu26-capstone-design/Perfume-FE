@@ -38,8 +38,7 @@ export const getPerfumes = (params: PerfumeListParams) =>
 
 export const getAccords = () => client.get<string[]>('/api/accords');
 
-export const getPerfumeDetail = (id: number) =>
-  client.get<PerfumeDetail>(`/api/perfumes/${id}`);
+export const getPerfumeDetail = (id: number) => client.get<PerfumeDetail>(`/api/perfumes/${id}`);
 
 export const getReviews = (id: number, page: number, size = 10) =>
   client.get<ReviewListResponse>(`/api/perfumes/${id}/reviews`, { params: { page, size } });
