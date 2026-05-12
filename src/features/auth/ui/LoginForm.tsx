@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [searchParams] = useSearchParams();
   const { setIsLogin } = useAuth();
   const raw = searchParams.get('redirect') ?? '/';
-  const redirectTo = raw.startsWith('/') ? raw : '/';
+  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
