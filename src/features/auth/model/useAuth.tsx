@@ -5,31 +5,46 @@ import { getMe, refreshCsrfToken } from './authApi';
 interface AuthContextValue {
   isLogin: boolean;
   isAuthLoading: boolean;
+  userId: number | null;
   setIsLogin: (v: boolean) => void;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
   isLogin: false,
   isAuthLoading: true,
+  userId: null,
   setIsLogin: () => {},
+  refreshUser: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLogin, setIsLogin] = useState(() => localStorage.getItem('isLogin') === 'true');
   const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [userId, setUserId] = useState<number | null>(null);
 
   const handleSetIsLogin = (v: boolean) => {
     setIsLogin(v);
     if (v) localStorage.setItem('isLogin', 'true');
-    else localStorage.removeItem('isLogin');
+    else {
+      localStorage.removeItem('isLogin');
+      setUserId(null);
+    }
+  };
+
+  const refreshUser = async () => {
+    const res = await getMe();
+    handleSetIsLogin(true);
+    setUserId(res.data?.userId ?? null);
   };
 
   useEffect(() => {
     let cancelled = false;
     getMe()
-      .then(() => {
+      .then((res) => {
         if (cancelled) return;
         handleSetIsLogin(true);
+        setUserId(res.data?.userId ?? null);
         refreshCsrfToken().catch(() => {});
       })
       .catch(() => {
@@ -44,7 +59,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLogin, isAuthLoading, setIsLogin: handleSetIsLogin }}>
+    <AuthContext.Provider
+      value={{ isLogin, isAuthLoading, userId, setIsLogin: handleSetIsLogin, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

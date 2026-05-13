@@ -22,7 +22,7 @@ const OAuthSuccessPage = () => {
         }
       })
       .catch(() => navigate('/login'));
-  }, [navigate, setIsLogin, redirectTo]);
+  }, [navigate, refreshUser, redirectTo]);
 
   return <p>로그인 처리 중...</p>;
 };
