@@ -25,13 +25,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
+    let cancelled = false;
     getMe()
       .then(() => {
+        if (cancelled) return;
         handleSetIsLogin(true);
         refreshCsrfToken().catch(() => {});
       })
-      .catch(() => handleSetIsLogin(false))
-      .finally(() => setIsAuthLoading(false));
+      .catch(() => {
+        if (!cancelled) handleSetIsLogin(false);
+      })
+      .finally(() => {
+        if (!cancelled) setIsAuthLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
