@@ -22,7 +22,8 @@ const SignupForm = () => {
     return value;
   };
 
-  const handleSignup = async () => {
+  const handleSignup = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     if (isLoading) return;
     setError('');
     if (!name.trim()) {
@@ -70,7 +71,8 @@ const SignupForm = () => {
       });
       navigate('/');
     } catch (err: unknown) {
-      const message = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail;
+      const message = (err as { response?: { data?: { detail?: string } } })?.response?.data
+        ?.detail;
       if (message === 'email already exists') {
         setError('이미 사용 중인 이메일이에요.');
       } else if (message === 'nickname already exists') {
@@ -84,7 +86,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="signup">
+    <form className="signup" onSubmit={handleSignup}>
       <h1 className="signup__title">회원가입</h1>
       <p className="signup__subtitle">서비스 이용을 위해 정확한 정보를 입력해주세요.</p>
 
@@ -179,10 +181,10 @@ const SignupForm = () => {
 
       {error && <p className="signup__error">{error}</p>}
 
-      <button className="signup__btn" onClick={handleSignup} disabled={isLoading}>
+      <button type="submit" className="signup__btn" disabled={isLoading}>
         {isLoading ? '처리 중...' : '회원가입 완료'}
       </button>
-    </div>
+    </form>
   );
 };
 
