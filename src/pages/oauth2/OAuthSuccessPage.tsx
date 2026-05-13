@@ -6,14 +6,14 @@ import { useAuth } from '@features/auth/model/useAuth';
 const OAuthSuccessPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { setIsLogin } = useAuth();
+  const { refreshUser } = useAuth();
   const raw = searchParams.get('redirect') ?? sessionStorage.getItem('oauth_redirect') ?? '/';
   const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
 
   useEffect(() => {
     bootstrapAfterOAuth()
-      .then((res) => {
-        setIsLogin(true);
+      .then(async (res) => {
+        await refreshUser();
         sessionStorage.removeItem('oauth_redirect');
         if (!res.data?.profileCompleted) {
           navigate('/oauth2/complete-profile');
