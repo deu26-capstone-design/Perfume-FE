@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { getMe, refreshCsrfToken } from './authApi';
 
@@ -23,20 +23,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [userId, setUserId] = useState<number | null>(null);
 
-  const handleSetIsLogin = (v: boolean) => {
+  const handleSetIsLogin = useCallback((v: boolean) => {
     setIsLogin(v);
     if (v) localStorage.setItem('isLogin', 'true');
     else {
       localStorage.removeItem('isLogin');
       setUserId(null);
     }
-  };
+  }, []);
 
-  const refreshUser = async () => {
+  const refreshUser = useCallback(async () => {
     const res = await getMe();
     handleSetIsLogin(true);
     setUserId(res.data?.userId ?? null);
-  };
+  }, [handleSetIsLogin]);
 
   useEffect(() => {
     let cancelled = false;

@@ -31,7 +31,10 @@ export default function WishlistButton({ perfumeId }: Props) {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      setIsWishlisted(false);
+      return;
+    }
     setIsWishlisted(getStoredWishlist(userId).includes(perfumeId));
   }, [userId, perfumeId]);
 

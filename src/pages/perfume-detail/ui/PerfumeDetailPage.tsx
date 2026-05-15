@@ -22,14 +22,20 @@ export default function PerfumeDetailPage() {
       setPerfume(null);
     }
     getPerfumeDetail(numId)
-      .then((res) => { if (!cancelled) setPerfume(res.data); })
+      .then((res) => {
+        if (!cancelled) setPerfume(res.data);
+      })
       .catch((err) => {
         if (cancelled) return;
         if (err.response?.status === 404) setNotFound(true);
         else setFetchError(true);
       })
-      .finally(() => { if (!cancelled) setIsLoading(false); });
-    return () => { cancelled = true; };
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
