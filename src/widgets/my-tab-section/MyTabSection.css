@@ -1,0 +1,151 @@
+.tab-section {
+  width: 450px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--gray-200);
+  border-right: 1px solid var(--gray-200);
+  padding: 100px 40px;
+  box-shadow: 8px 0 15px -5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-info-box {
+  text-align: center;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.profile-image-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.profile-image {
+  width: clamp(103px, 2.6vw + 93px, 120px);
+  height: clamp(103px, 2.6vw + 93px, 120px);
+  border-radius: 50%;
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-img-btn {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  background: var(--white-900);
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-img-btn svg {
+  font-size: 20px;
+  color: var(--gray-600);
+}
+
+.nickname {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 15px 0 5px;
+  color: var(--gray-900);
+}
+
+.email {
+  color: var(--gray-400);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.tab-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.tab-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 12px 15px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--gray-500);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.tab-item:hover {
+  color: var(--gray-900);
+}
+
+.tab-item.active {
+  color: var(--gray-900);
+  font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+  .tab-section {
+    width: 100%;
+    min-width: 0;
+    padding: 20px;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid var(--gray-200);
+    box-shadow: none;
+  }
+
+  .tab-menu {
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    gap: 0;
+  }
+
+  .tab-item {
+    width: auto;
+    text-align: center;
+    padding: 10px 20px;
+  }
+
+  .nickname {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .email {
+    font-size: 0.937rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .tab-menu {
+    justify-content: space-between;
+  }
+
+  .tab-item {
+    font-size: 1rem;
+    padding: 8px 10px;
+  }
+}
