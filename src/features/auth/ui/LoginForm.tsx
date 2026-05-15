@@ -9,18 +9,19 @@ import { useAuth } from '@features/auth/model/useAuth';
 const LoginForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { setIsLogin } = useAuth();
+  const { refreshUser } = useAuth();
   const raw = searchParams.get('redirect') ?? '/';
   const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     setError('');
     try {
       await login({ email, password });
-      setIsLogin(true);
+      await refreshUser();
       navigate(redirectTo);
     } catch {
       setError('아이디 또는 비밀번호가 올바르지 않아요.');
@@ -28,7 +29,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login">
+    <form className="login" onSubmit={handleLogin}>
       <h1 className="login__title">로그인</h1>
       <p className="login__subtitle">로그인을 해주세요.</p>
 
@@ -51,7 +52,7 @@ const LoginForm = () => {
 
       {error && <p className="login__error">{error}</p>}
 
-      <button className="login__btn" onClick={handleLogin}>
+      <button type="submit" className="login__btn">
         로그인
       </button>
 
@@ -92,7 +93,7 @@ const LoginForm = () => {
           아이디/비밀번호 찾기
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
