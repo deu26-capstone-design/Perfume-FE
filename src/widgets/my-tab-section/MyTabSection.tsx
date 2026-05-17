@@ -14,18 +14,20 @@ interface MyTabSectionProps {
 const MyTabSection: React.FC<MyTabSectionProps> = ({ user, activeTab, onTabChange }) => {
   return (
     <aside className="tab-section">
-      <div className="user-info-box">
-        <div className="profile-image-wrapper">
-          <div className="profile-image">
-            <img src={user.profileImage} alt="프로필" />
+      <div className="profile-header-area">
+        <div className="user-info-box">
+          <div className="profile-image-wrapper">
+            <div className="profile-image">
+              <img src={user.profileImage} alt="프로필" />
+            </div>
+            <button className="edit-img-btn" aria-label="프로필 수정">
+              <MdEdit />
+            </button>
           </div>
-          <button className="edit-img-btn" aria-label="프로필 수정">
-            <MdEdit />
-          </button>
-        </div>
-        <div className="user-text-info">
-          <h2 className="nickname">{user.nickname}</h2>
-          <p className="email">{user.email}</p>
+          <div className="user-text-info">
+            <h2 className="nickname">{user.nickname}</h2>
+            <p className="email">{user.email}</p>
+          </div>
         </div>
       </div>
 
