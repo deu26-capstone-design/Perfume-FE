@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import MyTabSection from '@widgets/my-tab-section/MyTabSection';
 import UserInfo from '@widgets/UserInfo/UserInfo';
+import WishlistCarousel from '@widgets/wishlist-carousel/WishlistCarousel';
+import MyReviewList from '@widgets/my-reviews/MyReviewList';
 import './MyPage.css';
 
 interface UserProfile {
@@ -50,8 +52,17 @@ const MyPage: React.FC = () => {
 
         <main className="main-content">
           {activeTab === 'profile' && <UserInfo userData={user} />}
-          {activeTab === 'tastes' && <div>내취향 콘텐츠</div>}
-          {activeTab === 'reviews' && <div>리뷰관리 콘텐츠</div>}
+          {activeTab === 'tastes' && (
+            <div className="tastes-content">
+              <WishlistCarousel />
+            </div>
+          )}
+          {activeTab === 'reviews' && (
+            <section className="reviews-section">
+              <div className="section-header"></div>
+              <MyReviewList />
+            </section>
+          )}
         </main>
       </div>
     </div>
