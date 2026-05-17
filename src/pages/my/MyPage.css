@@ -1,25 +1,48 @@
 .mypage-container {
   width: 100%;
-  min-height: calc(100vh - 71px);
+  min-height: calc(100vh - 70.8px);
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  overflow: visible;
 }
 
 .mypage-layout {
   display: flex;
   width: 100%;
-  max-width: 1200px;
-  gap: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .main-content {
   flex-grow: 1;
+  padding: 20px 0 20px 80px;
+  min-width: 0;
+}
+
+.tastes-content {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: var(--gray-500);
 }
 
 @media (max-width: 1023px) {
   .mypage-layout {
     flex-direction: column;
-    align-items: stretch;
+    display: block;
+  }
+
+  .main-content {
+    padding: 40px 20px;
   }
 }
