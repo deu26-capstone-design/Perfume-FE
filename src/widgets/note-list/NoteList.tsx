@@ -19,6 +19,7 @@ const NoteList = ({ accordId }: Props) => {
   const observerRef = useRef<HTMLDivElement>(null);
 
   const isFetchingRef = useRef(false);
+  const requestSeqRef = useRef(0);
 
   const getInitialLimit = () => {
     if (window.innerWidth < 767) return 3;
@@ -38,26 +39,33 @@ const NoteList = ({ accordId }: Props) => {
 
   const fetchNotes = useCallback(
     async (targetPage: number, reset = false) => {
-      if (isFetchingRef.current) return;
+      if (isFetchingRef.current && !reset) return;
+
+      const requestSeq = ++requestSeqRef.current;
 
       isFetchingRef.current = true;
       setIsFetching(true);
       try {
         const data = await accordsApi.getAccordNotes(accordId, targetPage, 30);
+        if (requestSeq !== requestSeqRef.current) return;
         setNotes((prev) => (reset ? data.content : [...prev, ...data.content]));
         setHasNext(data.hasNext);
         setPage(data.pageNum);
       } catch (e) {
         console.error('노트 목록을 불러오는데 실패했습니다.', e);
       } finally {
-        isFetchingRef.current = false;
-        setIsFetching(false);
+        if (requestSeq === requestSeqRef.current) {
+          isFetchingRef.current = false;
+          setIsFetching(false);
+        }
       }
     },
     [accordId],
   );
 
   useEffect(() => {
+    requestSeqRef.current += 1;
+    isFetchingRef.current = false;
     setNotes([]);
     setPage(0);
     setHasNext(false);
