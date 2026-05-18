@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { accordsApi, type PerfumeItem } from '@entities/accords/api/accordsApi';
 import SimplePerfumeGrid from '@widgets/simple-perfume-grid/SimplePerfumeGrid';
+import './AccordPerfumeList.css';
 
 interface AccordPerfumeListProps {
   accordId: number;
@@ -10,9 +11,11 @@ interface AccordPerfumeListProps {
 const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
   const navigate = useNavigate();
   const [perfumes, setPerfumes] = useState<PerfumeItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+
   const observerRef = useRef<HTMLDivElement>(null);
   const isFetchingRef = useRef(false);
   const latestAccordIdRef = useRef(accordId);
@@ -27,6 +30,8 @@ const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
 
       isFetchingRef.current = true;
       setIsFetching(true);
+      setError(null);
+
       try {
         const data = await accordsApi.getAccordPerfumes(accordId, targetPage, 30);
 
@@ -37,6 +42,9 @@ const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
         setPage(data.pageNum);
       } catch (error) {
         console.error('향수 목록을 불러오는데 실패했습니다.', error);
+        if (accordId === latestAccordIdRef.current) {
+          setError('향수 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+        }
       } finally {
         if (accordId === latestAccordIdRef.current) {
           isFetchingRef.current = false;
@@ -49,6 +57,7 @@ const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
 
   useEffect(() => {
     setPerfumes([]);
+    setError(null);
     setPage(0);
     setHasNext(false);
     isFetchingRef.current = false;
@@ -82,12 +91,12 @@ const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
     }));
   }, [perfumes]);
 
+  if (error) {
+    return <div className="accord-perfume-message">{error}</div>;
+  }
+
   if (!isFetching && perfumes.length === 0) {
-    return (
-      <div style={{ padding: '20px', textAlign: 'center', color: 'var(--gray-500)' }}>
-        해당 계열의 향수가 없습니다.
-      </div>
-    );
+    return <div className="accord-perfume-message">해당 계열의 향수가 없습니다.</div>;
   }
 
   return (
@@ -98,14 +107,9 @@ const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
       />
 
       {hasNext && (
-        <div
-          ref={observerRef}
-          style={{ height: '40px', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
-        >
+        <div ref={observerRef} className="accord-perfume-observer">
           {isFetching && (
-            <span style={{ color: 'var(--gray-500)', fontSize: '0.9rem' }}>
-              향수 목록을 불러오는 중...
-            </span>
+            <span className="accord-perfume-loading-text">향수 목록을 불러오는 중...</span>
           )}
         </div>
       )}
