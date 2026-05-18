@@ -9,7 +9,6 @@
 }
 
 .image-wrapper {
-  /* position: relative; */
   position: sticky;
   top: 40px;
 
@@ -66,6 +65,11 @@
     max-width: none;
     max-height: 170px;
     border-radius: 10px 10px 0 0;
+  }
+
+  .accords-about .image-wrapper {
+    position: relative;
+    top: auto;
   }
 
   .title {
