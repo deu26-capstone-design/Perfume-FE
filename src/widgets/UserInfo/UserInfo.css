@@ -16,11 +16,10 @@
 .info-list {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 35px;
 }
 
 .info-row {
-  display: grid;
   grid-template-columns: 100px 1fr 60px;
   align-items: center;
   font-size: 1rem;

@@ -1,0 +1,138 @@
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.info-label {
+  width: 120px;
+  color: var(--gray-500);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.info-content-area {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 1. 기본 표시 모드 */
+.info-display-mode {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.info-value {
+  color: var(--gray-900);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.text-edit-trigger-btn {
+  padding: 9px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-600);
+  background-color: var(--gray-100);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.text-edit-trigger-btn:hover {
+  background-color: var(--gray-200);
+  color: var(--gray-900);
+}
+
+.info-edit-mode {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.info-input {
+  flex: 1;
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  color: var(--gray-900);
+  border: 1px solid var(--main-color);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.info-input:focus {
+  border-color: var(--main-color);
+}
+
+.edit-text-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.text-action-btn {
+  padding: 9px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.text-action-btn.cancel {
+  background-color: var(--gray-100);
+  color: var(--gray-600);
+  border: 1px solid transparent;
+}
+
+.text-action-btn.cancel:hover {
+  background-color: var(--gray-200);
+  color: var(--gray-900);
+}
+
+.text-action-btn.save {
+  background-color: var(--main-color);
+  color: var(--white-900);
+  border: 1px solid transparent;
+}
+
+.text-action-btn.save:hover {
+  background-color: color-mix(in srgb, var(--main-color), black 30%);
+}
+
+@media (max-width: 767px) {
+  .info-label {
+    width: 90px;
+  }
+
+  .info-edit-mode {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .info-input {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .edit-text-actions {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .text-action-btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
