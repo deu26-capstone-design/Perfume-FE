@@ -11,7 +11,6 @@
 .image-wrapper {
   position: sticky;
   top: 40px;
-
   flex: 1;
   max-width: 298px;
   aspect-ratio: 3 / 4;
