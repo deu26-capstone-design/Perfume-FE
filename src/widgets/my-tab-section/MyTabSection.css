@@ -69,6 +69,66 @@
   color: var(--gray-600);
 }
 
+.img-edit-dropdown {
+  position: absolute;
+  top: 105%;
+  right: -20px;
+  width: 170px;
+  background-color: var(--white-900);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 8px 0;
+  z-index: 50;
+
+  animation: fadeInDown 0.2s ease-out;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: var(--gray-100);
+}
+
+.dropdown-icon {
+  font-size: 1.1rem;
+  color: var(--gray-500);
+}
+
+.dropdown-item.delete,
+.dropdown-item.delete .dropdown-icon {
+  color: #e53e3e;
+}
+
+.dropdown-item.delete:hover {
+  background-color: var(--white-900);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .nickname {
   margin: 15px 0 5px;
   font-size: 1.4rem;
