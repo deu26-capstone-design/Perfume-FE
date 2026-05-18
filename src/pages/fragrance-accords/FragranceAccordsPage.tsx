@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { accordsApi, type AccordDetail } from '@entities/accords/api/accordsApi';
 import AccordsAbout from '@widgets/accords-about/AccordsAbout';
 import NoteList from '@widgets/note-list/NoteList';
@@ -6,28 +7,28 @@ import AccordPerfumeList from '@widgets/accord-perfume-list/AccordPerfumeList';
 import './FragranceAccordsPage.css';
 
 const AccordsPage = () => {
+  const { accordId } = useParams<{ accordId: string }>();
+  const navigate = useNavigate();
+
   const [accordsList, setAccordsList] = useState<AccordDetail[]>([]);
-  const [activeAccord, setActiveAccord] = useState<AccordDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const activeAccord = accordsList.find((accord) => accord.id === Number(accordId)) || null;
 
   useEffect(() => {
     const fetchAccords = async () => {
       try {
-        console.log('API 호출 시작');
-
         const data = await accordsApi.getAccordsDetail();
-
-        console.log('응답 성공');
-        console.log(data);
-
         setAccordsList(data);
 
         if (data && data.length > 0) {
-          setActiveAccord(data[0]);
+          const isValidId = data.some((a) => a.id === Number(accordId));
+          if (!isValidId) {
+            navigate(`/accords/${data[0].id}`, { replace: true });
+          }
         }
       } catch (e) {
-        console.error('에러 발생');
-        console.error(e);
+        console.error('향 계열 목록을 불러오는데 실패했습니다.', e);
       } finally {
         setIsLoading(false);
       }
@@ -37,7 +38,11 @@ const AccordsPage = () => {
   }, []);
 
   if (isLoading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="accords-loading-text">
+        <p>향 계열 정보를 불러오는 중...</p>
+      </div>
+    );
   }
 
   if (!activeAccord) {
@@ -53,7 +58,7 @@ const AccordsPage = () => {
             <li
               key={accord.id}
               className={`sidebar__item ${activeAccord.id === accord.id ? 'active' : ''}`}
-              onClick={() => setActiveAccord(accord)}
+              onClick={() => navigate(`/accords/${accord.id}`)}
             >
               {accord.name}
             </li>
