@@ -21,6 +21,18 @@ const PerfumeInfoCard: React.FC<PerfumeInfoCardProps> = ({
     <div
       className={`perfume-info-card ${align} ${direction} ${onClick ? 'clickable' : ''}`}
       onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={
+        onClick
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onClick();
+              }
+            }
+          : undefined
+      }
     >
       {imageUrl && <img src={imageUrl} alt={name} className="perfume-image" />}
 
