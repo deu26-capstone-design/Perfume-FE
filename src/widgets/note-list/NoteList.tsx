@@ -15,12 +15,32 @@ const NoteList = ({ accordId }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<HTMLDivElement>(null);
+
+  const isFetchingRef = useRef(false);
+
+  const getInitialLimit = () => {
+    if (window.innerWidth < 767) return 3;
+    if (window.innerWidth < 1023) return 4;
+    return 5;
+  };
+  const [initialLimit, setInitialLimit] = useState(5);
+
+  useEffect(() => {
+    setInitialLimit(getInitialLimit());
+    const handleResize = () => {
+      setInitialLimit(getInitialLimit());
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const fetchNotes = useCallback(
     async (targetPage: number, reset = false) => {
-      if (isFetching) return;
+      if (isFetchingRef.current) return;
 
+      isFetchingRef.current = true;
       setIsFetching(true);
       try {
         const data = await accordsApi.getAccordNotes(accordId, targetPage, 30);
@@ -30,13 +50,13 @@ const NoteList = ({ accordId }: Props) => {
       } catch (e) {
         console.error('노트 목록을 불러오는데 실패했습니다.', e);
       } finally {
+        isFetchingRef.current = false;
         setIsFetching(false);
       }
     },
-    [accordId, isFetching],
+    [accordId],
   );
 
-  // 카테고리(accordId)가 변경될 때마다 초기화
   useEffect(() => {
     setNotes([]);
     setPage(0);
@@ -44,55 +64,72 @@ const NoteList = ({ accordId }: Props) => {
     setIsExpanded(false);
 
     fetchNotes(0, true);
-  }, [accordId]);
+  }, [accordId, fetchNotes]);
 
   useEffect(() => {
     if (!isExpanded || !hasNext || isFetching) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        fetchNotes(page + 1);
-      }
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNotes(page + 1);
+        }
+      },
+      {
+        root: scrollContainerRef.current,
+        threshold: 0.1,
+      },
+    );
 
     if (observerRef.current) observer.observe(observerRef.current);
 
     return () => observer.disconnect();
   }, [isExpanded, hasNext, isFetching, page, fetchNotes]);
 
-  const displayNotes = isExpanded ? notes : notes.slice(0, 5);
+  const displayNotes = isExpanded ? notes : notes.slice(0, initialLimit);
 
   return (
     <div className={`notes-frame ${isExpanded ? 'expanded' : ''}`}>
-      <div className="notes-grid">
-        {displayNotes.map((note, idx) => (
-          <div key={`${note.name}-${idx}`}>
-            <NoteCard imageUrl={note.imageUrl} name={note.name} />
+      <div className="notes-scroll-container" ref={scrollContainerRef}>
+        <div className="notes-grid">
+          {displayNotes.map((note, idx) => (
+            <div key={`${note.name}-${idx}`} className="notes-item">
+              <NoteCard imageUrl={note.imageUrl} name={note.name} />
+            </div>
+          ))}
+        </div>
+
+        {isExpanded && hasNext && (
+          <div ref={observerRef} className="notes-infinite-trigger">
+            {isFetching && (
+              <div
+                style={{
+                  textAlign: 'center',
+                  fontSize: '0.8rem',
+                  color: 'gray',
+                  padding: '10px 0',
+                }}
+              >
+                불러오는 중...
+              </div>
+            )}
           </div>
-        ))}
+        )}
       </div>
 
-      {isExpanded && hasNext && (
-        <div ref={observerRef} style={{ height: 40, marginTop: 10 }}>
-          {isFetching && (
-            <div style={{ textAlign: 'center', fontSize: '0.8rem', color: 'gray' }}>
-              불러오는 중...
-            </div>
-          )}
-        </div>
-      )}
-
       <div className="notes-btn-wrapper">
-        {!isExpanded && notes.length > 5 && (
-          <button onClick={() => setIsExpanded(true)}>
+        {!isExpanded && notes.length > initialLimit && (
+          <button className="notes-action-btn" onClick={() => setIsExpanded(true)}>
             전체 보기 <FiChevronDown />
           </button>
         )}
 
         {isExpanded && (
           <button
+            className="notes-action-btn"
             onClick={() => {
               setIsExpanded(false);
+              if (scrollContainerRef.current) scrollContainerRef.current.scrollTop = 0;
             }}
           >
             닫기 <FiChevronUp />
