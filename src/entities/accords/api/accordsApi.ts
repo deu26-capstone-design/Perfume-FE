@@ -37,7 +37,6 @@ export const accordsApi = {
     return response.data;
   },
 
-  // 2. 향 계열 노트 목록 조회
   getAccordNotes: async (id: number, page: number = 0, size: number = 30) => {
     const response = await client.get<PageResponse<NoteItem>>(`/api/accords/detail/${id}/notes`, {
       params: { page, size },
@@ -45,7 +44,6 @@ export const accordsApi = {
     return response.data;
   },
 
-  // 3. 향 계열 향수 목록 조회
   getAccordPerfumes: async (id: number, page: number = 0, size: number = 30) => {
     const response = await client.get<PageResponse<PerfumeItem>>(
       `/api/accords/detail/${id}/perfumes`,
