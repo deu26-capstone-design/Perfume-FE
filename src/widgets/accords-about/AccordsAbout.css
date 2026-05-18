@@ -5,12 +5,10 @@
   padding: 55px 50px;
   border: 1px solid var(--gray-200);
   border-radius: 12px;
-  align-items: flex-start;
 }
 
 .image-wrapper {
-  position: sticky;
-  top: 40px;
+  position: relative;
   flex: 1;
   max-width: 298px;
   aspect-ratio: 3 / 4;
