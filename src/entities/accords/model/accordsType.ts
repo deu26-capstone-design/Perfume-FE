@@ -1,4 +1,5 @@
 export type Accord = {
+  id: number;
   name: string;
   description: string;
   imageUrl: string;
@@ -10,6 +11,6 @@ export type Accord = {
     id: number;
     name: string;
     brand: string;
-    imageUrl: string;
+    imageUrl: string | null;
   }[];
 };
