@@ -82,6 +82,10 @@
   .accords-page__sidebar {
     flex: 0 0 max-content;
   }
+
+  .accords-page__container {
+    gap: 40px;
+  }
 }
 
 @media (max-width: 767px) {
