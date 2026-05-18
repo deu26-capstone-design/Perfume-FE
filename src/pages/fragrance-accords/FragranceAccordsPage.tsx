@@ -13,20 +13,15 @@ const AccordsPage = () => {
   const [accordsList, setAccordsList] = useState<AccordDetail[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const activeAccord = accordsList.find((accord) => accord.id === Number(accordId)) || null;
+  const activeAccord = accordId
+    ? accordsList.find((accord) => accord.id === Number(accordId)) || null
+    : null;
 
   useEffect(() => {
     const fetchAccords = async () => {
       try {
         const data = await accordsApi.getAccordsDetail();
         setAccordsList(data);
-
-        if (data && data.length > 0) {
-          const isValidId = data.some((a) => a.id === Number(accordId));
-          if (!isValidId) {
-            navigate(`/accords/${data[0].id}`, { replace: true });
-          }
-        }
       } catch (e) {
         console.error('향 계열 목록을 불러오는데 실패했습니다.', e);
       } finally {
@@ -36,6 +31,15 @@ const AccordsPage = () => {
 
     fetchAccords();
   }, []);
+  useEffect(() => {
+    if (!isLoading && accordsList.length > 0) {
+      const isValidId = accordsList.some((a) => a.id === Number(accordId));
+
+      if (!isValidId) {
+        navigate(`/accords/${accordsList[0].id}`, { replace: true });
+      }
+    }
+  }, [accordId, accordsList, isLoading, navigate]);
 
   if (isLoading) {
     return (
