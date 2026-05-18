@@ -25,7 +25,7 @@ const MyPage: React.FC = () => {
     const fetchUserData = async () => {
       try {
         const mockData: UserProfile = {
-          profileImage: 'https://i.pinimg.com/736x/e9/c6/92/e9c692d5adaef54de0fc98e829cc1e13.jpg',
+          profileImage: 'https://i.pinimg.com/736x/9d/16/4e/9d164e4e074d11ce4de0a508914537a8.jpg',
           nickname: '향수콜렉터',
           email: 'aaa@naver.com',
           name: '김철수',
