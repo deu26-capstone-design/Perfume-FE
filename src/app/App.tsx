@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from '@widgets/Header/ui/Header';
 import { AuthProvider } from '@features/auth/model/useAuth';
 import MainPage from '@pages/main/MainPage';
@@ -18,7 +18,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/perfume/:id" element={<PerfumeDetailPage />} />
-        <Route path="/accords" element={<AccordsPage />} />
+        <Route path="/accords" element={<Navigate to="/accords/1" replace />} />
+        <Route path="/accords/:accordId" element={<AccordsPage />} />
         <Route path="/layering" element={<LayeringPage />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/login" element={<LoginPage />} />
