@@ -58,12 +58,6 @@
   text-transform: uppercase;
 }
 
-.perfume-name,
-.perfume-brand {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .perfume-image {
   width: clamp(70px, 15vw, 122px);
   height: auto;
