@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { accordsApi, type PerfumeItem } from '@entities/accords/api/accordsApi';
 import SimplePerfumeGrid from '@widgets/simple-perfume-grid/SimplePerfumeGrid';
@@ -9,37 +9,53 @@ interface AccordPerfumeListProps {
 
 const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
   const navigate = useNavigate();
-
   const [perfumes, setPerfumes] = useState<PerfumeItem[]>([]);
   const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-
   const observerRef = useRef<HTMLDivElement>(null);
-  const DEFAULT_IMAGE = 'https://fimgs.net/mdimg/perfume-thumbs/375x500.10806.webp';
+  const isFetchingRef = useRef(false);
+  const latestAccordIdRef = useRef(accordId);
+
+  useEffect(() => {
+    latestAccordIdRef.current = accordId;
+  }, [accordId]);
 
   const fetchPerfumes = useCallback(
     async (targetPage: number, isReset: boolean = false) => {
-      if (isFetching) return;
+      if (isFetchingRef.current && !isReset) return;
+
+      isFetchingRef.current = true;
       setIsFetching(true);
       try {
         const data = await accordsApi.getAccordPerfumes(accordId, targetPage, 30);
+
+        if (accordId !== latestAccordIdRef.current) return;
+
         setPerfumes((prev) => (isReset ? data.content : [...prev, ...data.content]));
         setHasNext(data.hasNext);
         setPage(data.pageNum);
       } catch (error) {
         console.error('향수 목록을 불러오는데 실패했습니다.', error);
       } finally {
-        setIsFetching(false);
+        if (accordId === latestAccordIdRef.current) {
+          isFetchingRef.current = false;
+          setIsFetching(false);
+        }
       }
     },
-    [accordId, isFetching],
+    [accordId],
   );
 
   useEffect(() => {
     setPerfumes([]);
+    setPage(0);
+    setHasNext(false);
+    isFetchingRef.current = false;
+    setIsFetching(false);
+
     fetchPerfumes(0, true);
-  }, [accordId]);
+  }, [accordId, fetchPerfumes]);
 
   useEffect(() => {
     if (!hasNext || isFetching) return;
@@ -57,12 +73,14 @@ const AccordPerfumeList = ({ accordId }: AccordPerfumeListProps) => {
     return () => observer.disconnect();
   }, [hasNext, isFetching, page, fetchPerfumes]);
 
-  const gridPerfumes = perfumes.map((perfume) => ({
-    id: perfume.id,
-    name: perfume.name,
-    brand: perfume.brand,
-    imageUrl: perfume.imageUrl ?? DEFAULT_IMAGE,
-  }));
+  const gridPerfumes = useMemo(() => {
+    return perfumes.map((perfume) => ({
+      id: perfume.id,
+      name: perfume.name,
+      brand: perfume.brand,
+      imageUrl: perfume.imageUrl || '',
+    }));
+  }, [perfumes]);
 
   if (!isFetching && perfumes.length === 0) {
     return (
