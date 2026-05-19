@@ -34,8 +34,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshUser = useCallback(async () => {
     const res = await getMe();
+    if (!res.data?.userId) {
+      handleSetIsLogin(false);
+      return;
+    }
     handleSetIsLogin(true);
-    setUserId(res.data?.userId ?? null);
+    setUserId(res.data.userId);
   }, [handleSetIsLogin]);
 
   useEffect(() => {
@@ -43,8 +47,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     getMe()
       .then((res) => {
         if (cancelled) return;
+        if (!res.data?.userId) {
+          handleSetIsLogin(false);
+          return;
+        }
         handleSetIsLogin(true);
-        setUserId(res.data?.userId ?? null);
+        setUserId(res.data.userId);
         refreshCsrfToken().catch(() => {});
       })
       .catch(() => {

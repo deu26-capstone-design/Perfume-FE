@@ -63,14 +63,14 @@ export default function WishlistButton({ perfumeId }: Props) {
 
     try {
       if (next) {
-        await addWishlist(perfumeId, userId);
+        await addWishlist(perfumeId);
         saveWishlist(userId, [
           ...getStoredWishlist(userId).filter((id) => id !== perfumeId),
           perfumeId,
         ]);
         showToast('위시리스트에 추가됐어요!');
       } else {
-        await removeWishlist(perfumeId, userId);
+        await removeWishlist(perfumeId);
         saveWishlist(
           userId,
           getStoredWishlist(userId).filter((id) => id !== perfumeId),

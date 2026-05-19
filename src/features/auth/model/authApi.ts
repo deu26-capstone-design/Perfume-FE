@@ -1,6 +1,6 @@
 import client, { updateClientCsrfToken } from '@shared/api/client';
 
-const API_BASE_URL = 'https://perfume.biryeong.kim';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 let csrfToken: string | null = null;
 
