@@ -1,6 +1,6 @@
 import client, { updateClientCsrfToken } from '@shared/api/client';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 let csrfToken: string | null = null;
 

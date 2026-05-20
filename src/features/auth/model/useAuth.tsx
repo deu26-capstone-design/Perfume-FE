@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshUser = useCallback(async () => {
     const res = await getMe();
-    if (!res.data?.userId) {
+    if (res.data?.userId == null) {
       handleSetIsLogin(false);
       return;
     }
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     getMe()
       .then((res) => {
         if (cancelled) return;
-        if (!res.data?.userId) {
+        if (res.data?.userId == null) {
           handleSetIsLogin(false);
           return;
         }
