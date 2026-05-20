@@ -1,4 +1,4 @@
-import client, { updateClientCsrfToken } from '@shared/api/client';
+import client, { setRefreshCsrfCallback, updateClientCsrfToken } from '@shared/api/client';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
@@ -25,6 +25,8 @@ export const refreshCsrfToken = async () => {
   updateClientCsrfToken(csrfToken);
   return csrfToken;
 };
+
+setRefreshCsrfCallback(refreshCsrfToken);
 
 const withCsrf = () => (csrfToken ? { 'X-XSRF-TOKEN': csrfToken } : {});
 
