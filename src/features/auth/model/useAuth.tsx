@@ -33,13 +33,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const refreshUser = useCallback(async () => {
-    const res = await getMe();
-    if (res.data?.userId == null) {
+    try {
+      const res = await getMe();
+      if (res.data?.userId == null) {
+        handleSetIsLogin(false);
+        return;
+      }
+      handleSetIsLogin(true);
+      setUserId(res.data.userId);
+    } catch {
       handleSetIsLogin(false);
-      return;
     }
-    handleSetIsLogin(true);
-    setUserId(res.data.userId);
   }, [handleSetIsLogin]);
 
   useEffect(() => {
