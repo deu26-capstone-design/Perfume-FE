@@ -164,12 +164,14 @@ const SignupForm = () => {
           <span className="signup__label">성별</span>
           <div className="signup__gender">
             <button
+              type="button"
               className={`signup__gender-btn ${gender === 'F' ? 'signup__gender-btn--active' : ''}`}
               onClick={() => setGender('F')}
             >
               여성
             </button>
             <button
+              type="button"
               className={`signup__gender-btn ${gender === 'M' ? 'signup__gender-btn--active' : ''}`}
               onClick={() => setGender('M')}
             >
