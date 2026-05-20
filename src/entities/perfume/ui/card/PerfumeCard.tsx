@@ -9,7 +9,7 @@ export const PerfumeCard = ({ perfume }: PerfumeCardProps) => (
   <article className="perfume-card">
     <div className="perfume-card__inner">
       <div className="perfume-card__image-container">
-        <img src={perfume.imageUrl} alt={perfume.name} className="perfume-card__image" />
+        <img src={perfume.imageUrl ?? undefined} alt={perfume.name} className="perfume-card__image" />
       </div>
       <div className="perfume-card__info">
         <h3 className="perfume-card__name">{perfume.name}</h3>

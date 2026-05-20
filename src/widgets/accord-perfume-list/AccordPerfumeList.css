@@ -1,0 +1,17 @@
+.accord-perfume-message {
+  padding: 20px;
+  text-align: center;
+  color: var(--gray-500);
+}
+
+.accord-perfume-observer {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.accord-perfume-loading-text {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+}

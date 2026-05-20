@@ -1,42 +1,124 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ReviewButton from '@features/review/ui/ReviewButton';
 import ReviewFormModal from '@features/review/ui/ReviewFormModal';
 import { useInfiniteScroll } from '@shared/lib/useInfiniteScroll';
+import { useAuth } from '@features/auth/model/useAuth';
 import PerfumeReviewItem from './PerfumeReviewItem';
-import { mockReviews } from '@entities/review/model/reviewMockData';
+import { getReviews } from '@entities/perfume/api/perfumeApi';
 import type { Review } from '@entities/review/model/types';
 import '../styles/PerfumeReviewList.css';
 
-//5개씩 로드되게 구현(추후 수정 가능)
-const PAGE_SIZE = 5;
+interface Props {
+  perfumeId: number;
+  onReviewSubmit?: () => void;
+}
 
-export default function PerfumeReviewList() {
-  const [reviews, setReviews] = useState<Review[]>(mockReviews);
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) {
+  const { isLogin } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const isLoadingRef = useRef(false);
+  const [fetchError, setFetchError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [hasFirstLoaded, setHasFirstLoaded] = useState(false);
+
+  useEffect(() => {
+    setPage(0);
+    setFetchError(false);
+    setHasFirstLoaded(false);
+  }, [perfumeId]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setIsLoading(true);
+    isLoadingRef.current = true;
+    getReviews(perfumeId, page)
+      .then((res) => {
+        if (cancelled) return;
+        const items = res.data.content;
+        setReviews((prev) => (page === 0 ? items : [...prev, ...items]));
+        setHasMore(res.data.hasNext);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setHasMore(false);
+          setFetchError(true);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsLoading(false);
+          setHasFirstLoaded(true);
+        }
+        isLoadingRef.current = false;
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [perfumeId, page, refreshKey]);
 
   const handleLoadMore = useCallback(() => {
-    setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, reviews.length));
-  }, [reviews.length]);
+    if (!hasMore || isLoadingRef.current || reviews.length === 0) return;
+    isLoadingRef.current = true;
+    setPage((prev) => prev + 1);
+  }, [hasMore, reviews.length]);
 
   const sentinelRef = useInfiniteScroll(handleLoadMore);
 
-  const handleSubmit = (newReview: Review) => {
-    setReviews((prev) => [newReview, ...prev]);
+  const handleSubmit = () => {
     setIsModalOpen(false);
+    setPage(0);
+    setRefreshKey((prev) => prev + 1);
+    onReviewSubmit?.();
   };
 
   return (
     <div className="review-list">
-      <ReviewButton onClick={() => setIsModalOpen(true)} />
+      <ReviewButton
+        onClick={() =>
+          isLogin
+            ? setIsModalOpen(true)
+            : navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`)
+        }
+      />
       <div className="review-list__items">
-        {reviews.slice(0, visibleCount).map((review, index) => (
-          <PerfumeReviewItem key={index} review={review} />
-        ))}
+        {isLoading && !hasFirstLoaded ? (
+          <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
+            불러오는 중...
+          </p>
+        ) : fetchError ? (
+          <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
+            리뷰를 불러오지 못했어요. 잠시 후 다시 시도해주세요.
+          </p>
+        ) : reviews.length === 0 ? (
+          <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
+            아직 작성된 리뷰가 없어요!
+          </p>
+        ) : (
+          reviews.map((review) => (
+            <PerfumeReviewItem key={`${review.nickname}-${review.createdAt}`} review={review} />
+          ))
+        )}
       </div>
-      {visibleCount < reviews.length && <div ref={sentinelRef} />}
+      {hasMore && <div ref={sentinelRef} />}
+      {isLoading && hasFirstLoaded && (
+        <p style={{ textAlign: 'center', padding: '1rem 0', color: 'var(--gray-400)' }}>
+          불러오는 중...
+        </p>
+      )}
       {isModalOpen && (
-        <ReviewFormModal onClose={() => setIsModalOpen(false)} onSubmit={handleSubmit} />
+        <ReviewFormModal
+          perfumeId={perfumeId}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleSubmit}
+        />
       )}
     </div>
   );

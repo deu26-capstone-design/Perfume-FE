@@ -67,6 +67,14 @@
   padding-top: 2rem;
 }
 
+.layering-page__loading,
+.layering-page__empty {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--gray-400);
+}
+
 /* 태블릿 */
 @media (max-width: 1023px) {
   .layering-title {

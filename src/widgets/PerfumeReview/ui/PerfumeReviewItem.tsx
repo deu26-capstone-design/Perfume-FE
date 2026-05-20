@@ -13,17 +13,17 @@ import type { Review } from '@entities/review/model/types';
 import '../styles/PerfumeReviewList.css';
 
 const SATISFACTION_ICONS = {
-  1: <FaRegFaceGrinHearts size={20} color="var(--gray-600)" />,
-  2: <FaRegFaceLaughBeam size={20} color="var(--gray-600)" />,
+  5: <FaRegFaceGrinHearts size={20} color="var(--gray-600)" />,
+  4: <FaRegFaceLaughBeam size={20} color="var(--gray-600)" />,
   3: <FaRegFaceSmile size={20} color="var(--gray-600)" />,
-  4: <FaRegFaceMeh size={20} color="var(--gray-600)" />,
-  5: <FaRegFaceTired size={20} color="var(--gray-600)" />,
+  2: <FaRegFaceMeh size={20} color="var(--gray-600)" />,
+  1: <FaRegFaceTired size={20} color="var(--gray-600)" />,
 };
 
 const LONGEVITY_ICONS = {
-  1: <FaRegFaceLaughBeam size={20} color="var(--gray-600)" />,
+  3: <FaRegFaceLaughBeam size={20} color="var(--gray-600)" />,
   2: <FaRegFaceSmile size={20} color="var(--gray-600)" />,
-  3: <FaRegFaceMeh size={20} color="var(--gray-600)" />,
+  1: <FaRegFaceMeh size={20} color="var(--gray-600)" />,
 };
 
 const SEASON_ICONS = {

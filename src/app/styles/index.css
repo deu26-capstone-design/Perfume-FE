@@ -11,6 +11,7 @@ body {
   font-family: 'Pretendard', sans-serif;
   line-height: 1.4;
   letter-spacing: -0.025em;
+  scrollbar-gutter: stable;
 }
 
 :root {

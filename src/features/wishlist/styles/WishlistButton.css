@@ -1,3 +1,40 @@
+.wishlist-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.wishlist-toast {
+  position: absolute;
+  right: calc(100% + 8px);
+  white-space: nowrap;
+  font-size: 0.8rem;
+  color: var(--gray-600);
+  background: var(--white-900);
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  padding: 4px 10px;
+  pointer-events: none;
+  animation: toast-fade 2s ease forwards;
+}
+
+@keyframes toast-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .wishlist-btn {
   background: none;
   border: none;
