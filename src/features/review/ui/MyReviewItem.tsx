@@ -12,18 +12,12 @@ import PerfumeInfoCard from '@entities/perfume/ui/card/PerfumeInfoCard';
 import type { Review } from '@entities/review/model/types';
 import '../styles/MyReviewItem.css';
 
-export interface MyReviewType extends Omit<
-  Review,
-  'nickname' | 'profileImageUrl' | 'seasons' | 'scents' | 'satisfaction' | 'longevity'
-> {
+export interface MyReviewType extends Omit<Review, 'nickname' | 'profileImageUrl'> {
   id: number;
+  perfumeId: number;
   perfumeName: string;
   brandName: string;
   imageUrl: string;
-  satisfaction: number;
-  longevity: number | null;
-  readonly seasons: readonly string[];
-  readonly scents: readonly string[];
 }
 
 const SATISFACTION_ICONS = {
