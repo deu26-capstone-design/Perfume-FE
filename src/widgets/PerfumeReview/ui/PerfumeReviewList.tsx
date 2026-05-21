@@ -38,6 +38,12 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
   }, [perfumeId]);
 
   useEffect(() => {
+    return () => {
+      if (alreadyReviewedTimer.current) clearTimeout(alreadyReviewedTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
     let cancelled = false;
     setIsLoading(true);
     isLoadingRef.current = true;
@@ -98,7 +104,9 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
         setIsModalOpen(true);
       }
     } catch {
-      setIsModalOpen(true);
+      if (alreadyReviewedTimer.current) clearTimeout(alreadyReviewedTimer.current);
+      setAlreadyReviewedMsg('잠시 후 다시 시도해주세요.');
+      alreadyReviewedTimer.current = setTimeout(() => setAlreadyReviewedMsg(null), 2000);
     } finally {
       setIsCheckingReview(false);
     }
