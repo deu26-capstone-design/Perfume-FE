@@ -10,8 +10,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { refreshUser } = useAuth();
-  const raw = searchParams.get('redirect') ?? '/';
-  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
+  const raw = searchParams.get('redirect') ?? '/main';
+  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/main';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
