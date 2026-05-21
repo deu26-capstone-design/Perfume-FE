@@ -32,7 +32,7 @@ export const features: ServiceFeature[] = [
   {
     label: '향 선호도 테스트',
     title: '나에게 어울리는 향을\n찾아드릴게요.',
-    desc: '12가지 질문을 통해 나의 향 취향을 분석하고\n어떤 향을 좋아하는 지 파악해보세요.',
+    desc: '12가지 질문을 통해 나의 향 취향을 분석하고\n어떤 향을 좋아하는지 파악해보세요.',
     image: testPage,
   },
 ];
