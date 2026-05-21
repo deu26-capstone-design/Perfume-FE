@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from '@widgets/Header/ui/Header';
 import { AuthProvider } from '@features/auth/model/useAuth';
 import ScrollToTop from '@app/router/ScrollToTop';
@@ -29,6 +29,7 @@ export default function App() {
         <Route path="/oauth2/success" element={<OAuthSuccessPage />} />
         <Route path="/oauth2/failure" element={<OAuthFailurePage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AuthProvider>
   );
