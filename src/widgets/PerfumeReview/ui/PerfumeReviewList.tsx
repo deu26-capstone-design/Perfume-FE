@@ -5,7 +5,7 @@ import ReviewFormModal from '@features/review/ui/ReviewFormModal';
 import { useInfiniteScroll } from '@shared/lib/useInfiniteScroll';
 import { useAuth } from '@features/auth/model/useAuth';
 import PerfumeReviewItem from './PerfumeReviewItem';
-import { getReviews } from '@entities/perfume/api/perfumeApi';
+import { getReviews, getMyReview } from '@entities/perfume/api/perfumeApi';
 import type { Review } from '@entities/review/model/types';
 import '../styles/PerfumeReviewList.css';
 
@@ -27,6 +27,9 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [hasFirstLoaded, setHasFirstLoaded] = useState(false);
+  const [isCheckingReview, setIsCheckingReview] = useState(false);
+  const [alreadyReviewedMsg, setAlreadyReviewedMsg] = useState<string | null>(null);
+  const alreadyReviewedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setPage(0);
@@ -79,15 +82,32 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
     onReviewSubmit?.();
   };
 
+  const handleReviewButtonClick = async () => {
+    if (!isLogin) {
+      navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`);
+      return;
+    }
+    setIsCheckingReview(true);
+    try {
+      const res = await getMyReview(perfumeId);
+      if (res.status === 200) {
+        if (alreadyReviewedTimer.current) clearTimeout(alreadyReviewedTimer.current);
+        setAlreadyReviewedMsg('이미 리뷰를 작성한 향수예요.');
+        alreadyReviewedTimer.current = setTimeout(() => setAlreadyReviewedMsg(null), 2000);
+      } else {
+        setIsModalOpen(true);
+      }
+    } catch {
+      setIsModalOpen(true);
+    } finally {
+      setIsCheckingReview(false);
+    }
+  };
+
   return (
     <div className="review-list">
-      <ReviewButton
-        onClick={() =>
-          isLogin
-            ? setIsModalOpen(true)
-            : navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`)
-        }
-      />
+      <ReviewButton onClick={handleReviewButtonClick} disabled={isCheckingReview} />
+      {alreadyReviewedMsg && <p className="review-list__already-msg">{alreadyReviewedMsg}</p>}
       <div className="review-list__items">
         {isLoading && !hasFirstLoaded ? (
           <p style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--gray-400)' }}>
