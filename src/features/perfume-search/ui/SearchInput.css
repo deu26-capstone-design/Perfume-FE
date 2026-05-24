@@ -3,20 +3,19 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  transition: all 0.5s ease-in-out;
   gap: 0.5rem;
   height: var(--search-height);
+  width: 100%;
 }
 
 .search-field {
   flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
   background: transparent;
   appearance: none;
   font-size: 1.125rem;
-  height: var(--search-height);
-  line-height: var(--search-height);
   padding: 0;
   margin: 0;
   color: inherit;
@@ -29,6 +28,7 @@
   color: var(--gray-600);
   font-size: 1.5625rem;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .search-icon:hover {
@@ -44,11 +44,8 @@
   opacity: 0;
 }
 
-/* variants */
 .search-container.layering {
   --search-height: 3.5rem;
-
-  width: 100%;
   max-width: 544px;
   padding: 0 1.625rem;
   background-color: var(--layering-mix-search);
@@ -57,8 +54,6 @@
 
 .search-container.main {
   --search-height: 3.125rem;
-
-  width: 100%;
   max-width: 700px;
   padding: 0 1.625rem;
   background-color: var(--main-bar);
@@ -70,38 +65,23 @@
   color: var(--main-bar-placeholder);
 }
 
-/* 태블릿 (예: 1024px 이하) */
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .search-container.main {
-    --search-height: 2.5rem;
-
-    width: 400px;
+    --search-height: 2.75rem;
+    max-width: 500px;
   }
 
   .search-container.layering {
-    --search-height: 2.375rem;
-
-    width: 297px;
-  }
-
-  .search-field {
-    font-size: 1.125rem;
+    --search-height: 2.75rem;
+    max-width: 400px;
   }
 }
 
-/* 모바일 (예: 768px 이하) */
-@media (max-width: 768px) {
-  .search-container.main {
-    --search-height: 1.875rem;
-
-    width: 300px;
-    padding: 0 1.25rem;
-  }
-
+@media (max-width: 767px) {
+  .search-container.main,
   .search-container.layering {
-    --search-height: 2.1875rem;
-
-    width: 306px;
+    --search-height: 2.5rem;
+    max-width: 100%;
     padding: 0 1.25rem;
   }
 
@@ -110,11 +90,10 @@
   }
 
   .search-field {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 
   .search-icon {
-    flex-shrink: 0;
     font-size: 1.25rem;
   }
 }
