@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from '@widgets/Header/ui/Header';
 import { AuthProvider } from '@features/auth/model/useAuth';
 import ScrollToTop from '@app/router/ScrollToTop';
