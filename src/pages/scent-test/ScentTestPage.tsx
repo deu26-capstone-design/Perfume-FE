@@ -11,6 +11,8 @@ import '@features/scent-test/ui/QuestionCard.css';
 const ScentTestPage = () => {
   const navigate = useNavigate();
   const { isLogin, isAuthLoading } = useAuth();
+  const { currentQuestion, currentIndex, totalCount, answers, isComplete, selectAnswer, goBack } =
+    useScentTest();
 
   useEffect(() => {
     if (!isAuthLoading && !isLogin) {
@@ -19,15 +21,6 @@ const ScentTestPage = () => {
   }, [isLogin, isAuthLoading, navigate]);
 
   if (isAuthLoading || !isLogin) return null;
-  const {
-    currentQuestion,
-    currentIndex,
-    totalCount,
-    answers,
-    isComplete,
-    selectAnswer,
-    goBack,
-  } = useScentTest();
 
   if (isComplete) {
     return (
