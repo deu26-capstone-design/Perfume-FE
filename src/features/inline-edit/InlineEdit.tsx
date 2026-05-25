@@ -5,12 +5,19 @@ interface InlineEditProps {
   label: string;
   initialValue: string;
   isPhone?: boolean;
+  onSave: (newValue: string) => Promise<void> | void;
 }
 
-export default function InlineEdit({ label, initialValue, isPhone = false }: InlineEditProps) {
+export default function InlineEdit({
+  label,
+  initialValue,
+  isPhone = false,
+  onSave,
+}: InlineEditProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
   const [tempValue, setTempValue] = useState(initialValue);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     setValue(initialValue);
@@ -29,20 +36,28 @@ export default function InlineEdit({ label, initialValue, isPhone = false }: Inl
       } else {
         inputValue = `${onlyNumbers.slice(0, 3)}-${onlyNumbers.slice(3, 7)}-${onlyNumbers.slice(7, 11)}`;
       }
-      if (inputValue.length > 13) return; // 010-1234-5678 길이 제한
+      if (inputValue.length > 13) return;
     }
 
     setTempValue(inputValue);
   };
 
-  const handleSave = () => {
-    setValue(tempValue);
-    setIsEditing(false);
-    // TODO: 백엔드 정보 수정 API 호출 (label, tempValue 활용)
+  const handleSave = async () => {
+    try {
+      setIsSaving(true);
+      await onSave(tempValue);
+
+      setValue(tempValue);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('수정 실패');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleCancel = () => {
-    setTempValue(value); // 기존 값으로 원상복구
+    setTempValue(value);
     setIsEditing(false);
   };
 
@@ -60,13 +75,24 @@ export default function InlineEdit({ label, initialValue, isPhone = false }: Inl
               onChange={handleChange}
               placeholder={isPhone ? '숫자만 입력해주세요' : `${label} 입력`}
               autoFocus
+              disabled={isSaving}
             />
             <div className="edit-text-actions">
-              <button type="button" className="text-action-btn cancel" onClick={handleCancel}>
+              <button
+                type="button"
+                className="text-action-btn cancel"
+                onClick={handleCancel}
+                disabled={isSaving}
+              >
                 취소
               </button>
-              <button type="button" className="text-action-btn save" onClick={handleSave}>
-                저장
+              <button
+                type="button"
+                className="text-action-btn save"
+                onClick={handleSave}
+                disabled={isSaving}
+              >
+                {isSaving ? '저장 중...' : '저장'}
               </button>
             </div>
           </div>
