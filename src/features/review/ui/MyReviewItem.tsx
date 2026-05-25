@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   FaRegFaceGrinHearts,
   FaRegFaceLaughBeam,
@@ -45,9 +46,23 @@ interface MyReviewProps {
   review: MyReviewType;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
+  isMyPage?: boolean;
 }
 
-export default function MyReviewItem({ review, onEdit, onDelete }: MyReviewProps) {
+export default function MyReviewItem({
+  review,
+  onEdit,
+  onDelete,
+  isMyPage = false,
+}: MyReviewProps) {
+  const navigate = useNavigate();
+
+  const handlePerfumeClick = () => {
+    if (isMyPage) {
+      navigate(`/perfume/${review.perfumeId}`);
+    }
+  };
+
   const {
     id,
     satisfaction,
@@ -66,7 +81,11 @@ export default function MyReviewItem({ review, onEdit, onDelete }: MyReviewProps
 
   return (
     <div className="my-review-item">
-      <div className="my-review-item__perfume">
+      <div
+        className="my-review-item__perfume"
+        onClick={handlePerfumeClick}
+        style={{ cursor: isMyPage ? 'pointer' : 'default' }}
+      >
         <PerfumeInfoCard
           brand={brandName}
           name={perfumeName}
