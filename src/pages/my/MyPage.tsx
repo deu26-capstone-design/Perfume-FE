@@ -3,6 +3,7 @@ import MyTabSection from '@widgets/my-tab-section/MyTabSection';
 import UserInfo from '@widgets/UserInfo/UserInfo';
 import WishlistCarousel from '@widgets/wishlist-carousel/WishlistCarousel';
 import MyReviewList from '@widgets/my-reviews/MyReviewList';
+import { getMe } from '@features/auth/model/authApi';
 import './MyPage.css';
 
 interface UserProfile {
@@ -17,29 +18,32 @@ interface UserProfile {
 
 type TabType = 'profile' | 'tastes' | 'reviews';
 
-const MyPage: React.FC = () => {
+export default function MyPage() {
   const [activeTab, setActiveTab] = useState<TabType>('profile');
   const [user, setUser] = useState<UserProfile | null>(null);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await getMe();
+      const data = response.data;
+
+      const mappedData: UserProfile = {
+        profileImage: 'https://i.pinimg.com/736x/9d/16/4e/9d164e4e074d11ce4de0a508914537a8.jpg',
+        nickname: data.nickname,
+        email: data.email,
+        name: data.name,
+        gender: data.gender,
+        birthdate: data.birthDate,
+        phone: data.phoneNumber,
+      };
+
+      setUser(mappedData);
+    } catch (error) {
+      console.error('데이터를 불러오지 못했습니다.', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const mockData: UserProfile = {
-          profileImage: 'https://i.pinimg.com/736x/9d/16/4e/9d164e4e074d11ce4de0a508914537a8.jpg',
-          nickname: '향수콜렉터',
-          email: 'aaa@naver.com',
-          name: '김철수',
-          gender: 'male',
-          birthdate: '2003-05-20',
-          phone: '010-1234-5678',
-        };
-
-        setUser(mockData);
-      } catch (error) {
-        console.error('데이터를 불러오지 못했습니다.', error);
-      }
-    };
-
     fetchUserData();
   }, []);
 
@@ -51,12 +55,14 @@ const MyPage: React.FC = () => {
         <MyTabSection user={user} activeTab={activeTab} onTabChange={setActiveTab} />
 
         <main className="main-content">
-          {activeTab === 'profile' && <UserInfo userData={user} />}
+          {activeTab === 'profile' && <UserInfo userData={user} onUpdateSuccess={fetchUserData} />}
+
           {activeTab === 'tastes' && (
             <div className="tastes-content">
               <WishlistCarousel />
             </div>
           )}
+
           {activeTab === 'reviews' && (
             <section className="reviews-section">
               <div className="section-header"></div>
@@ -67,6 +73,4 @@ const MyPage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default MyPage;
+}
