@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import MyTabSection from '@widgets/my-tab-section/MyTabSection';
 import UserInfo from '@widgets/UserInfo/UserInfo';
 import WishlistCarousel from '@widgets/wishlist-carousel/WishlistCarousel';
+import PreferenceGraph from '@widgets/preference-graph/PreferenceGraph';
 import MyReviewList from '@widgets/my-reviews/MyReviewList';
 import { getMe } from '@features/auth/model/authApi';
 import './MyPage.css';
@@ -60,6 +61,16 @@ export default function MyPage() {
           {activeTab === 'tastes' && (
             <div className="tastes-content">
               <WishlistCarousel />
+              <PreferenceGraph
+                accords={
+                  [
+                    // { accordName: 'Floral', ratio: 100 },
+                    // { accordName: 'Earthy', ratio: 70 },
+                    // { accordName: 'Woody', ratio: 50 },
+                    // { accordName: 'Gourmand', ratio: 80 },
+                  ]
+                }
+              />
             </div>
           )}
 
