@@ -73,7 +73,7 @@ export function useReviewForm({ perfumeId, editData, onClose, onSubmit }: UseRev
 
     try {
       if (editData) {
-        // await patchReview(editData.reviewId, payload);
+        await patchReview(editData.reviewId, payload);
       } else {
         await postReview(perfumeId, payload);
       }
