@@ -58,7 +58,6 @@
   background: var(--white-900);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +79,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 8px 0;
   z-index: 50;
-
   animation: fadeInDown 0.2s ease-out;
 }
 
@@ -146,7 +144,6 @@
 .tab-menu {
   width: 100%;
   margin-top: 20px;
-
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -158,15 +155,12 @@
   border: none;
   border-radius: 8px;
   background: none;
-
   position: relative;
   cursor: pointer;
-
   text-align: left;
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--gray-500);
-
   transition: all 0.2s;
 }
 
@@ -192,10 +186,8 @@
     position: sticky;
     top: 0;
     z-index: 10;
-
     flex-direction: row;
     justify-content: space-evenly;
-
     padding: 10px 0;
     background-color: var(--white-900);
     border-bottom: 1px solid var(--gray-200);
