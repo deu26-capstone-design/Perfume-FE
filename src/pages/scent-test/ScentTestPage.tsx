@@ -92,7 +92,7 @@ const ScentTestPage = () => {
               <br />
               추후 작성하시는 리뷰에 따라 선호도 결과가 업데이트됩니다.
             </p>
-            <button className="scent-test__btn" onClick={() => navigate('/')}>
+            <button className="scent-test__btn" onClick={() => navigate('/my-page/tastes')}>
               마이페이지에서 결과 확인하기
             </button>
           </div>
