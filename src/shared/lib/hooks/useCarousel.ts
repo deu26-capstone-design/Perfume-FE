@@ -14,7 +14,13 @@ export const useCarousel = () => {
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 2);
 
-    const page = Math.round(scrollLeft / clientWidth);
+    const firstItem = trackRef.current.firstElementChild as HTMLElement | null;
+    const gap = parseFloat(window.getComputedStyle(trackRef.current).gap) || 0;
+    const itemsToScroll = window.innerWidth <= 767 ? 3 : 5;
+    const pageWidth = firstItem
+      ? (firstItem.getBoundingClientRect().width + gap) * itemsToScroll
+      : clientWidth;
+    const page = Math.round(scrollLeft / pageWidth);
     setCurrentPage(page);
   }, []);
 
