@@ -10,6 +10,7 @@ import LoginPage from '@pages/login/LoginPage';
 import SignupPage from '@pages/signup/SignupPage';
 import OAuthSuccessPage from '@pages/oauth2/OAuthSuccessPage';
 import OAuthFailurePage from '@pages/oauth2/OAuthFailurePage';
+import ScentTestPage from '@pages/scent-test/ScentTestPage';
 import ServicesPage from '@pages/services/ServicesPage';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/oauth2/success" element={<OAuthSuccessPage />} />
         <Route path="/oauth2/failure" element={<OAuthFailurePage />} />
+        <Route path="/scent-test" element={<ScentTestPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
