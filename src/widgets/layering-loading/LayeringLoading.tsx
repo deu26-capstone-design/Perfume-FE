@@ -30,9 +30,10 @@ export const LayeringLoading = ({ onCancel }: LayeringLoadingProps) => {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
     const timer = setInterval(() => {
       setIsFading(true);
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         setCurrentTip((prev) => (prev + 1) % TIPS.length);
         setIsFading(false);
       }, 500);
@@ -40,15 +41,20 @@ export const LayeringLoading = ({ onCancel }: LayeringLoadingProps) => {
 
     return () => {
       clearInterval(timer);
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
       document.body.style.overflow = '';
     };
   }, []);
 
   return (
     <div className="loading-overlay">
-      <button className="loading-close-btn" onClick={onCancel} aria-label="로딩 취소">
-        <FiX size={24} />
-      </button>
+      {onCancel && (
+        <button className="loading-close-btn" onClick={onCancel} aria-label="로딩 취소">
+          <FiX size={24} />
+        </button>
+      )}
 
       <div className="loading-content">
         <div className="spinner-wrapper">
