@@ -41,6 +41,28 @@
   transition: background-color 0.15s;
 }
 
+.login__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login__input-wrap .login__input {
+  padding-right: 44px;
+}
+
+.login__pw-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  line-height: 1;
+  color: var(--gray-400, #aaa);
+}
+
 .login__input::placeholder {
   color: var(--login-textbox-placeholder);
 }
