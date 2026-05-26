@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import './LoginForm.css';
 import googleLogo from '@shared/assets/google_logo.png';
@@ -10,11 +11,12 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { refreshUser } = useAuth();
-  const raw = searchParams.get('redirect') ?? '/';
-  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
+  const raw = searchParams.get('redirect') ?? '/main';
+  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/main';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -41,13 +43,24 @@ const LoginForm = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input
-          className={`login__input ${password ? 'login__input--filled' : ''}`}
-          type="password"
-          placeholder="비밀번호를 입력해주세요."
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="login__input-wrap">
+          <input
+            className={`login__input ${password ? 'login__input--filled' : ''}`}
+            type={showPassword ? 'text' : 'password'}
+            placeholder="비밀번호를 입력해주세요."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            className="login__pw-toggle"
+            onClick={() => setShowPassword((v) => !v)}
+            aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+            aria-pressed={showPassword}
+          >
+            {showPassword ? <HiEyeOff /> : <HiEye />}
+          </button>
+        </div>
       </div>
 
       {error && <p className="login__error">{error}</p>}

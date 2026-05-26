@@ -54,3 +54,19 @@ export interface ReviewRequest {
 
 export const postReview = (id: number, data: ReviewRequest) =>
   client.post(`/api/perfumes/${id}/reviews`, data);
+
+export interface MyReviewResponse {
+  id: number;
+  satisfaction: number;
+  longevity: number | null;
+  seasons: string[];
+  scents: string[];
+  comment: string | null;
+  disclaimerAgreed: boolean;
+  createdAt: string;
+}
+
+export const getMyReview = (id: number) =>
+  client.get<MyReviewResponse>(`/api/perfumes/${id}/reviews/me`, {
+    validateStatus: (s) => s === 200 || s === 204,
+  });

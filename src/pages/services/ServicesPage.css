@@ -1,0 +1,187 @@
+.services {
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+}
+
+.services__hero {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.services__hero-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--main-color);
+  letter-spacing: 0.04em;
+}
+
+.services__hero-title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--gray-900);
+}
+
+.services__features {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.services__feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
+}
+
+.services__feature--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.services__feature--reverse {
+  direction: rtl;
+}
+
+.services__feature--reverse > * {
+  direction: ltr;
+}
+
+.services__feature-visual {
+  width: 100%;
+  background: #f0ece6;
+  border-radius: 16px;
+  border: 1px solid #e8e0d8;
+  overflow: hidden;
+}
+
+.services__feature-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.services__feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.services__feature-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--main-color);
+  letter-spacing: 0.04em;
+}
+
+.services__feature-title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #1a1a1a;
+  white-space: pre-line;
+}
+
+.services__feature-desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #666;
+  white-space: pre-line;
+}
+
+.services__cta {
+  display: flex;
+  justify-content: center;
+}
+
+.services__cta-btn {
+  padding: 16px 48px;
+  background: var(--main-color);
+  color: var(--white-800);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
+}
+
+.services__cta-btn:hover {
+  opacity: 0.8;
+  transform: scale(1.02);
+}
+
+/* 태블릿 */
+@media (max-width: 1024px) {
+  .services {
+    padding: 64px 48px 80px;
+    gap: 80px;
+  }
+
+  .services__hero-title {
+    font-size: 34px;
+  }
+
+  .services__feature {
+    gap: 40px;
+  }
+
+  .services__feature-title {
+    font-size: 24px;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+  .services {
+    padding: 48px 20px 80px;
+    gap: 64px;
+  }
+
+  .services__hero-label {
+    font-size: 16px;
+  }
+
+  .services__hero-title {
+    font-size: 26px;
+  }
+
+  .services__features {
+    gap: 64px;
+  }
+
+  .services__feature {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .services__feature--reverse {
+    direction: ltr;
+  }
+
+  .services__feature-title {
+    font-size: 20px;
+  }
+
+  .services__feature-desc {
+    font-size: 14px;
+  }
+
+  .services__cta-btn {
+    width: 100%;
+    padding: 16px 0;
+  }
+}

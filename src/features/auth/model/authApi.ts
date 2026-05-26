@@ -1,4 +1,4 @@
-import client, { updateClientCsrfToken } from '@shared/api/client';
+import client, { setRefreshCsrfCallback, updateClientCsrfToken } from '@shared/api/client';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
@@ -26,6 +26,8 @@ export const refreshCsrfToken = async () => {
   return csrfToken;
 };
 
+setRefreshCsrfCallback(refreshCsrfToken);
+
 const withCsrf = () => (csrfToken ? { 'X-XSRF-TOKEN': csrfToken } : {});
 
 export const signup = async (data: SignupRequest) => {
@@ -49,6 +51,11 @@ export const logout = async () => {
 };
 
 export const getMe = () => client.get('/api/auth/me');
+
+export const updateMe = async (data: { nickname: string; phoneNumber: string }) => {
+  if (!csrfToken) await refreshCsrfToken();
+  return client.patch('/api/auth/me', data, { headers: withCsrf() });
+};
 
 export const startGoogleLogin = () => {
   window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
