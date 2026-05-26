@@ -127,12 +127,14 @@ export default function MyReviewItem({
               {LONGEVITY_ICONS[longevity as keyof typeof LONGEVITY_ICONS]}
             </div>
           )}
-          <div className="review-item__rating-group">
-            <span className="review-item__rating-label">계절성</span>
-            {seasons?.map((s) => (
-              <span key={s}>{SEASON_ICONS[s as keyof typeof SEASON_ICONS]}</span>
-            ))}
-          </div>
+          {seasons && seasons.length > 0 && (
+            <div className="review-item__rating-group">
+              <span className="review-item__rating-label">계절성</span>
+              {seasons.map((s) => (
+                <span key={s}>{SEASON_ICONS[s as keyof typeof SEASON_ICONS]}</span>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="review-item__scents">
