@@ -26,7 +26,14 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 403 && !error.config?._csrfRetry && _refreshCsrfToken) {
+    const url: string = error.config?.url ?? '';
+    const isCsrfEndpoint = url.includes('/api/auth/csrf');
+    if (
+      error.response?.status === 403 &&
+      !error.config?._csrfRetry &&
+      !isCsrfEndpoint &&
+      _refreshCsrfToken
+    ) {
       error.config._csrfRetry = true;
       try {
         await _refreshCsrfToken();
