@@ -27,6 +27,7 @@ export default function App() {
         <Route path="/accords/:accordId" element={<AccordsPage />} />
         <Route path="/layering" element={<LayeringPage />} />
         <Route path="/my-page" element={<MyPage />} />
+        <Route path="/my-page/:tab" element={<MyPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/oauth2/success" element={<OAuthSuccessPage />} />
