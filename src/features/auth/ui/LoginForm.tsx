@@ -56,6 +56,7 @@ const LoginForm = () => {
             className="login__pw-toggle"
             onClick={() => setShowPassword((v) => !v)}
             aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+            aria-pressed={showPassword}
           >
             {showPassword ? <HiEyeOff /> : <HiEye />}
           </button>
