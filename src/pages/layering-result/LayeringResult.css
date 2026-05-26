@@ -1,4 +1,4 @@
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
@@ -7,7 +7,7 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
   from {
     opacity: 0;
     transform: translateY(1rem);
@@ -29,7 +29,7 @@
   background-color: rgba(28, 25, 23, 0.6);
   backdrop-filter: blur(0.75rem);
   padding: 3rem 1rem;
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fade-in 0.3s ease-out forwards;
   font-family: sans-serif;
 }
 
@@ -49,7 +49,7 @@
   border-radius: 2rem;
   box-shadow: 0 1.5rem 3rem -0.75rem rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  animation: slideUp 0.5s ease-out forwards;
+  animation: slide-up 0.5s ease-out forwards;
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
