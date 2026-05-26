@@ -10,6 +10,7 @@ export default function PreferenceGraph() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [testCompleted, setTestCompleted] = useState(false);
   const [top5Accords, setTop5Accords] = useState<{ scentName: string; score: number }[]>([]);
   const [hasInProgress, setHasInProgress] = useState(false);
@@ -31,6 +32,7 @@ export default function PreferenceGraph() {
         }
       } catch (error) {
         console.error('선호도 데이터를 불러오는데 실패했습니다.', error);
+        setHasError(true);
       } finally {
         setIsLoading(false);
       }
@@ -43,7 +45,16 @@ export default function PreferenceGraph() {
     return <div className="preference-section">결과를 불러오는 중입니다...</div>;
   }
 
-  const maxScore = top5Accords.length > 0 ? top5Accords[0].score : 1;
+  if (hasError) {
+    return (
+      <div className="preference-section">
+        결과를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.
+      </div>
+    );
+  }
+
+  const maxScore =
+    top5Accords.length > 0 ? Math.max(1, ...top5Accords.map((accord) => accord.score)) : 1;
 
   return (
     <div className="preference-section">
