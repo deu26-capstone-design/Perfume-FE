@@ -18,7 +18,6 @@
   justify-content: flex-end;
 }
 
-/* 1. 기본 표시 모드 */
 .info-display-mode {
   display: flex;
   align-items: center;
