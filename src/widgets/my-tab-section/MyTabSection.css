@@ -1,0 +1,221 @@
+.tab-section {
+  width: 450px;
+  flex-shrink: 0;
+  padding: 100px 40px;
+  border-inline: 1px solid var(--gray-200);
+  box-shadow: 8px 0 15px -5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--white-900);
+}
+
+.profile-header-area {
+  width: 100%;
+  padding: 40px 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-info-box {
+  width: 100%;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.profile-image-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.profile-image {
+  width: clamp(103px, 2.6vw + 93px, 120px);
+  height: clamp(103px, 2.6vw + 93px, 120px);
+  border: 1px solid var(--gray-200);
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-img-btn {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  background: var(--white-900);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-img-btn svg {
+  font-size: 20px;
+  color: var(--gray-600);
+}
+
+.img-edit-dropdown {
+  position: absolute;
+  top: 105%;
+  right: -20px;
+  width: 170px;
+  background-color: var(--white-900);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 8px 0;
+  z-index: 50;
+  animation: fadeInDown 0.2s ease-out;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: var(--gray-100);
+}
+
+.dropdown-icon {
+  font-size: 1.1rem;
+  color: var(--gray-500);
+}
+
+.dropdown-item.delete,
+.dropdown-item.delete .dropdown-icon {
+  color: #e53e3e;
+}
+
+.dropdown-item.delete:hover {
+  background-color: var(--white-900);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nickname {
+  margin: 15px 0 5px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.email {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--gray-400);
+}
+
+/* 탭 메뉴 */
+.tab-menu {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tab-item {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  position: relative;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--gray-500);
+  transition: all 0.2s;
+}
+
+.tab-item:hover,
+.tab-item.active {
+  color: var(--gray-900);
+}
+
+.tab-item.active {
+  font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+  .tab-section {
+    display: contents;
+  }
+
+  .profile-header-area {
+    background-color: var(--white-900);
+  }
+
+  .tab-menu {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 10px 0;
+    background-color: var(--white-900);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .tab-item {
+    flex: 1;
+    width: auto;
+    padding: 10px 20px;
+    text-align: center;
+  }
+
+  .nickname {
+    font-size: 1.125rem;
+  }
+
+  .email {
+    font-size: 0.937rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .tab-menu {
+    justify-content: space-between;
+  }
+
+  .tab-item {
+    padding: 8px 10px;
+    font-size: 1rem;
+  }
+}

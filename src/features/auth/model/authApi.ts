@@ -52,6 +52,11 @@ export const logout = async () => {
 
 export const getMe = () => client.get('/api/auth/me');
 
+export const updateMe = async (data: { nickname: string; phoneNumber: string }) => {
+  if (!csrfToken) await refreshCsrfToken();
+  return client.patch('/api/auth/me', data, { headers: withCsrf() });
+};
+
 export const startGoogleLogin = () => {
   window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
 };

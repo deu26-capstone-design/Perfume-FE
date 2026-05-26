@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useReviewForm, type EditReviewData } from '../hooks/useReviewForm';
 import {
   FaRegFaceGrinHearts,
   FaRegFaceLaughBeam,
@@ -10,7 +10,6 @@ import {
 import { LuFlower2 } from 'react-icons/lu';
 import { FaRegSun } from 'react-icons/fa';
 import { TbLeaf2, TbSnowman } from 'react-icons/tb';
-import { postReview } from '@entities/perfume/api/perfumeApi';
 import '../styles/ReviewFormModal.css';
 
 const SATISFACTION_OPTIONS = [
@@ -51,21 +50,33 @@ const SCENT_OPTIONS = [
 
 interface Props {
   perfumeId: number;
+  editData?: EditReviewData;
   onClose: () => void;
   onSubmit: () => void;
 }
 
-export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [satisfaction, setSatisfaction] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
-  const [longevity, setLongevity] = useState<1 | 2 | 3 | null>(null);
-  const [seasons, setSeasons] = useState<('봄' | '여름' | '가을' | '겨울')[]>([]);
-  const [scents, setScents] = useState<string[]>([]);
-  const [comment, setComment] = useState('');
-  const [isAgreed, setIsAgreed] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+export default function ReviewFormModal({ perfumeId, editData, onClose, onSubmit }: Props) {
+  const { state, actions } = useReviewForm({ perfumeId, editData, onClose, onSubmit });
+
+  const {
+    satisfaction,
+    longevity,
+    seasons,
+    scents,
+    comment,
+    isAgreed,
+    isSubmitting,
+    errorMessage,
+  } = state;
+  const {
+    setSatisfaction,
+    setLongevity,
+    setComment,
+    setIsAgreed,
+    toggleSeason,
+    toggleScent,
+    handleSubmit,
+  } = actions;
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -74,44 +85,6 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [onClose, isSubmitting]);
-
-  const toggleSeason = (season: '봄' | '여름' | '가을' | '겨울') => {
-    setSeasons((prev) =>
-      prev.includes(season) ? prev.filter((s) => s !== season) : [...prev, season],
-    );
-  };
-
-  const toggleScent = (scent: string) => {
-    setScents((prev) => {
-      if (prev.includes(scent)) return prev.filter((s) => s !== scent);
-      if (prev.length >= 5) return prev;
-      return [...prev, scent];
-    });
-  };
-
-  const handleSubmit = async () => {
-    if (!satisfaction || !isAgreed || isSubmitting) return;
-    setIsSubmitting(true);
-    setErrorMessage(null);
-    try {
-      await postReview(perfumeId, {
-        satisfaction,
-        longevity,
-        seasons: seasons.length > 0 ? seasons : null,
-        scents: scents.length > 0 ? scents : null,
-        comment: comment.trim() || null,
-        disclaimerAgreed: true,
-      });
-      onSubmit();
-    } catch (err: unknown) {
-      const status = (err as { response?: { status: number } })?.response?.status;
-      if (status === 409) setErrorMessage('이미 작성한 리뷰가 있습니다.');
-      else if (status === 401) navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`);
-      else setErrorMessage('리뷰 제출에 실패했어요. 잠시 후 다시 시도해주세요.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="modal-overlay" onClick={isSubmitting ? undefined : onClose}>
@@ -124,12 +97,12 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
       >
         <div className="modal__header">
           <h2 id="review-form-title" className="modal__title">
-            리뷰 작성하기
+            {editData ? '리뷰 수정하기' : '리뷰 작성하기'}
           </h2>
           <button
             type="button"
             className="modal__close"
-            aria-label="리뷰 작성 모달 닫기"
+            aria-label={editData ? '리뷰 수정 모달 닫기' : '리뷰 작성 모달 닫기'}
             onClick={onClose}
             disabled={isSubmitting}
           >
@@ -248,7 +221,7 @@ export default function ReviewFormModal({ perfumeId, onClose, onSubmit }: Props)
             onClick={handleSubmit}
             disabled={!satisfaction || !isAgreed || isSubmitting}
           >
-            {isSubmitting ? '제출 중...' : '제출하기'}
+            {isSubmitting ? '제출 중...' : editData ? '수정완료' : '제출하기'}
           </button>
         </div>
       </div>

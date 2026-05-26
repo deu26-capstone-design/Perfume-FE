@@ -1,0 +1,253 @@
+.wishlist-carousel-section {
+  width: 100%;
+  min-width: 0;
+  padding: 30px 40px;
+  border: 1px solid var(--gray-200);
+  border-radius: 20px;
+  background-color: var(--white-900);
+}
+
+.wishlist-title {
+  margin-bottom: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-500);
+}
+
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  padding: 10px 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-item {
+  position: relative;
+  flex: 0 0 calc((100% - 80px) / 5);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+
+.wishlist-btn-wrapper {
+  position: absolute;
+  top: -5px;
+  right: 5px;
+  z-index: 10;
+}
+
+/* 캐러셀 버튼 */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: var(--gray-400);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: all 0.2s;
+}
+
+.carousel-nav-btn:hover {
+  background-color: var(--white-900);
+  color: var(--gray-700);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-nav-btn.prev {
+  left: -20px;
+}
+.carousel-nav-btn.next {
+  right: -20px;
+}
+
+/* 페이지네이션 */
+.carousel-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.pagination-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--gray-200);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.pagination-dot:hover {
+  background-color: var(--gray-300);
+}
+
+.pagination-dot.active {
+  width: 20px;
+  border-radius: 12px;
+  background-color: var(--main-color);
+}
+
+/* 상태 UI */
+.wishlist-status-container {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.wishlist-status-text {
+  color: var(--gray-500);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* PerfumeInfoCard 스타일 덮어쓰기 */
+.carousel-item .perfume-info-card.center.column {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.carousel-item img.perfume-image {
+  width: 105px !important;
+  height: 135px !important;
+  object-fit: contain !important;
+  margin-bottom: 15px !important;
+}
+
+.carousel-item .perfume-text {
+  width: 100% !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.carousel-item span.perfume-name,
+.carousel-item span.perfume-brand {
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+  white-space: normal !important;
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+}
+
+.carousel-item span.perfume-name {
+  color: var(--gray-900) !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 5px !important;
+}
+
+.carousel-item span.perfume-brand {
+  color: var(--gray-400) !important;
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+}
+
+.carousel-nav-btn.prev {
+  left: -30px;
+}
+.carousel-nav-btn.next {
+  right: -30px;
+}
+
+@media (max-width: 1023px) {
+  .wishlist-carousel-section {
+    padding: 25px 20px;
+  }
+
+  .wishlist-title {
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .carousel-track {
+    gap: 12px;
+  }
+
+  .carousel-item {
+    flex: 0 0 calc((100% - 36px) / 3);
+  }
+
+  .carousel-item img.perfume-image {
+    width: 100% !important;
+    max-width: 105px !important;
+    height: auto !important;
+    aspect-ratio: 105 / 135 !important;
+  }
+
+  .carousel-item span.perfume-name {
+    font-size: 0.85rem !important;
+  }
+  .carousel-item span.perfume-brand {
+    font-size: 0.75rem !important;
+  }
+
+  .carousel-nav-btn {
+    width: 32px;
+    height: 32px;
+  }
+  .carousel-nav-btn.prev {
+    left: -10px;
+  }
+  .carousel-nav-btn.next {
+    right: -10px;
+  }
+}
+
+/* 로딩 중 UI */
+.wishlist-spinner {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 16px auto;
+  border: 3px solid var(--gray-100);
+  border-top: 3px solid var(--gray-400);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
