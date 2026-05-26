@@ -28,15 +28,9 @@ export default function InlineEdit({
     let inputValue = e.target.value;
 
     if (isPhone) {
-      const onlyNumbers = inputValue.replace(/[^0-9]/g, '');
-      if (onlyNumbers.length <= 3) {
-        inputValue = onlyNumbers;
-      } else if (onlyNumbers.length <= 7) {
-        inputValue = `${onlyNumbers.slice(0, 3)}-${onlyNumbers.slice(3)}`;
-      } else {
-        inputValue = `${onlyNumbers.slice(0, 3)}-${onlyNumbers.slice(3, 7)}-${onlyNumbers.slice(7, 11)}`;
-      }
-      if (inputValue.length > 13) return;
+      inputValue = inputValue.replace(/[^0-9]/g, '');
+
+      if (inputValue.length > 11) return;
     }
 
     setTempValue(inputValue);
