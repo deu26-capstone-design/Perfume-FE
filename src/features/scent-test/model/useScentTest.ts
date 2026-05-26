@@ -31,19 +31,20 @@ export const useScentTest = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [apiQuestions, setApiQuestions] = useState<ApiQuestion[] | null>(null);
 
-  const displayQuestions = apiQuestions
-    ? apiQuestions.map((aq, i) => {
-        const local = localQuestions[i];
-        return {
-          ...local,
-          question: aq.question,
-          answers: local.answers.map((a, j) => ({
-            ...a,
-            text: aq.options[OPTION_KEYS[j]] ?? a.text,
-          })),
-        };
-      })
-    : localQuestions;
+  const displayQuestions =
+    apiQuestions && apiQuestions.length === localQuestions.length
+      ? apiQuestions.map((aq, i) => {
+          const local = localQuestions[i];
+          return {
+            ...local,
+            question: aq.question,
+            answers: local.answers.map((a, j) => ({
+              ...a,
+              text: aq.options[OPTION_KEYS[j]] ?? a.text,
+            })),
+          };
+        })
+      : localQuestions;
 
   useEffect(() => {
     let cancelled = false;
@@ -64,7 +65,8 @@ export const useScentTest = () => {
         if (Object.keys(savedAnswers).length > 0) {
           const restored = fromApiAnswers(savedAnswers);
           setAnswers(restored);
-          setCurrentIndex(Math.min(Object.keys(savedAnswers).length, localQuestions.length - 1));
+          const firstUnanswered = localQuestions.findIndex((q) => restored[q.id] == null);
+          setCurrentIndex(firstUnanswered === -1 ? localQuestions.length - 1 : firstUnanswered);
         }
       })
       .catch(() => {
@@ -96,13 +98,16 @@ export const useScentTest = () => {
     if (Object.keys(next).length === displayQuestions.length) {
       setIsSubmitting(true);
       submitTest(toApiAnswers(next))
+        .then(() => {
+          setIsComplete(true);
+        })
         .catch((err) => {
-          // 409: 이미 완료된 테스트도 완료 처리
-          if (err?.response?.status !== 409) throw err;
+          if (err?.response?.status === 409) {
+            setIsComplete(true);
+          }
         })
         .finally(() => {
           setIsSubmitting(false);
-          setIsComplete(true);
         });
     }
   };
