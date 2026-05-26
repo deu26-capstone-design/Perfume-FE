@@ -84,6 +84,14 @@ export default function MyReviewItem({
       <div
         className="my-review-item__perfume"
         onClick={handlePerfumeClick}
+        onKeyDown={(e) => {
+          if (isMyPage && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            handlePerfumeClick();
+          }
+        }}
+        role={isMyPage ? 'button' : undefined}
+        tabIndex={isMyPage ? 0 : -1}
         style={{ cursor: isMyPage ? 'pointer' : 'default' }}
       >
         <PerfumeInfoCard
