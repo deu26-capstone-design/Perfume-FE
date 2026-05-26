@@ -1,6 +1,7 @@
 import toast, { type ToastOptions } from 'react-hot-toast';
+import type { CSSProperties } from 'react';
 
-const LAYERING_TOAST_STYLE: React.CSSProperties = {
+const LAYERING_TOAST_STYLE: CSSProperties = {
   borderRadius: '50px',
   background: '#ffffff',
   color: 'var(--gray-800)',
@@ -13,13 +14,15 @@ const LAYERING_TOAST_STYLE: React.CSSProperties = {
   letterSpacing: '-0.02em',
 };
 
-export const layeringToast = (message: string, options?: ToastOptions) => {
+type LayeringToastFn = ((message: string, options?: ToastOptions) => ReturnType<typeof toast>) & {
+  dismiss: () => ReturnType<typeof toast.dismiss>;
+};
+
+export const layeringToast = ((message: string, options?: ToastOptions) => {
   return toast(message, {
     ...options,
     style: { ...LAYERING_TOAST_STYLE, ...options?.style },
   });
-};
+}) as LayeringToastFn;
 
-layeringToast.dismiss = () => {
-  return toast.dismiss();
-};
+layeringToast.dismiss = () => toast.dismiss();
