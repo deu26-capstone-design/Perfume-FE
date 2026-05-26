@@ -23,6 +23,7 @@ export interface Question {
   answers: Answer[];
 }
 
+/** questionId(1~12) → 선택지 인덱스(0~3) */
 export type TestAnswers = Record<number, number>;
 
 export interface TestResult {
