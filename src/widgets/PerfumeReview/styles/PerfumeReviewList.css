@@ -10,6 +10,12 @@
   justify-self: center;
 }
 
+.review-list__already-msg {
+  font-size: 13px;
+  color: #e53935;
+  align-self: flex-end;
+}
+
 .review-list__items {
   display: flex;
   flex-direction: column;

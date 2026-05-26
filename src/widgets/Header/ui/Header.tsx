@@ -28,7 +28,7 @@ export default function Header() {
 
   return (
     <header className="header">
-      <Link to="/" className="header__logo">
+      <Link to="/main" className="header__logo">
         <span>The Scent Lab</span>
       </Link>
 
@@ -36,7 +36,7 @@ export default function Header() {
         <>
           {/* Desktop, Tablet nav */}
           <nav className="header__nav">
-            <Link className="header__nav-item" to="/">
+            <Link className="header__nav-item" to="/main">
               향수
             </Link>
             <Link className="header__nav-item" to="/accords">
@@ -79,7 +79,7 @@ export default function Header() {
           {/* Mobile 드롭다운 메뉴 */}
           {isOpen && (
             <nav className="header__nav--mobile">
-              <Link className="header__nav-item" to="/" onClick={() => setIsOpen(false)}>
+              <Link className="header__nav-item" to="/main" onClick={() => setIsOpen(false)}>
                 향수
               </Link>
               <Link className="header__nav-item" to="/accords" onClick={() => setIsOpen(false)}>

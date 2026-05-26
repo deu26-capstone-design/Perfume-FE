@@ -10,8 +10,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { refreshUser } = useAuth();
-  const raw = searchParams.get('redirect') ?? '/';
-  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
+  const raw = searchParams.get('redirect') ?? '/main';
+  const redirectTo = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/main';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -64,6 +64,7 @@ const LoginForm = () => {
 
       <div className="login__social">
         <button
+          type="button"
           className="login__social-btn"
           onClick={() => {
             sessionStorage.setItem('oauth_redirect', redirectTo);
@@ -74,6 +75,7 @@ const LoginForm = () => {
           Google로 계속하기
         </button>
         <button
+          type="button"
           className="login__social-btn"
           onClick={() => {
             sessionStorage.setItem('oauth_redirect', redirectTo);
@@ -86,10 +88,10 @@ const LoginForm = () => {
       </div>
 
       <div className="login__bottom">
-        <button className="login__signup" onClick={() => navigate('/signup')}>
+        <button type="button" className="login__signup" onClick={() => navigate('/signup')}>
           회원가입
         </button>
-        <button className="login__find" onClick={() => navigate('/find-account')}>
+        <button type="button" className="login__find" onClick={() => navigate('/find-account')}>
           아이디/비밀번호 찾기
         </button>
       </div>
