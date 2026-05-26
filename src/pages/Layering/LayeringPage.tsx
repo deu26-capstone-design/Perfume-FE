@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { Toaster } from 'react-hot-toast';
 import PerfumeGrid from '@widgets/perfume-grid/ui/PerfumeGrid';
 import LayeringButton from '@features/layering-mix/ui/LayeringButton';
 import type { Perfume } from '@entities/perfume/model/types';
@@ -6,13 +7,24 @@ import { useDebounce } from '@shared/lib/useDebounce';
 import { INITIAL_SLOT_STATE, type SlotKey, type SlotState } from './model/layeringTypes';
 import { useLayeringPerfumes } from './hooks/useLayeringPerfumes';
 import { LayeringSelectionSection } from './ui/LayeringSelectionSection';
+import { LayeringResult } from '../layering-result/LayeringResult';
+import { LayeringLoading } from '@widgets/layering-loading/LayeringLoading';
+import { layeringToast } from './model/layeringToast';
+import {
+  getLayeringRecommendation,
+  type LayeringRecommendationResponse,
+} from '@entities/layering/api/layeringApi';
 import './LayeringPage.css';
 
 const LayeringPage = () => {
   const [activeSlot, setActiveSlot] = useState<SlotKey>('first');
   const [isTouched, setIsTouched] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [resultData, setResultData] = useState<LayeringRecommendationResponse | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  // 왼쪽/오른쪽 슬롯 상태
+  const isCancelledRef = useRef<boolean>(false);
+
   const [slots, setSlots] = useState<Record<SlotKey, SlotState>>({
     first: INITIAL_SLOT_STATE,
     second: INITIAL_SLOT_STATE,
@@ -36,7 +48,6 @@ const LayeringPage = () => {
   const updateSlot = (slot: SlotKey, updates: Partial<SlotState>) => {
     setSlots((prev) => ({
       ...prev,
-
       [slot]: {
         ...prev[slot],
         ...updates,
@@ -56,15 +67,14 @@ const LayeringPage = () => {
 
   const resetSlot = (slot: SlotKey) => {
     updateSlot(slot, INITIAL_SLOT_STATE);
-
     setActiveSlot(slot);
   };
 
   const handleSelectPerfume = (slot: SlotKey, perfume: Perfume) => {
     if (firstPerfume && secondPerfume) {
-      // alert는 나중에 toast로 변경 예정
-      alert('향수 2개를 모두 선택하셨습니다. 초기화 버튼을 눌러주세요.');
-
+      layeringToast('이미 향수 2개를 선택했어요.\n초기화 후 다시 선택해주세요.', {
+        id: 'max-perfume-toast',
+      });
       return;
     }
 
@@ -82,21 +92,62 @@ const LayeringPage = () => {
     }
   };
 
-  // 이미 선택된 향수 제외
   const filteredPerfumes = perfumes.filter(
     (perfume) => perfume.id !== firstPerfume?.id && perfume.id !== secondPerfume?.id,
   );
 
-  const handleLayeringMix = () => {
-    // TODO:
-    // 레이어링 결과 연결
+  const handleLayeringMix = async () => {
+    if (!firstPerfume || !secondPerfume) return;
+
+    layeringToast.dismiss();
+    setIsGenerating(true);
+    isCancelledRef.current = false;
+
+    try {
+      const response = await getLayeringRecommendation({
+        perfumeIds: [firstPerfume.id, secondPerfume.id],
+      });
+
+      if (!isCancelledRef.current) {
+        setResultData(response);
+        setIsModalOpen(true);
+      }
+    } catch (error: any) {
+      if (!isCancelledRef.current) {
+        layeringToast(error.message || '레이어링 분석에 실패했습니다.');
+      }
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleCancelGenerate = () => {
+    const isConfirmed = window.confirm('결과 분석을 중단하고 이전 화면으로 돌아갈까요?');
+
+    if (isConfirmed) {
+      isCancelledRef.current = true;
+      setIsGenerating(false);
+
+      layeringToast.dismiss();
+      layeringToast('분석이 중단되었습니다.', {
+        id: 'cancel-generate-toast',
+      });
+    }
   };
 
   return (
     <div className="layering-page">
+      <Toaster
+        position="top-center"
+        containerStyle={{
+          top: '300px',
+        }}
+        toastOptions={{
+          duration: 2000,
+        }}
+      />
       <div className="layering-text-frame">
         <h1 className="layering-title">향수 레이어링</h1>
-
         <p className="layering-description">레이어링 하고 싶은 향수 2개를 선택해주세요</p>
       </div>
 
@@ -111,7 +162,6 @@ const LayeringPage = () => {
               isBothBright={isBothBright}
               onActivate={(slot) => {
                 setIsTouched(true);
-
                 setActiveSlot(slot);
               }}
               onSelectPerfume={handleSelectPerfume}
@@ -162,6 +212,15 @@ const LayeringPage = () => {
           )}
         </section>
       </main>
+
+      {resultData && (
+        <LayeringResult
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          data={resultData}
+        />
+      )}
+      {isGenerating && <LayeringLoading onCancel={handleCancelGenerate} />}
     </div>
   );
 };
