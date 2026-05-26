@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import MyTabSection from '@widgets/my-tab-section/MyTabSection';
 import UserInfo from '@widgets/UserInfo/UserInfo';
 import WishlistCarousel from '@widgets/wishlist-carousel/WishlistCarousel';
@@ -20,7 +21,9 @@ interface UserProfile {
 type TabType = 'profile' | 'tastes' | 'reviews';
 
 export default function MyPage() {
-  const [activeTab, setActiveTab] = useState<TabType>('profile');
+  const { tab } = useParams<{ tab: string }>();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<UserProfile | null>(null);
 
   const fetchUserData = async () => {
@@ -48,33 +51,33 @@ export default function MyPage() {
     fetchUserData();
   }, []);
 
+  const isValidTab = tab === 'profile' || tab === 'tastes' || tab === 'reviews';
+  if (!isValidTab) {
+    return <Navigate to="/my-page/profile" replace />;
+  }
+
   if (!user) return <div className="loading">데이터를 불러오는 중...</div>;
 
   return (
     <div className="mypage-container">
       <div className="mypage-layout">
-        <MyTabSection user={user} activeTab={activeTab} onTabChange={setActiveTab} />
+        <MyTabSection
+          user={user}
+          activeTab={tab as TabType}
+          onTabChange={(newTab) => navigate(`/my-page/${newTab}`)}
+        />
 
         <main className="main-content">
-          {activeTab === 'profile' && <UserInfo userData={user} onUpdateSuccess={fetchUserData} />}
+          {tab === 'profile' && <UserInfo userData={user} onUpdateSuccess={fetchUserData} />}
 
-          {activeTab === 'tastes' && (
+          {tab === 'tastes' && (
             <div className="tastes-content">
               <WishlistCarousel />
-              <PreferenceGraph
-                accords={
-                  [
-                    // { accordName: 'Floral', ratio: 100 },
-                    // { accordName: 'Earthy', ratio: 70 },
-                    // { accordName: 'Woody', ratio: 50 },
-                    // { accordName: 'Gourmand', ratio: 80 },
-                  ]
-                }
-              />
+              <PreferenceGraph />
             </div>
           )}
 
-          {activeTab === 'reviews' && (
+          {tab === 'reviews' && (
             <section className="reviews-section">
               <div className="section-header"></div>
               <MyReviewList />
