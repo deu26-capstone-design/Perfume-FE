@@ -31,7 +31,7 @@ const ScentTestPage = () => {
 
   useEffect(() => {
     if (!isAuthLoading && !isLogin) {
-      navigate(wasLoggedIn.current ? '/' : '/login?redirect=/scent-test', { replace: true });
+      navigate(wasLoggedIn.current ? '/main' : '/login?redirect=/scent-test', { replace: true });
     }
   }, [isLogin, isAuthLoading, navigate]);
 
