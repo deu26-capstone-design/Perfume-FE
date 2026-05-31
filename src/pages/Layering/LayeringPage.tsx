@@ -24,6 +24,7 @@ const LayeringPage = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const isCancelledRef = useRef<boolean>(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const [slots, setSlots] = useState<Record<SlotKey, SlotState>>({
     first: INITIAL_SLOT_STATE,
@@ -97,27 +98,35 @@ const LayeringPage = () => {
   );
 
   const handleLayeringMix = async () => {
-    if (!firstPerfume || !secondPerfume) return;
+    if (isGenerating || !firstPerfume || !secondPerfume) return;
 
     layeringToast.dismiss();
     setIsGenerating(true);
     isCancelledRef.current = false;
+    abortControllerRef.current = new AbortController();
 
     try {
-      const response = await getLayeringRecommendation({
-        perfumeIds: [firstPerfume.id, secondPerfume.id],
-      });
+      const response = await getLayeringRecommendation(
+        { perfumeIds: [firstPerfume.id, secondPerfume.id] },
+        abortControllerRef.current.signal,
+      );
 
       if (!isCancelledRef.current) {
         setResultData(response);
         setIsModalOpen(true);
       }
     } catch (error: any) {
+      if (error.name === 'AbortError' || error.name === 'CanceledError') {
+        console.log('API 요청이 사용자에 의해 중단되었습니다.');
+        return;
+      }
+
       if (!isCancelledRef.current) {
         layeringToast(error.message || '레이어링 분석에 실패했습니다.');
       }
     } finally {
       setIsGenerating(false);
+      abortControllerRef.current = null;
     }
   };
 
@@ -127,6 +136,10 @@ const LayeringPage = () => {
     if (isConfirmed) {
       isCancelledRef.current = true;
       setIsGenerating(false);
+
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
 
       layeringToast.dismiss();
       layeringToast('분석이 중단되었습니다.', {

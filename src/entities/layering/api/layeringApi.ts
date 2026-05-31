@@ -50,11 +50,13 @@ export interface LayeringRecommendationResponse {
 
 export const getLayeringRecommendation = async (
   request: LayeringRecommendationRequest,
+  signal?: AbortSignal,
 ): Promise<LayeringRecommendationResponse> => {
   try {
     const response = await client.post<LayeringRecommendationResponse>(
       '/api/layering/recommendations',
       request,
+      { signal },
     );
 
     return response.data;
