@@ -61,6 +61,10 @@ export const getLayeringRecommendation = async (
 
     return response.data;
   } catch (error) {
+    if (isAxiosError(error) && error.code === 'ERR_CANCELED') {
+      throw error;
+    }
+
     if (isAxiosError(error) && error.response?.data?.message) {
       throw new Error(error.response.data.message);
     }
