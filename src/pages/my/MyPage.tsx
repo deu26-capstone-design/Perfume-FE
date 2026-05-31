@@ -25,6 +25,8 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
   const fetchUserData = async () => {
     try {
@@ -44,6 +46,9 @@ export default function MyPage() {
       setUser(mappedData);
     } catch (error) {
       console.error('데이터를 불러오지 못했습니다.', error);
+      setError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,6 +59,19 @@ export default function MyPage() {
   const isValidTab = tab === 'profile' || tab === 'tastes' || tab === 'reviews';
   if (!isValidTab) {
     return <Navigate to="/my-page/profile" replace />;
+  }
+
+  if (isLoading) {
+    return <div className="loading">데이터를 불러오는 중...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="error-container" style={{ textAlign: 'center', padding: '50px' }}>
+        <h2>데이터를 불러오는데 실패했습니다.</h2>
+        <p>일시적인 오류이거나 로그인이 만료되었을 수 있습니다.</p>
+      </div>
+    );
   }
 
   if (!user) return <div className="loading">데이터를 불러오는 중...</div>;
