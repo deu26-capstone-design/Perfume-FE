@@ -103,7 +103,9 @@ const LayeringPage = () => {
     layeringToast.dismiss();
     setIsGenerating(true);
     isCancelledRef.current = false;
-    abortControllerRef.current = new AbortController();
+
+    const currentController = new AbortController();
+    abortControllerRef.current = currentController;
 
     try {
       const response = await getLayeringRecommendation(
@@ -125,8 +127,10 @@ const LayeringPage = () => {
         layeringToast(error.message || '레이어링 분석에 실패했습니다.');
       }
     } finally {
-      setIsGenerating(false);
-      abortControllerRef.current = null;
+      if (abortControllerRef.current === currentController) {
+        setIsGenerating(false);
+        abortControllerRef.current = null;
+      }
     }
   };
 
