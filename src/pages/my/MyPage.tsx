@@ -33,8 +33,11 @@ export default function MyPage() {
       const response = await getMe();
       const data = response.data;
 
+      const DEFAULT_PROFILE_IMAGE =
+        'https://i.pinimg.com/736x/9d/16/4e/9d164e4e074d11ce4de0a508914537a8.jpg';
+
       const mappedData: UserProfile = {
-        profileImage: 'https://i.pinimg.com/736x/9d/16/4e/9d164e4e074d11ce4de0a508914537a8.jpg',
+        profileImage: (data as any).profileImage || DEFAULT_PROFILE_IMAGE,
         nickname: data.nickname,
         email: data.email,
         name: data.name,
