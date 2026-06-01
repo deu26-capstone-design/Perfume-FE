@@ -26,7 +26,6 @@ export const LayeringPerfumeSelection: React.FC<LayeringPerfumeSelectionProps> =
 }) => {
   const [accordOptions, setAccordOptions] = useState<string[]>([]);
 
-  // accord 목록 조회
   useEffect(() => {
     let isMounted = true;
 
@@ -78,7 +77,7 @@ export const LayeringPerfumeSelection: React.FC<LayeringPerfumeSelectionProps> =
 
       <div className="layering-perfume-selection__content">
         {selectedPerfume ? (
-          <div className="selected-info-wrapper">
+          <div className="selected-info-wrapper" onClick={handleResetAll}>
             <PerfumeInfoCard
               name={selectedPerfume.name}
               brand={selectedPerfume.brand}

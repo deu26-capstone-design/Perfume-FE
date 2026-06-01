@@ -101,6 +101,7 @@ export default function PerfumeReviewList({ perfumeId, onReviewSubmit }: Props) 
         setAlreadyReviewedMsg('이미 리뷰를 작성한 향수예요.');
         alreadyReviewedTimer.current = setTimeout(() => setAlreadyReviewedMsg(null), 2000);
       } else {
+        // 204(리뷰 없음) 또는 404(리뷰 없음) 모두 신규 작성 모달 오픈
         setIsModalOpen(true);
       }
     } catch {

@@ -68,5 +68,5 @@ export interface MyReviewResponse {
 
 export const getMyReview = (id: number) =>
   client.get<MyReviewResponse>(`/api/perfumes/${id}/reviews/me`, {
-    validateStatus: (s) => s === 200 || s === 204,
+    validateStatus: (s) => s === 200 || s === 204 || s === 404,
   });

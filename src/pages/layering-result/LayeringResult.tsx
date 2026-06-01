@@ -38,11 +38,17 @@ export const LayeringResult = ({ isOpen, onClose, data }: LayeringResultProps) =
     if (!cardRef.current || !buttonRef.current || !closeButtonREF.current) return;
 
     const cardElement = cardRef.current;
+    const buttonElement = buttonRef.current;
+    const closeButtonElement = closeButtonREF.current;
+
     const currentWidth = cardElement.offsetWidth;
+    const prevPaddingBottom = cardElement.style.paddingBottom;
+    const prevButtonDisplay = buttonElement.style.display;
+    const prevCloseDisplay = closeButtonElement.style.display;
 
     try {
-      buttonRef.current.style.display = 'none';
-      closeButtonREF.current.style.display = 'none';
+      buttonElement.style.display = 'none';
+      closeButtonElement.style.display = 'none';
       cardElement.style.paddingBottom = '0.5rem';
 
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -71,9 +77,9 @@ export const LayeringResult = ({ isOpen, onClose, data }: LayeringResultProps) =
         id: 'save-result-failure-toast',
       });
     } finally {
-      cardElement.style.paddingBottom = '0';
-      if (buttonRef.current) buttonRef.current.style.display = 'flex';
-      if (closeButtonREF.current) closeButtonREF.current.style.display = 'flex';
+      cardElement.style.paddingBottom = prevPaddingBottom;
+      buttonElement.style.display = prevButtonDisplay;
+      closeButtonElement.style.display = prevCloseDisplay;
     }
   };
 
@@ -155,7 +161,7 @@ export const LayeringResult = ({ isOpen, onClose, data }: LayeringResultProps) =
 
                 <div className="grid-cell-label right">
                   <span className="meta-label" style={{ marginBottom: 0 }}>
-                    추천 계절
+                    키워드
                   </span>
                 </div>
 

@@ -50,15 +50,21 @@ export interface LayeringRecommendationResponse {
 
 export const getLayeringRecommendation = async (
   request: LayeringRecommendationRequest,
+  signal?: AbortSignal,
 ): Promise<LayeringRecommendationResponse> => {
   try {
     const response = await client.post<LayeringRecommendationResponse>(
       '/api/layering/recommendations',
       request,
+      { signal },
     );
 
     return response.data;
   } catch (error) {
+    if (isAxiosError(error) && error.code === 'ERR_CANCELED') {
+      throw error;
+    }
+
     if (isAxiosError(error) && error.response?.data?.message) {
       throw new Error(error.response.data.message);
     }

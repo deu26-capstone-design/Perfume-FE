@@ -4,7 +4,7 @@ interface Props {
 }
 
 const ProgressBar = ({ current, total }: Props) => {
-  const percent = (current / total) * 100;
+  const percent = total > 0 ? (current / total) * 100 : 0;
 
   return (
     <div className="progress">
