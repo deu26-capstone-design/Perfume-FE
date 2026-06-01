@@ -155,7 +155,7 @@ export const LayeringResult = ({ isOpen, onClose, data }: LayeringResultProps) =
 
                 <div className="grid-cell-label right">
                   <span className="meta-label" style={{ marginBottom: 0 }}>
-                    추천 계절
+                    키워드
                   </span>
                 </div>
 
