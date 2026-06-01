@@ -8,8 +8,8 @@ import {
 import { LuFlower2 } from 'react-icons/lu';
 import { FaRegSun } from 'react-icons/fa';
 import { TbLeaf2, TbSnowman } from 'react-icons/tb';
-import { FaUserCircle } from 'react-icons/fa';
 import type { Review } from '@entities/review/model/types';
+import defaultProfileImg from '@shared/assets/default-profile.jpg';
 import '../styles/PerfumeReviewList.css';
 
 const SATISFACTION_ICONS = {
@@ -31,6 +31,12 @@ const SEASON_ICONS = {
   여름: <FaRegSun size={20} color="var(--gray-600)" />,
   가을: <TbLeaf2 size={20} color="var(--gray-600)" />,
   겨울: <TbSnowman size={20} color="var(--gray-600)" />,
+};
+
+const getValidImageUrl = (url: string | null | undefined) => {
+  if (!url) return defaultProfileImg;
+  const cleanUrl = url.trim();
+  return cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`;
 };
 
 interface Props {
@@ -55,11 +61,11 @@ export default function PerfumeReviewItem({ review }: Props) {
     <div className="review-item">
       <div className="review-item__header">
         <div className="review-item__profile">
-          {profileImageUrl ? (
-            <img src={profileImageUrl} alt={nickname} className="review-item__profile-img" />
-          ) : (
-            <FaUserCircle size={36} className="review-item__profile-default" />
-          )}
+          <img
+            src={getValidImageUrl(profileImageUrl)}
+            alt={nickname}
+            className="review-item__profile-img"
+          />
           <span className="review-item__nickname">{nickname}</span>
         </div>
         <span className="review-item__date">{date}</span>
