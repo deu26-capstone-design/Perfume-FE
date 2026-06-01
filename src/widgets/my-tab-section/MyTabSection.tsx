@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MdEdit, MdPhotoCamera, MdDelete } from 'react-icons/md';
+import { updateProfileImage } from '@features/auth/model/authApi';
+import defaultProfileImg from '@shared/assets/default-profile.jpg';
 import './MyTabSection.css';
 
 interface MyTabSectionProps {
@@ -10,9 +12,15 @@ interface MyTabSectionProps {
   };
   activeTab: string;
   onTabChange: (tab: 'profile' | 'tastes' | 'reviews') => void;
+  onUpdateSuccess: () => void;
 }
 
-const MyTabSection: React.FC<MyTabSectionProps> = ({ user, activeTab, onTabChange }) => {
+const MyTabSection: React.FC<MyTabSectionProps> = ({
+  user,
+  activeTab,
+  onTabChange,
+  onUpdateSuccess,
+}) => {
   const [isImgDropdownOpen, setIsImgDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -32,18 +40,45 @@ const MyTabSection: React.FC<MyTabSectionProps> = ({ user, activeTab, onTabChang
     setIsImgDropdownOpen(false);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      console.log('선택된 파일:', file);
-      // TODO: 백엔드로 파일 전송하는 API 호출
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('프로필 이미지는 5MB 이하여야 합니다.');
+      e.target.value = '';
+      return;
+    }
+
+    try {
+      await updateProfileImage(file);
+      alert('프로필 이미지가 성공적으로 변경되었습니다.');
+      onUpdateSuccess();
+    } catch (error) {
+      console.error('프로필 이미지 업로드 실패:', error);
+      alert('이미지 변경에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      e.target.value = '';
+      setIsImgDropdownOpen(false);
     }
   };
 
-  const handleDefaultImgClick = () => {
-    console.log('기본 이미지로 변경 요청');
-    // TODO: 프로필 이미지를 기본값으로 되돌리는 API 호출
-    setIsImgDropdownOpen(false);
+  const handleDefaultImgClick = async () => {
+    try {
+      const response = await fetch(defaultProfileImg);
+      const blob = await response.blob();
+      const defaultFile = new File([blob], 'default-profile.jpg', { type: 'image/jpeg' });
+
+      await updateProfileImage(defaultFile);
+
+      alert('기본 이미지로 변경되었습니다.');
+      onUpdateSuccess();
+    } catch (error) {
+      console.error('기본 이미지 변경 실패:', error);
+      alert('기본 이미지로 변경하는 데 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setIsImgDropdownOpen(false);
+    }
   };
 
   return (

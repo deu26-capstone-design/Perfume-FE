@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import PerfumeInfoCard from '@entities/perfume/ui/card/PerfumeInfoCard';
@@ -20,7 +20,6 @@ export default function WishlistCarousel() {
   const [perfumes, setPerfumes] = useState<WishlistItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-
   const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 767 ? 3 : 5);
 
   useEffect(() => {
@@ -35,7 +34,6 @@ export default function WishlistCarousel() {
 
   useEffect(() => {
     let isMounted = true;
-
     getMyWishlist()
       .then((data) => {
         if (isMounted) {
@@ -63,7 +61,17 @@ export default function WishlistCarousel() {
     setPerfumes((prevPerfumes) => prevPerfumes.filter((p) => p.perfumeId !== idToRemove));
   };
 
-  // 마지막 페이지의 더미 아이템
+  const handleNavigateToDetail = (id: number) => {
+    navigate(`/perfume/${id}`);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>, id: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleNavigateToDetail(id);
+    }
+  };
+
   const remainder = perfumes.length % itemsPerPage;
   const dummyCount = remainder === 0 ? 0 : itemsPerPage - remainder;
 
@@ -107,11 +115,7 @@ export default function WishlistCarousel() {
 
         <div className="carousel-track" ref={trackRef} onScroll={checkScroll}>
           {perfumes.map((perfume) => (
-            <div
-              key={perfume.perfumeId}
-              className="carousel-item"
-              onClick={() => navigate(`/perfume/${perfume.perfumeId}`)}
-            >
+            <div key={perfume.perfumeId} className="carousel-item">
               <div className="wishlist-btn-wrapper">
                 <WishlistRemoveButton
                   perfumeId={perfume.perfumeId}
@@ -119,17 +123,26 @@ export default function WishlistCarousel() {
                 />
               </div>
 
-              <PerfumeInfoCard
-                brand={perfume.brand}
-                name={perfume.name}
-                imageUrl={perfume.imageUrl}
-                align="center"
-                direction="column"
-              />
+              <div
+                className="perfume-card-clickable"
+                role="button"
+                tabIndex={0}
+                onClick={() => handleNavigateToDetail(perfume.perfumeId)}
+                onKeyDown={(e) => handleKeyDown(e, perfume.perfumeId)}
+                aria-label={`${perfume.brand}의 ${perfume.name} 상세 페이지로 이동`}
+                style={{ cursor: 'pointer' }}
+              >
+                <PerfumeInfoCard
+                  brand={perfume.brand}
+                  name={perfume.name}
+                  imageUrl={perfume.imageUrl}
+                  align="center"
+                  direction="column"
+                />
+              </div>
             </div>
           ))}
 
-          {/* 더미 아이템 렌더링 */}
           {Array.from({ length: dummyCount }).map((_, idx) => (
             <div
               key={`dummy-${idx}`}
