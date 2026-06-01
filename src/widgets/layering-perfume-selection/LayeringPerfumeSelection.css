@@ -51,6 +51,16 @@
   min-height: calc(clamp(70px, 15vw, 122px) + 40px);
 }
 
+.selected-info-wrapper {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  width: 100%;
+}
+
+.selected-info-wrapper:hover {
+  opacity: 0.6;
+}
+
 @media (max-width: 1023px) {
   .reset-button {
     font-size: 12px;

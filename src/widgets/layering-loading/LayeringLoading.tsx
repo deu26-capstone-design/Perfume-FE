@@ -29,6 +29,7 @@ export const LayeringLoading = ({ onCancel }: LayeringLoadingProps) => {
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
     const timer = setInterval(() => {
@@ -44,7 +45,7 @@ export const LayeringLoading = ({ onCancel }: LayeringLoadingProps) => {
       if (timeoutId !== null) {
         clearTimeout(timeoutId);
       }
-      document.body.style.overflow = '';
+      document.body.style.overflow = prevOverflow;
     };
   }, []);
 
