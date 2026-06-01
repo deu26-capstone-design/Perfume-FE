@@ -20,7 +20,9 @@ const toApiAnswers = (answers: TestAnswers): Record<string, OptionKey> =>
 
 const fromApiAnswers = (apiAnswers: Record<string, OptionKey>): TestAnswers =>
   Object.fromEntries(
-    Object.entries(apiAnswers).map(([qId, key]) => [Number(qId), keyToIndex(key)]),
+    Object.entries(apiAnswers)
+      .map(([qId, key]) => [Number(qId), keyToIndex(key)])
+      .filter(([, idx]) => (idx as number) >= 0),
   );
 
 export const useScentTest = () => {
@@ -120,8 +122,10 @@ export const useScentTest = () => {
     const scores: Partial<Record<AccordKey, number>> = {};
     localQuestions.forEach((q) => {
       const answerIndex = answers[q.id];
-      if (answerIndex == null) return;
-      const weights = q.answers[answerIndex].weights;
+      if (answerIndex == null || answerIndex < 0) return;
+      const answer = q.answers[answerIndex];
+      if (!answer) return;
+      const weights = answer.weights;
       Object.entries(weights).forEach(([accord, weight]) => {
         const key = accord as AccordKey;
         scores[key] = (scores[key] ?? 0) + weight;
