@@ -6,6 +6,7 @@ import WishlistCarousel from '@widgets/wishlist-carousel/WishlistCarousel';
 import PreferenceGraph from '@widgets/preference-graph/PreferenceGraph';
 import MyReviewList from '@widgets/my-reviews/MyReviewList';
 import { getMe } from '@features/auth/model/authApi';
+import defaultProfileImg from '@shared/assets/default-profile.jpg';
 import './MyPage.css';
 
 interface UserProfile {
@@ -33,11 +34,14 @@ export default function MyPage() {
       const response = await getMe();
       const data = response.data;
 
-      const DEFAULT_PROFILE_IMAGE =
-        'https://i.pinimg.com/736x/9d/16/4e/9d164e4e074d11ce4de0a508914537a8.jpg';
+      const getValidImageUrl = (url: string | null | undefined) => {
+        if (!url) return defaultProfileImg;
+        const cleanUrl = url.trim();
+        return cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`;
+      };
 
       const mappedData: UserProfile = {
-        profileImage: (data as any).profileImage || DEFAULT_PROFILE_IMAGE,
+        profileImage: getValidImageUrl(data.profileImageUrl),
         nickname: data.nickname,
         email: data.email,
         name: data.name,
@@ -86,6 +90,7 @@ export default function MyPage() {
           user={user}
           activeTab={tab as TabType}
           onTabChange={(newTab) => navigate(`/my-page/${newTab}`)}
+          onUpdateSuccess={fetchUserData}
         />
 
         <main className="main-content">

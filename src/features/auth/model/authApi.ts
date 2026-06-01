@@ -19,6 +19,19 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface AuthUserResponse {
+  userId: number;
+  email: string;
+  name: string;
+  nickname: string;
+  gender: string;
+  birthDate: string;
+  phoneNumber: string;
+  profileImageUrl: string | null;
+  oauthProvider: string | null;
+  profileCompleted: boolean;
+}
+
 export const refreshCsrfToken = async () => {
   const res = await client.get('/api/auth/csrf');
   csrfToken = res.data?.csrfToken ?? null;
@@ -55,6 +68,20 @@ export const getMe = () => client.get('/api/auth/me');
 export const updateMe = async (data: { nickname: string; phoneNumber: string }) => {
   if (!csrfToken) await refreshCsrfToken();
   return client.patch('/api/auth/me', data, { headers: withCsrf() });
+};
+
+export const updateProfileImage = async (imageFile: File) => {
+  if (!csrfToken) await refreshCsrfToken();
+
+  const formData = new FormData();
+  formData.append('image', imageFile);
+
+  return client.post<AuthUserResponse>('/api/auth/me/profile-image', formData, {
+    headers: {
+      ...withCsrf(),
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 export const startGoogleLogin = () => {
