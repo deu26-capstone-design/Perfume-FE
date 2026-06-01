@@ -79,7 +79,6 @@ export const updateProfileImage = async (imageFile: File) => {
   return client.post<AuthUserResponse>('/api/auth/me/profile-image', formData, {
     headers: {
       ...withCsrf(),
-      'Content-Type': 'multipart/form-data',
     },
   });
 };
