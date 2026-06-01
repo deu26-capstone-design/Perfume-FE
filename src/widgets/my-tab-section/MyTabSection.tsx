@@ -5,6 +5,8 @@ import { updateProfileImage } from '@features/auth/model/authApi';
 import defaultProfileImg from '@shared/assets/default-profile.jpg';
 import './MyTabSection.css';
 
+const PROFILE_TOAST_ID = 'profile-update-toast';
+
 interface MyTabSectionProps {
   user: {
     profileImage: string;
@@ -46,21 +48,18 @@ const MyTabSection: React.FC<MyTabSectionProps> = ({
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.dismiss();
-      toast.error('프로필 이미지는 5MB 이하여야 합니다.');
+      toast.error('프로필 이미지는 5MB 이하여야 합니다.', { id: PROFILE_TOAST_ID });
       e.target.value = '';
       return;
     }
 
     try {
       await updateProfileImage(file);
-      toast.dismiss();
-      toast.success('프로필 이미지가 성공적으로 변경되었습니다.');
+      toast.success('프로필 이미지가 성공적으로 변경되었습니다.', { id: PROFILE_TOAST_ID });
       onUpdateSuccess();
     } catch (error) {
       console.error('프로필 이미지 업로드 실패:', error);
-      toast.dismiss();
-      toast.error('이미지 변경에 실패했습니다. 다시 시도해 주세요.');
+      toast.error('이미지 변경에 실패했습니다. 다시 시도해 주세요.', { id: PROFILE_TOAST_ID });
     } finally {
       e.target.value = '';
       setIsImgDropdownOpen(false);
@@ -75,13 +74,13 @@ const MyTabSection: React.FC<MyTabSectionProps> = ({
 
       await updateProfileImage(defaultFile);
 
-      toast.dismiss();
-      toast.success('기본 이미지로 변경되었습니다.');
+      toast.success('기본 이미지로 변경되었습니다.', { id: PROFILE_TOAST_ID });
       onUpdateSuccess();
     } catch (error) {
       console.error('기본 이미지 변경 실패:', error);
-      toast.dismiss();
-      toast.error('기본 이미지로 변경하는 데 실패했습니다. 다시 시도해 주세요.');
+      toast.error('기본 이미지로 변경하는 데 실패했습니다. 다시 시도해 주세요.', {
+        id: PROFILE_TOAST_ID,
+      });
     } finally {
       setIsImgDropdownOpen(false);
     }
@@ -101,6 +100,7 @@ const MyTabSection: React.FC<MyTabSectionProps> = ({
             borderRadius: '50px',
             padding: '16px 28px',
             maxWidth: 'none',
+            whiteSpace: 'nowrap',
           },
         }}
       />
