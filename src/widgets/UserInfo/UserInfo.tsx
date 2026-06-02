@@ -18,7 +18,7 @@ interface UserInfoProps {
   onUpdateSuccess?: () => void;
 }
 
-const UserInfo: React.FC<UserInfoProps> = ({ userData, onUpdateSuccess }) => {
+const UserInfo = ({ userData, onUpdateSuccess }: UserInfoProps) => {
   const formatGender = (gender: string) => {
     if (gender === 'M') return '남성';
     if (gender === 'F') return '여성';
@@ -26,6 +26,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, onUpdateSuccess }) => {
   };
 
   const handleSave = async (field: 'nickname' | 'phone', newValue: string) => {
+    const toastId = 'user-info-toast';
     try {
       const payload = {
         nickname: field === 'nickname' ? newValue : userData.nickname,
@@ -33,7 +34,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, onUpdateSuccess }) => {
       };
       await updateMe(payload);
 
-      toast.success('정보가 수정되었습니다.');
+      toast.success('정보가 수정되었습니다.', { id: toastId });
 
       if (onUpdateSuccess) {
         onUpdateSuccess();
@@ -41,9 +42,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, onUpdateSuccess }) => {
     } catch (error: any) {
       const status = error.response?.status;
       if (status === 409) {
-        toast.error('이미 사용 중인 닉네임입니다.');
+        toast.error('이미 사용 중인 닉네임입니다.', { id: toastId });
       } else {
-        toast.error('정보 수정에 실패했습니다. 다시 시도해주세요.');
+        toast.error('정보 수정에 실패했습니다. 다시 시도해주세요.', { id: toastId });
       }
       throw error;
     }
