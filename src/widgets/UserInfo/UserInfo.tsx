@@ -1,5 +1,6 @@
 import InlineEdit from '@features/inline-edit/InlineEdit';
 import { updateMe } from '@features/auth/model/authApi';
+import toast, { Toaster } from 'react-hot-toast';
 import './UserInfo.css';
 
 interface UserProfile {
@@ -17,7 +18,7 @@ interface UserInfoProps {
   onUpdateSuccess?: () => void;
 }
 
-const UserInfo: React.FC<UserInfoProps> = ({ userData, onUpdateSuccess }) => {
+const UserInfo = ({ userData, onUpdateSuccess }: UserInfoProps) => {
   const formatGender = (gender: string) => {
     if (gender === 'M') return '남성';
     if (gender === 'F') return '여성';
@@ -25,23 +26,25 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, onUpdateSuccess }) => {
   };
 
   const handleSave = async (field: 'nickname' | 'phone', newValue: string) => {
+    const toastId = 'user-info-toast';
     try {
       const payload = {
         nickname: field === 'nickname' ? newValue : userData.nickname,
         phoneNumber: field === 'phone' ? newValue : userData.phone,
       };
       await updateMe(payload);
+
+      toast.success('정보가 수정되었습니다.', { id: toastId });
+
       if (onUpdateSuccess) {
         onUpdateSuccess();
-      } else {
-        alert('정보가 수정되었습니다.');
       }
     } catch (error: any) {
       const status = error.response?.status;
       if (status === 409) {
-        alert('이미 사용 중인 닉네임입니다.');
+        toast.error('이미 사용 중인 닉네임입니다.', { id: toastId });
       } else {
-        alert('정보 수정에 실패했습니다. 다시 시도해주세요.');
+        toast.error('정보 수정에 실패했습니다. 다시 시도해주세요.', { id: toastId });
       }
       throw error;
     }
@@ -70,6 +73,22 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, onUpdateSuccess }) => {
 
   return (
     <section className="info-card">
+      <Toaster
+        position="top-center"
+        containerStyle={{
+          top: '100px',
+        }}
+        toastOptions={{
+          duration: 2000,
+          style: {
+            background: 'var(--white-800)',
+            borderRadius: '50px',
+            padding: '16px 28px',
+            maxWidth: 'none',
+            whiteSpace: 'nowrap',
+          },
+        }}
+      />
       <h3 className="card-title">회원정보</h3>
       <div className="info-list">
         {infoList.map((info, index) =>
